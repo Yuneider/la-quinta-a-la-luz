@@ -1,0 +1,792 @@
+<title>La Quinta a la luz</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Special+Elite&display=swap">
+<style>
+/* Layout: el plano ocupa toda la pantalla como marquetería de oro sobre nogal; todo lo demás (título, contadores,
+   controles, cartelas con imagen) flota dentro de la escena y se ancla a los espacios con un hilo dorado.
+   Linterna: la casa se apaga y la luz UV revela la escena del crimen (cinta, huellas, pisadas, marcadores). */
+:root{
+  --wood:#3A2214; --wood-hi:#6A4226; --wood-room:#5B371F;
+  --gold:#C9A24A; --gold-hi:#F1DB94; --gold-lo:#7E5E22;
+  --gold-grad:linear-gradient(135deg,#7E5E22 0%,#E9CF7F 22%,#A88232 45%,#F4E0A0 62%,#9A7428 82%,#D9B866 100%);
+  --velvet:#1E2A1B; --cream:#F3E8CF; --muted:#CDB98C;
+  --night:#06040B; --uv:#A27BFF; --fluo:#8CFFD0;
+  --tape:#F2C230; --manila:#D9BF87; --stamp:#B3261E;
+  --font-display:"IM Fell English", Georgia, "Times New Roman", serif;
+  --font-sc:"IM Fell English SC", "IM Fell English", Georgia, serif;
+  --font-body:"EB Garamond", Garamond, Georgia, serif;
+  --font-type:"Special Elite", "Courier New", Courier, monospace;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{margin:0;overflow:hidden;color:var(--cream);font-family:var(--font-body);font-size:16px;line-height:1.45;
+  background-color:var(--wood);
+  background-image:
+    radial-gradient(ellipse at 50% 50%, rgba(255,200,120,.12), transparent 62%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.16' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.10  0 0 0 0 0.05  0 0 0 0 0.02  1.6 0 0 0 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E"),
+    linear-gradient(180deg,#46291A,#2A170D);}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px}
+
+.scene{position:fixed;inset:0;overflow:hidden}
+.vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,transparent 45%,rgba(10,5,2,.65) 100%)}
+.night{position:absolute;inset:0;pointer-events:none;background:var(--night);opacity:0;transition:opacity 1.2s ease}
+body.uv .night{opacity:.86}
+.planwrap{position:absolute;inset:0;padding:calc(64px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) calc(64px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+#plan{width:100%;height:100%;display:block;overflow:visible;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+body.uv #plan{cursor:none;touch-action:none}
+
+/* ---------- Plano: marquetería ---------- */
+.estate{fill:var(--velvet);stroke:none}
+.north{fill:#2B1B10}
+.wall{fill:none;stroke:var(--gold);stroke-width:2.4;stroke-linejoin:round}
+.deco{fill:none;stroke:var(--gold);stroke-width:.8;opacity:.42}
+.deco-fill{fill:var(--gold)}
+.room{cursor:pointer;outline:none}
+.room .shape{fill:var(--wood-room);stroke:var(--gold);stroke-width:1.3;transition:fill .2s}
+.room.garden .shape{fill:transparent;stroke:none}
+.room:hover .shape,.room:focus-visible .shape{fill:#7C5130}
+.room.garden:hover .shape,.room.garden:focus-visible .shape{fill:rgba(201,162,74,.08)}
+.room.active .shape{fill:#9A6A35}
+.room.garden.active .shape{fill:rgba(201,162,74,.12)}
+.room .badge{fill:#24150B;stroke:var(--gold);stroke-width:1}
+.room .num{font-family:var(--font-display);font-size:9.5px;fill:var(--gold-hi);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.room.seen .badge{fill:var(--gold);stroke:var(--gold-hi)}
+.room.seen .num{fill:#24150B}
+.svg-label{font-family:var(--font-display);font-style:italic;fill:var(--gold);font-size:9px}
+.here{fill:#C0392B;stroke:var(--gold-hi);stroke-width:.8}
+body.uv .room{pointer-events:none}
+#lantern{cursor:pointer}
+#lantern .beam{fill:var(--uv);animation:pulse 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+#lantern .body{fill:#1A0E06;stroke:var(--gold-hi);stroke-width:.8}
+#lantern .lens{fill:var(--uv)}
+@keyframes pulse{0%,100%{transform:scale(.75);opacity:.3}50%{transform:scale(1.25);opacity:.7}}
+
+/* ---------- Escena del crimen bajo luz UV ---------- */
+#crime{opacity:0;transition:opacity .8s}
+body.uv #crime{opacity:1}
+.tape-band{fill:none;stroke:var(--tape);stroke-width:7}
+.tape-text{font-family:var(--font-type);font-size:4.6px;fill:#111;letter-spacing:.3px}
+.chalk{fill:none;stroke:#F4F0FF;stroke-width:.9;stroke-dasharray:3 2;opacity:.75}
+.step{fill:var(--fluo);opacity:.75}
+#uvLayer{opacity:0;transition:opacity 1s;pointer-events:none}
+body.uv #uvLayer{opacity:1}
+#tint{mix-blend-mode:screen}
+.lens-ring{fill:none;stroke:var(--uv);stroke-width:.8;opacity:.55}
+#marks{opacity:0;transition:opacity .6s}
+body.uv #marks{opacity:1}
+.mark{opacity:0;pointer-events:none}
+.mark.lit{pointer-events:auto;cursor:pointer}
+.mark .halo{fill:var(--fluo);opacity:.4}
+.mark .print{fill:none;stroke:var(--fluo);stroke-width:1.6;stroke-linecap:round}
+.mark .tent{display:none}
+.mark.found .print{stroke:#CFFFEA;opacity:.7}
+.mark.found .tent{display:block}
+.tent path{fill:var(--tape);stroke:#111;stroke-width:1.2}
+.tent text{font-family:var(--font-type);font-size:13px;fill:#111;text-anchor:middle}
+
+/* ---------- Elementos flotantes ---------- */
+.float{position:absolute;z-index:20}
+.title{top:calc(10px + env(safe-area-inset-top,0px));left:max(16px,env(safe-area-inset-left,0px));pointer-events:none;max-width:calc(100vw - 180px)}
+.eyebrow{font-family:var(--font-sc);font-size:12.5px;letter-spacing:.16em;color:var(--gold)}
+h1{margin:0;font-family:var(--font-display);font-weight:400;font-size:clamp(1.5rem,3.2vw,2.4rem);line-height:1.05;
+  background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
+.rule{margin:2px 0 0;font-style:italic;color:var(--muted);font-size:15px;text-shadow:0 1px 3px #000}
+body.uv .rule{font-family:var(--font-type);font-style:normal;color:var(--fluo);font-size:13px;letter-spacing:.04em}
+.counters{top:calc(10px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));display:flex;gap:10px}
+.medal{width:62px;height:62px;border-radius:50%;display:grid;place-content:center;text-align:center;background:radial-gradient(circle at 35% 30%,#3D2514,#1A0E06);
+  box-shadow:0 0 0 2px #1A0E06,0 0 0 4px var(--gold),0 6px 16px rgba(0,0,0,.6);font-variant-numeric:tabular-nums;transition:all .6s}
+.medal b{font-family:var(--font-display);font-weight:400;font-size:1.25rem;line-height:1;color:var(--gold-hi)}
+.medal span{font-family:var(--font-sc);font-size:9.5px;letter-spacing:.08em;color:var(--muted)}
+.medal.locked{opacity:.45}
+body.uv .medal.ev{background:var(--tape);box-shadow:0 0 0 2px #111,0 0 0 4px var(--tape),0 0 22px rgba(242,194,48,.35)}
+body.uv .medal.ev b,body.uv .medal.ev span{color:#111;font-family:var(--font-type)}
+.controls{bottom:calc(14px + env(safe-area-inset-bottom,0px));left:max(16px,env(safe-area-inset-left,0px));display:flex;gap:10px;align-items:center}
+.ctl{width:46px;height:46px;border-radius:50%;border:none;display:grid;place-items:center;color:var(--gold-hi);background:radial-gradient(circle at 35% 30%,#3D2514,#1A0E06);
+  box-shadow:0 0 0 2px #1A0E06,0 0 0 3px var(--gold-lo),0 6px 14px rgba(0,0,0,.6);transition:box-shadow .2s,transform .2s}
+.ctl:hover{box-shadow:0 0 0 2px #1A0E06,0 0 0 3px var(--gold-hi),0 6px 14px rgba(0,0,0,.6);transform:translateY(-1px)}
+.ctl[aria-pressed="true"]{box-shadow:0 0 0 2px #1A0E06,0 0 0 3px var(--gold-hi),0 0 18px rgba(241,219,148,.45)}
+.ctl svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ctl.uvctl{color:var(--uv)}
+body.uv .ctl.uvctl{background:radial-gradient(circle,#3B2580,#140A2E);color:#fff;box-shadow:0 0 0 2px #140A2E,0 0 0 3px var(--uv),0 0 22px rgba(162,123,255,.6)}
+.hint{bottom:calc(24px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);font-style:italic;color:var(--muted);font-size:14px;text-shadow:0 1px 3px #000;pointer-events:none;white-space:nowrap}
+body.uv .hint{font-family:var(--font-type);font-style:normal;color:var(--fluo);font-size:12.5px}
+.proto{bottom:calc(14px + env(safe-area-inset-bottom,0px));right:max(16px,env(safe-area-inset-right,0px))}
+.proto summary{list-style:none}
+.proto summary::-webkit-details-marker{display:none}
+.proto-pop{position:absolute;right:0;bottom:calc(100% + 10px);width:min(280px,calc(100vw - 32px));background:#1F120A;border:1px solid var(--gold);padding:12px;display:grid;gap:8px;box-shadow:0 12px 30px rgba(0,0,0,.6)}
+.proto-pop p{margin:0;font-size:14px;color:var(--muted)}
+.btn{border:1px solid var(--gold-lo);background:linear-gradient(#3B2414,#26160C);color:var(--gold-hi);padding:6px 12px;font-family:var(--font-sc);font-size:14px;letter-spacing:.06em;text-align:left}
+.btn:hover{border-color:var(--gold-hi);color:#fff}
+.btn.gold{background:var(--gold-grad);color:#24150B;border-color:#6B4E1C;text-align:center}
+.btn.gold:hover{filter:brightness(1.08);color:#120A03}
+
+/* ---------- Cartela anclada ---------- */
+#leader{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:25;overflow:visible}
+#leader line{stroke:var(--gold-hi);stroke-width:1.2;opacity:.85}
+#leader circle{fill:var(--gold-hi)}
+body.uv #leader line{stroke:var(--fluo);stroke-dasharray:4 3}
+body.uv #leader circle{fill:var(--fluo)}
+.card{position:absolute;z-index:30;width:min(330px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 170px));overflow:auto;padding:14px 16px 16px;display:grid;gap:9px;align-content:start;
+  color:var(--cream);background:linear-gradient(rgba(38,22,12,.95),rgba(22,12,6,.97));border:1px solid var(--gold);
+  box-shadow:0 0 0 3px rgba(18,9,4,.95),0 0 0 4px var(--gold-lo),0 22px 50px rgba(0,0,0,.65)}
+.card.pop{animation:pop .28s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+.card .x{position:absolute;top:6px;right:8px;width:30px;height:30px;border:none;background:none;color:var(--gold);font-size:22px;line-height:1;z-index:2}
+.card .x:hover{color:#fff}
+.kicker{font-family:var(--font-sc);font-size:12.5px;letter-spacing:.12em;color:var(--gold);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding-right:28px}
+.card h2{font-family:var(--font-display);font-weight:400;font-size:1.6rem;line-height:1.05;margin:0;text-wrap:balance;color:var(--gold-hi)}
+.meta{font-style:italic;color:var(--muted);margin:-4px 0 0}
+.card p{margin:0}
+.foto{aspect-ratio:16/10;max-width:100%;display:grid;place-items:center;text-align:center;padding:10px;
+  background:radial-gradient(ellipse at 50% 40%,#5A3720,#1C0F07);border:5px solid transparent;
+  border-image:linear-gradient(135deg,#7E5E22,#F1DB94,#A88232,#E9CF7F,#7E5E22) 1;color:var(--muted);font-family:var(--font-sc);font-size:11.5px;letter-spacing:.1em}
+.foto strong{display:block;font-family:var(--font-display);font-weight:400;font-size:1.1rem;letter-spacing:0;color:var(--gold-hi);margin-bottom:2px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--font-sc);font-size:11px;letter-spacing:.08em;border:1px solid var(--gold-lo);padding:1px 7px;color:var(--muted)}
+.notice{border:1px solid var(--uv);background:rgba(162,123,255,.12);padding:10px 12px;display:grid;gap:8px}
+.steps{margin:0;padding-left:1.2em;display:grid;gap:4px}
+.card.guide{left:max(16px,env(safe-area-inset-left,0px));top:calc(112px + env(safe-area-inset-top,0px));max-height:calc(100% - 200px);z-index:22}
+.card.guide.sheet{left:16px;right:16px;width:auto!important;top:auto;bottom:calc(76px + env(safe-area-inset-bottom,0px));max-height:42vh;z-index:32}
+.ctl.help{font-family:var(--font-display);font-size:22px;line-height:1}
+
+/* Evidencia: carpeta manila con cinta */
+.card.secret{background:var(--manila);color:#2B2116;font-family:var(--font-type);font-size:14px;line-height:1.5;padding-top:24px;transform:rotate(-.6deg);
+  background-image:repeating-linear-gradient(0deg,transparent 0 23px,rgba(80,55,20,.12) 23px 24px);
+  border:none;box-shadow:0 0 0 1px rgba(0,0,0,.4),0 0 40px -6px rgba(162,123,255,.6),0 22px 50px rgba(0,0,0,.7)}
+.card.secret::before{content:"EVIDENCIA · NO CRUZAR · EVIDENCIA · NO CRUZAR · EVIDENCIA";position:absolute;top:0;left:-6px;right:-6px;height:16px;background:var(--tape);color:#111;
+  font-size:9.5px;letter-spacing:.14em;line-height:16px;white-space:nowrap;overflow:hidden;padding-left:12px}
+.card.secret .x{color:#3B2D1B;top:16px}
+.card.secret .kicker{font-family:var(--font-type);letter-spacing:.04em;color:#3B2D1B}
+.card.secret h2{font-family:var(--font-type);font-size:1.3rem;line-height:1.15;text-transform:uppercase;color:#1B140C}
+.card.secret .meta{font-style:normal;color:#4A3A24}
+.card.secret .foto{background:#15121A;border:2px solid #fff;border-image:none;box-shadow:2px 3px 0 rgba(0,0,0,.35);transform:rotate(1deg);color:#bbb;font-family:var(--font-type);font-size:11px}
+.card.secret .foto strong{font-family:var(--font-type);color:#fff;font-size:1rem}
+.stamp{position:absolute;right:16px;top:58px;font-family:var(--font-type);color:var(--stamp);border:2.5px solid var(--stamp);padding:2px 8px;transform:rotate(10deg);font-size:12.5px;letter-spacing:.1em;opacity:.8;pointer-events:none}
+.fuente{border-top:1px dashed rgba(60,40,15,.5);padding-top:8px;display:grid;gap:3px;font-size:12.5px}
+.quote{font-style:italic;border-left:3px solid var(--stamp);padding-left:10px}
+.card.uvnote{background:rgba(16,10,34,.93);border-color:var(--uv);box-shadow:0 0 0 3px rgba(6,4,11,.95),0 0 0 4px #4A2AA0,0 0 40px -8px var(--uv)}
+.card.uvnote h2{color:#fff}
+.card.uvnote .kicker{color:var(--fluo);font-family:var(--font-type);letter-spacing:.04em}
+
+/* ---------- Expediente final ---------- */
+.final{position:fixed;inset:0;z-index:60;overflow:auto;background:rgba(5,3,8,.96);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-top:calc(24px + env(safe-area-inset-top,0px));padding-bottom:calc(30px + env(safe-area-inset-bottom,0px))}
+.final-inner{max-width:1040px;margin:0 auto;display:grid;gap:20px}
+.final h2{font-family:var(--font-display);font-weight:400;font-size:clamp(1.9rem,4.4vw,3rem);margin:0;line-height:1.05;text-wrap:balance;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.col{padding:16px 18px;display:grid;gap:8px;align-content:start;min-width:0}
+.col.museo{background:#24150B;color:var(--cream);box-shadow:0 0 0 1px var(--gold),0 0 0 4px #120A04,0 0 0 5px var(--gold-lo)}
+.col.oculta{background:var(--manila);color:#2B2116;font-family:var(--font-type);font-size:14px;box-shadow:0 0 0 4px #111,0 0 0 8px var(--tape)}
+.col h3{margin:0;font-family:var(--font-sc);font-weight:400;font-size:15px;letter-spacing:.12em;color:var(--gold)}
+.col.oculta h3{font-family:var(--font-type);letter-spacing:.06em;color:#2B2116}
+.col ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.col li{display:grid;grid-template-columns:2.2em 1fr;gap:6px;border-top:1px solid color-mix(in srgb,currentColor 22%,transparent);padding-top:6px}
+.col li i{font-style:normal;opacity:.7}
+.question{font-family:var(--font-display);font-size:clamp(1.5rem,3.6vw,2.3rem);line-height:1.15;margin:0;color:#fff;text-wrap:balance}
+.question em{color:var(--tape)}
+.context{max-width:68ch;color:var(--muted);margin:0}
+.final label{font-family:var(--font-sc);letter-spacing:.1em;color:var(--gold)}
+.final textarea{width:100%;min-height:96px;background:#140D08;color:var(--cream);border:1px solid var(--gold-lo);padding:10px;font:inherit;resize:vertical}
+.final .row{display:flex;flex-wrap:wrap;gap:10px}
+.saved{font-size:14px;color:var(--fluo);min-height:1.2em}
+
+@media (max-width:640px){
+  .rule,.eyebrow{display:none}
+  .medal{width:50px;height:50px}
+  .medal b{font-size:1.05rem}
+  .medal span{font-size:8px}
+  .hint{display:none}
+  .card{max-height:46vh}
+  .compare{grid-template-columns:1fr}
+  .planwrap{padding-top:calc(70px + env(safe-area-inset-top,0px));padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} }
+</style>
+
+<div class="scene" id="scene">
+  <div class="vignette"></div>
+  <div class="night"></div>
+  <div class="planwrap"><svg id="plan" viewBox="164 192 482 528" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Plano de la Casa Museo Quinta de Bolívar con 17 espacios numerados"></svg></div>
+
+  <div class="float title">
+    <div class="eyebrow">Casa Museo Quinta de Bolívar</div>
+    <h1>La Quinta <em>a la luz</em></h1>
+    <p class="rule" id="rule">Explora la casa. Algunas cosas no están a la vista.</p>
+  </div>
+
+  <div class="float counters">
+    <div class="medal" title="Piezas del museo descubiertas"><b id="cPieces">0/10</b><span>piezas</span></div>
+    <div class="medal ev locked" title="Evidencias de la capa oculta"><b id="cHidden">—</b><span id="cHiddenLbl">hallazgos</span></div>
+  </div>
+
+  <div class="float controls">
+    <button class="ctl uvctl" id="uvToggle" type="button" hidden aria-pressed="false" aria-label="Encender o apagar la linterna UV" title="Linterna UV">
+      <svg viewBox="0 0 24 24"><path d="M14 3l7 7-3 3-7-7z"/><path d="M11 6L4 13l7 7 7-7"/><path d="M2 22l4-4"/></svg>
+    </button>
+    <button class="ctl help" id="helpBtn" type="button" aria-label="Mostrar u ocultar la guía" title="Guía">?</button>
+    <button class="ctl" id="soundToggle" type="button" aria-pressed="false" aria-label="Sonido" title="Sonido">
+      <svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+    </button>
+  </div>
+
+  <div class="float hint" id="hint">Pasa el cursor o toca un número</div>
+
+  <details class="float proto">
+    <summary class="ctl" aria-label="Atajos del prototipo" title="Atajos del prototipo"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></summary>
+    <div class="proto-pop">
+      <p>Atajos para revisar el prototipo en clase.</p>
+      <button class="btn" type="button" id="skipSix">Ver seis piezas</button>
+      <button class="btn" type="button" id="skipAll">Revelar todas las evidencias</button>
+      <button class="btn" type="button" id="resetBtn">Reiniciar recorrido</button>
+    </div>
+  </details>
+
+  <svg id="leader"><line id="leadLine" x1="0" y1="0" x2="0" y2="0" visibility="hidden"/><circle id="leadDot" r="3.5" visibility="hidden"/></svg>
+  <aside class="card guide" id="guide" aria-live="polite"></aside>
+  <article class="card" id="card" hidden aria-live="polite"></article>
+</div>
+
+<section class="final" id="final" hidden aria-labelledby="finalTitle">
+  <div class="final-inner">
+    <div>
+      <span class="eyebrow">Expediente cerrado · 10 de 10 evidencias</span>
+      <h2 id="finalTitle">Dos versiones de la misma casa</h2>
+    </div>
+    <div class="compare">
+      <div class="col museo"><h3>Lo que muestra el museo</h3><ul id="listMuseo"></ul></div>
+      <div class="col oculta"><h3>LO QUE NO SE CUENTA</h3><ul id="listOculta"></ul></div>
+    </div>
+    <p class="question">¿Quién decide <em>qué se muestra</em> en un museo?</p>
+    <p class="context">Cada museo elige qué piezas exhibir y qué historia contar con ellas. En Colombia esa elección es un debate vivo: en 2019 varias organizaciones de víctimas retiraron sus archivos del Centro Nacional de Memoria Histórica por desacuerdos con su dirección sobre cómo narrar el conflicto armado. La pregunta de la Quinta es la misma: ¿qué le pasa a un héroe cuando solo vemos su cama, su mesa y su retrato?</p>
+    <div style="display:grid;gap:6px">
+      <label for="respuesta">Tu respuesta (queda solo en este navegador)</label>
+      <textarea id="respuesta" placeholder="Escribe lo que piensas después del recorrido…"></textarea>
+      <div class="saved" id="saved"></div>
+    </div>
+    <div class="row">
+      <button class="btn" type="button" id="backBtn">Volver a la casa</button>
+      <button class="btn gold" type="button" id="restartBtn">Empezar de nuevo</button>
+    </div>
+  </div>
+</section>
+
+<script>
+(() => {
+/* ============ Contenido provisional (roles Guion e Imágenes) ============
+   Geometría trazada sobre el plano oficial del museo (assets/Mapa.jpeg). */
+const ROOMS = [
+  {id:1, name:"Jardín", garden:true, poly:"190,333 561,316 632,505 632,700 170,700", badges:[[325,425],[282,583],[443,588],[507,652]], c:[325,425],
+    space:"Los jardines rodean la casa con senderos, fuentes y árboles centenarios. Es el primer espacio que recorre el visitante al entrar."},
+  {id:2, name:"Salón de la estufa", rects:[[428,518,47,22]],
+    piece:{title:"La estufa", meta:"Hogar de leña · siglo XIX", text:"En una ciudad fría como Santafé, el salón con estufa era el lugar de reunión de la casa en las noches. Aquí se conversaba, se leía y se recibía a los amigos.", code:"QB-02"}, hidden:"bentham"},
+  {id:3, name:"Salón de Manuelita", rects:[[482,518,46,22]],
+    piece:{title:"Salón de Manuelita", meta:"Mobiliario de época · retrato de Manuela Sáenz", text:"El museo dedica este salón a Manuela Sáenz, compañera de Bolívar, que vivió temporadas en la Quinta y organizó aquí reuniones y celebraciones.", code:"QB-03"}, hidden:"manuela"},
+  {id:4, name:"Gran salón", rects:[[450,497,20,21],[482,497,23,21]], badges:[[460,507.5],[493.5,507.5]],
+    piece:{title:"Bolívar con la alegoría de América", meta:"Pedro José Figueroa · 1819 · óleo sobre tela", text:"Bolívar aparece junto a una mujer indígena que representa a América. Es uno de los retratos más tempranos del Libertador pintados en la Nueva Granada.", code:"QB-04"}, hidden:"tributo"},
+  {id:5, name:"Comedor", rects:[[465,437,25,50]],
+    piece:{title:"Mesa del comedor", meta:"Madera y vajilla de época", text:"En este comedor Bolívar recibía a sus oficiales y a la sociedad santafereña. La mesa se presenta servida como para un banquete.", code:"QB-05"}, hidden:"padilla"},
+  {id:6, name:"Salón de juegos", rects:[[505,497,23,21]],
+    piece:{title:"Mesa de juego", meta:"Naipes, dados y tablero · siglo XIX", text:"Los juegos de mesa eran parte de la vida social de la élite. En las tertulias se jugaba a las cartas mientras se discutía de política.", code:"QB-06"}, hidden:"miranda"},
+  {id:7, name:"Alcoba del Libertador", rects:[[428,497,22,21]],
+    piece:{title:"Cama del Libertador", meta:"Cama de madera con dosel", text:"La alcoba de Bolívar conserva su mobiliario de descanso. Es una de las salas más visitadas del museo.", code:"QB-07"}, hidden:"dictadura"},
+  {id:8, name:"Alcoba de José Palacios", rects:[[435,393,16,25]],
+    piece:{title:"Alcoba del mayordomo", meta:"Catre y baúl de viaje", text:"José Palacios acompañó a Bolívar casi toda su vida como mayordomo y estuvo con él hasta su muerte en Santa Marta, en 1830.", code:"QB-08"}, hidden:"esclavitud"},
+  {id:9, name:"Despensa", rects:[[451,393,27,25]],
+    space:"Depósito de víveres, granos y bebidas para la casa y sus visitantes."},
+  {id:10, name:"Cocina", rects:[[478,393,28,25]],
+    piece:{title:"Fogón de leña", meta:"Utensilios de cobre y barro", text:"La cocina estaba separada de la casa principal por el humo y el riesgo de incendio. De aquí salían los banquetes del comedor.", code:"QB-10"}},
+  {id:11, name:"Graneros y caballerizas", rects:[[527,318,17,118]], badges:[[535.5,405]], c:[535.5,380],
+    space:"Aquí se guardaban los granos y los caballos de la Quinta. Los caballos fueron decisivos en las campañas libertadoras.", hidden:"guerramuerte"},
+  {id:12, name:"Huerta", poly:"433,356 470,330 520,323 520,356", badges:[[503,341]], c:[490,342],
+    space:"La huerta abastecía la cocina con hortalizas y hierbas."},
+  {id:13, name:"Mirador y baño de asiento", diamond:[203,466,15], badges:[[223,483]],
+    piece:{title:"Baño de asiento", meta:"Piedra · jardín", text:"Un pequeño baño en el jardín, junto a un mirador hacia la sabana. Bañarse con agua fría de la montaña era parte de la rutina de la casa.", code:"QB-13"}, hidden:"laguaira"},
+  {id:14, name:"Alberca", oct:[258,351,16],
+    piece:{title:"La alberca", meta:"Estanque de piedra", text:"Un estanque alimentado por agua que bajaba de los cerros. Se cuenta que Bolívar se bañaba aquí en las mañanas.", code:"QB-14"}},
+  {id:15, name:"Mirador oriental", rects:[[240,271,83,51]],
+    space:"Terraza alta con vista sobre los jardines y los cerros orientales.", hidden:"piar"},
+  {id:16, name:"Oficinas", rects:[[212,274,28,48]],
+    space:"Hoy son las oficinas del museo: aquí se decide qué se exhibe y cómo se cuenta."},
+  {id:17, name:"Auditorio", rects:[[576,455,24,85]],
+    space:"Espacio del museo para charlas, talleres y actividades con el público."}
+];
+
+const HIDDEN = {
+  tributo:{n:1, title:"La América que pagaba tributo", date:"1821 · 1828",
+    text:"El retrato pone a una mujer indígena al lado del héroe. En 1821 el Congreso de Cúcuta abolió el tributo que pagaban los indígenas. En 1828, ya con poderes de dictador, Bolívar lo restableció como «contribución personal de indígenas» para financiar al Estado.",
+    src:"Decreto de 15 de octubre de 1828 sobre la contribución de indígenas; Ley del Congreso de Cúcuta de 1821."},
+  dictadura:{n:2, title:"El Libertador dictador", date:"27 de agosto de 1828",
+    text:"Tras el fracaso de la Convención de Ocaña, Bolívar asumió el «poder supremo» con el Decreto Orgánico. Eliminó la vicepresidencia que ocupaba Santander y gobernó por decreto hasta 1830.",
+    src:"Decreto Orgánico de la Dictadura, Bogotá, 27 de agosto de 1828."},
+  manuela:{n:3, title:"La que salvó al Libertador", date:"25 de septiembre de 1828",
+    text:"La noche de la conspiración septembrina, en el Palacio de San Carlos, Manuela Sáenz enfrentó a los conjurados mientras Bolívar escapaba por una ventana. Tras la muerte de él fue expulsada de Colombia (1834) y murió pobre en Paita, Perú, en 1856. Buena parte de sus cartas se quemaron.",
+    src:"Relatos de la conspiración del 25 de septiembre; correspondencia de Manuela Sáenz."},
+  piar:{n:4, title:"El fusilamiento de Piar", date:"16 de octubre de 1817",
+    text:"El general Manuel Piar, pardo nacido en Curazao y vencedor en San Félix, fue juzgado por insubordinación y por promover una guerra de razas. Bolívar confirmó la sentencia y Piar fue fusilado en Angostura.",
+    src:"Proceso y sentencia del consejo de guerra contra Manuel Piar, Angostura, 1817."},
+  bentham:{n:5, title:"Libros prohibidos", date:"12 de marzo de 1828",
+    text:"Por decreto, Bolívar prohibió enseñar en las universidades los Tratados de legislación de Jeremy Bentham, que Santander había incluido en el plan de estudios. La disputa era sobre qué ideas debían formar a los futuros abogados.",
+    src:"Decreto de 12 de marzo de 1828 sobre el plan de estudios."},
+  esclavitud:{n:6, title:"La casa que otros mantenían", date:"1816 · 1821 · 1851",
+    text:"José Palacios nació esclavizado en la casa de los Bolívar en Caracas. La familia tuvo haciendas trabajadas por personas esclavizadas. En 1816 Bolívar ofreció la libertad a quienes se unieran al ejército; la libertad de vientres llegó en 1821 y la abolición total en Colombia en 1851, veinte años después de su muerte.",
+    src:"Decreto de Carúpano, 2 de junio de 1816; Ley de 21 de julio de 1821; Ley de 21 de mayo de 1851."},
+  padilla:{n:7, title:"El almirante fusilado", date:"2 de octubre de 1828",
+    text:"José Prudencio Padilla, almirante pardo de Riohacha y héroe de la batalla del lago de Maracaibo, fue fusilado en Bogotá acusado de participar en la conspiración septembrina. Santander, también condenado a muerte, recibió el destierro.",
+    src:"Sentencias de los juicios por la conspiración de septiembre de 1828; cartas de Bolívar sobre la «pardocracia»."},
+  miranda:{n:8, title:"La entrega de Miranda", date:"31 de julio de 1812",
+    text:"Tras la caída de la Primera República de Venezuela, un grupo de oficiales, entre ellos Bolívar, arrestó en La Guaira a Francisco de Miranda. Miranda quedó en manos españolas y murió preso en Cádiz en 1816. Bolívar obtuvo un pasaporte para salir del país.",
+    src:"Documentos de la capitulación de 1812 y del arresto de Miranda en La Guaira."},
+  laguaira:{n:9, title:"Los prisioneros de La Guaira", date:"Febrero de 1814",
+    text:"En plena Guerra a Muerte, Bolívar ordenó ejecutar a los prisioneros españoles y canarios recluidos en Caracas y La Guaira. Murieron más de ochocientas personas, muchas de ellas civiles.",
+    src:"Órdenes de Bolívar al comandante de La Guaira, febrero de 1814."},
+  guerramuerte:{n:10, title:"Guerra a muerte", date:"15 de junio de 1813",
+    quote:"Españoles y canarios, contad con la muerte, aun siendo indiferentes. Americanos, contad con la vida, aun cuando seáis culpables.",
+    text:"Durante la Campaña Admirable, Bolívar firmó en Trujillo el decreto que convirtió la guerra de independencia en una guerra sin cuartel contra los civiles peninsulares.",
+    src:"Decreto de Guerra a Muerte, Trujillo, 15 de junio de 1813."}
+};
+
+ROOMS.forEach(r => {
+  if (!r.c) {
+    if (r.rects) { const [x,y,w,h] = r.rects[0]; r.c = [x+w/2, y+h/2]; }
+    else if (r.oct) r.c = [r.oct[0], r.oct[1]];
+    else if (r.diamond) r.c = [r.diamond[0], r.diamond[1]];
+  }
+  if (!r.badges) r.badges = [r.c];
+});
+const PIECE_ROOMS = ROOMS.filter(r => r.piece).map(r => r.id);
+const HIDDEN_ROOMS = ROOMS.filter(r => r.hidden);
+const UNLOCK_AT = 6;
+const R_LIGHT = 50;
+const ENTRY = [484, 677];
+
+/* ============ Estado ============ */
+let S = {seen:[], visited:[], found:[], lanternRoom:null, lanternTaken:false, uv:false};
+const $ = id => document.getElementById(id);
+const NS = "http://www.w3.org/2000/svg";
+const el = (tag, attrs = {}, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pad = n => String(n).padStart(2, "0");
+const txt = (parent, x, y, s, cls, extra = {}) => { const t = el("text", Object.assign({x, y, class:cls}, extra), parent); t.textContent = s; return t; };
+const plan = $("plan"), card = $("card");
+let light = {x:470, y:470}, lmc, tint, ring;
+
+/* ============ Plano ============ */
+function drawPlan(){
+  plan.innerHTML = "";
+  const defs = el("defs", {}, plan);
+  const rg = el("radialGradient", {id:"holeG"}, defs);
+  el("stop", {offset:"0", "stop-color":"#000"}, rg); el("stop", {offset:".6", "stop-color":"#000"}, rg); el("stop", {offset:"1", "stop-color":"#fff"}, rg);
+  const tg = el("radialGradient", {id:"tintG"}, defs);
+  el("stop", {offset:"0", "stop-color":"#C9AEFF", "stop-opacity":".55"}, tg); el("stop", {offset:".55", "stop-color":"#7A4FE0", "stop-opacity":".32"}, tg); el("stop", {offset:"1", "stop-color":"#3A1E90", "stop-opacity":"0"}, tg);
+  const mask = el("mask", {id:"lightMask", maskUnits:"userSpaceOnUse", x:"-800", y:"-800", width:"2400", height:"2400"}, defs);
+  el("rect", {x:-800, y:-800, width:2400, height:2400, fill:"#fff"}, mask);
+  lmc = el("circle", {r:R_LIGHT, fill:"url(#holeG)", cx:light.x, cy:light.y}, mask);
+  const gf = el("filter", {id:"glow", x:"-60%", y:"-60%", width:"220%", height:"220%"}, defs);
+  el("feGaussianBlur", {stdDeviation:"5"}, gf);
+  const gs = el("filter", {id:"glowS", x:"-50%", y:"-50%", width:"200%", height:"200%"}, defs);
+  el("feGaussianBlur", {stdDeviation:"1.4", result:"b"}, gs);
+  const fm = el("feMerge", {}, gs); el("feMergeNode", {in:"b"}, fm); el("feMergeNode", {in:"SourceGraphic"}, fm);
+
+  // Terreno: franja norte y jardín en terciopelo
+  el("polygon", {points:"200,200 548,282 632,505 632,700 170,700 190,333", class:"estate"}, plan);
+  // Rosa de los vientos
+  const rose = el("g", {transform:"translate(590,228)"}, plan);
+  el("circle", {r:20, class:"deco"}, rose);
+  el("path", {d:"M0 -27 L5 -5 L27 0 L5 5 L0 27 L-5 5 L-27 0 L-5 -5 Z", class:"deco-fill", opacity:".85"}, rose);
+  el("path", {d:"M-14 -14 L0 -3 L14 -14 L3 0 L14 14 L0 3 L-14 14 L-3 0 Z", class:"deco-fill", opacity:".4"}, rose);
+  txt(rose, 0, -32, "N", "svg-label", {"text-anchor":"middle"});
+
+  const roomsG = el("g", {}, plan);
+  ROOMS.filter(r => r.garden).forEach(r => drawRoom(r, roomsG));
+  // Parterres, fuentes y senderos
+  const deco = el("g", {"pointer-events":"none"}, plan);
+  el("rect", {x:206, y:230, width:88, height:28, class:"deco"}, deco);
+  for (let i=0;i<6;i++) el("line", {x1:333+i*4, y1:278, x2:333+i*4, y2:296, class:"deco"}, deco);
+  for (let i=0;i<6;i++) el("line", {x1:372, y1:282+i*4, x2:388, y2:282+i*4, class:"deco"}, deco);
+  [["280,345 362,340 362,485 280,492"],["370,338 425,335 425,465 370,468"],["192,500 262,492 262,550 188,556"],["268,495 380,480 385,540 270,560"],["188,562 345,548 350,690 182,690"],["240,600 340,590 342,660 238,668"]]
+    .forEach(([p]) => el("polygon", {points:p, class:"deco"}, deco));
+  [[236,382,24,62],[264,382,16,62],[365,568,45,35],[365,606,45,35],[425,568,40,30],[425,640,40,45],[492,568,40,30],[548,568,25,30],[492,640,40,45],[548,640,25,45],[540,452,30,60],[395,480,18,70],[415,478,130,76],[590,540,38,158],[576,440,24,15],[180,684,150,5],[345,684,120,5]]
+    .forEach(([x,y,w,h]) => el("rect", {x,y,width:w,height:h,class:"deco"}, deco));
+  [[228,577,9],[214,640,9],[418,620,14],[532,620,14]].forEach(([x,y,r]) => { el("circle",{cx:x,cy:y,r,class:"deco"},deco); el("circle",{cx:x,cy:y,r:r*.45,class:"deco"},deco); });
+  el("line", {x1:475, y1:555, x2:475, y2:700, class:"deco"}, deco); el("line", {x1:490, y1:555, x2:490, y2:700, class:"deco"}, deco);
+  el("polygon", {points:"552,340 560,335 586,390 578,395", class:"deco"}, deco);
+  // Muros
+  el("polyline", {points:"470,700 170,700 190,333 200,200 548,282 632,505 632,700 590,700", class:"wall"}, plan);
+  el("line", {x1:190, y1:333, x2:561, y2:316, class:"wall"}, plan);
+  el("line", {x1:433, y1:436, x2:575, y2:436, class:"wall"}, plan);
+  // Entrada
+  el("circle", {cx:ENTRY[0], cy:ENTRY[1], r:4.5, class:"here"}, plan);
+  txt(plan, 470, 712, "Entrada", "svg-label", {"text-anchor":"end"});
+  txt(plan, 590, 712, "Salida", "svg-label");
+  ROOMS.filter(r => !r.garden).forEach(r => drawRoom(r, plan));
+
+  drawCrime();
+  if (S.lanternRoom && !S.lanternTaken) drawLantern(S.lanternRoom);
+
+  // Oscuridad con el agujero de la linterna
+  const uv = el("g", {id:"uvLayer"}, plan);
+  el("rect", {x:-800, y:-800, width:2400, height:2400, fill:"#06040B", opacity:".94", mask:"url(#lightMask)"}, uv);
+  tint = el("circle", {id:"tint", r:R_LIGHT, fill:"url(#tintG)", cx:light.x, cy:light.y}, uv);
+  ring = el("circle", {r:R_LIGHT*.98, class:"lens-ring", cx:light.x, cy:light.y}, uv);
+  drawMarks();
+  syncRoomClasses();
+}
+
+function drawRoom(r, parent){
+  const g = el("g", {class:"room"+(r.garden?" garden":""), "data-id":r.id, tabindex:0, role:"button", "aria-label":`Espacio ${r.id}: ${r.name}`}, parent);
+  if (r.poly) el("polygon", {points:r.poly, class:"shape"}, g);
+  if (r.rects) r.rects.forEach(([x,y,w,h]) => el("rect", {x,y,width:w,height:h,class:"shape"}, g));
+  if (r.oct) { const [cx,cy,R] = r.oct; const pts = []; for (let i=0;i<8;i++){ const a = Math.PI/8 + i*Math.PI/4; pts.push(`${cx+R*Math.cos(a)},${cy+R*Math.sin(a)}`);} el("polygon",{points:pts.join(" "),class:"shape"},g); }
+  if (r.diamond) { const [cx,cy,s] = r.diamond; el("polygon",{points:`${cx},${cy-s} ${cx+s},${cy} ${cx},${cy+s} ${cx-s},${cy}`,class:"shape"},g); }
+  r.badges.forEach(([x,y]) => {
+    el("circle", {cx:x, cy:y, r: r.rects && r.rects[0][2] < 18 ? 6 : 7, class:"badge"}, g);
+    txt(g, x, y + .5, r.id, "num");
+  });
+  const t = el("title", {}, g); t.textContent = `${r.id}. ${r.name}`;
+  let timer;
+  // El jardín (espacio 1) rodea todo: solo se abre con clic, para que el hover no reabra ventanas al mover el cursor.
+  g.addEventListener("pointerenter", e => {
+    if (e.pointerType !== "mouse" || S.uv || r.garden || activeRoom === r.id) return;
+    clearTimeout(timer);
+    timer = setTimeout(() => { if (Date.now() - closedAt > 500) openRoom(r.id); }, 220);
+  });
+  g.addEventListener("pointerleave", () => clearTimeout(timer));
+  g.addEventListener("click", e => { e.stopPropagation(); if (!S.uv) openRoom(r.id); });
+  g.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && !S.uv){ e.preventDefault(); openRoom(r.id); }});
+}
+
+/* Escena del crimen: solo se ve dentro del haz UV */
+function drawCrime(){
+  const g = el("g", {id:"crime", "pointer-events":"none"}, plan);
+  // tiza alrededor de cada evidencia
+  HIDDEN_ROOMS.forEach(r => el("circle", {cx:r.c[0], cy:r.c[1], r:13, class:"chalk"}, g));
+  // cinta amarilla
+  const TAPES = [[404,474,562,562],[424,383,518,430],[512,326,558,446],[178,446,236,498],[226,262,338,334],[452,428,504,494]];
+  TAPES.forEach(([x1,y1,x2,y2],i) => {
+    el("path", {id:`tp${i}`, d:`M${x1} ${y1} L${x2} ${y2}`, class:"tape-band"}, g);
+    const t = el("text", {class:"tape-text", dy:"1.6"}, g);
+    const tp = el("textPath", {href:`#tp${i}`, startOffset:"3"}, t);
+    tp.textContent = "NO CRUZAR · ESCENA DEL CRIMEN · NO CRUZAR · ESCENA DEL CRIMEN · NO CRUZAR";
+  });
+}
+
+function drawLantern(id){
+  const old = $("lantern"); if (old) old.remove();
+  const [x,y] = ROOMS.find(r => r.id === id).c;
+  const g = el("g", {id:"lantern", tabindex:0, role:"button", "aria-label":"Tomar la linterna UV", transform:`translate(${x},${y - 4})`}, plan);
+  el("circle", {r:22, class:"beam"}, g);
+  const b = el("g", {transform:"rotate(-35) scale(.9)"}, g);
+  el("rect", {x:-4, y:-4, width:22, height:8, rx:1.5, class:"body"}, b);
+  el("path", {d:"M-4 -6 L-12 -9 L-12 9 L-4 6 Z", class:"body"}, b);
+  el("rect", {x:-13.5, y:-8, width:2.5, height:16, class:"lens"}, b);
+  const take = e => { e.stopPropagation(); takeLantern(); };
+  g.addEventListener("click", take);
+  g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); take(e); } });
+}
+
+function drawMarks(){
+  const mg = el("g", {id:"marks"}, plan);
+  HIDDEN_ROOMS.forEach(r => {
+    const h = HIDDEN[r.hidden]; const [x,y] = r.c;
+    const g = el("g", {class:"mark", "data-h":r.hidden, transform:`translate(${x},${y}) scale(.42)`, role:"button", "aria-label":`Huella oculta en ${r.name}`}, mg);
+    el("circle", {r:30, class:"halo", filter:"url(#glow)"}, g);
+    const p = el("g", {class:"print", transform:`rotate(${(h.n*37)%60-30})`}, g);
+    [[5,7],[9,12],[13,17],[17,22]].forEach(([rx,ry],i) => el("ellipse", {rx, ry, "stroke-dasharray": i%2 ? "9 4" : "14 5"}, p));
+    const tent = el("g", {class:"tent", transform:"translate(20,-30)"}, g);
+    el("path", {d:"M-13 14 L-9 -10 L9 -10 L13 14 Z"}, tent);
+    txt(tent, 0, 8, pad(h.n));
+    g.addEventListener("click", e => { e.stopPropagation(); if (g.classList.contains("lit")) openHidden(r.hidden); });
+    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); openHidden(r.hidden); } });
+    g.addEventListener("focus", () => { light.x = x; light.y = y; requestFrame(); });
+  });
+  syncMarks();
+}
+
+function syncRoomClasses(){
+  plan.querySelectorAll(".room").forEach(g => { const id = +g.dataset.id; g.classList.toggle("seen", S.seen.includes(id) || S.visited.includes(id)); });
+}
+function syncMarks(){
+  plan.querySelectorAll(".mark").forEach(g => { g.classList.toggle("found", S.found.includes(g.dataset.h)); g.setAttribute("tabindex", S.uv ? 0 : -1); });
+  requestFrame();
+}
+function setActive(id){ plan.querySelectorAll(".room").forEach(g => g.classList.toggle("active", +g.dataset.id === id)); }
+
+/* ============ Cartela anclada al plano ============ */
+let anchor = null, activeRoom = null, closedAt = 0, guideOpen = true;
+const guide = $("guide");
+function svgToScreen([x,y]){ const p = plan.createSVGPoint(); p.x = x; p.y = y; const s = p.matrixTransform(plan.getScreenCTM()); return {x:s.x, y:s.y}; }
+function mapRect(){ const a = svgToScreen([164,192]), b = svgToScreen([646,720]); return {l:a.x, t:a.y, r:b.x, b:b.y}; }
+function openCard(html, mode, pt){
+  if (guide.classList.contains("sheet") && !guide.hidden) { guideOpen = false; guide.hidden = true; }
+  card.className = "card" + (mode ? " " + mode : "");
+  card.innerHTML = `<button class="x" type="button" id="closeCard" aria-label="Cerrar">×</button>` + html;
+  card.hidden = false; card.scrollTop = 0; anchor = pt;
+  void card.offsetWidth; card.classList.add("pop");
+  $("closeCard").onclick = closeCard;
+  placeCard();
+}
+function closeCard(){ if (!card.hidden) closedAt = Date.now(); card.hidden = true; anchor = null; activeRoom = null; $("leadLine").setAttribute("visibility","hidden"); $("leadDot").setAttribute("visibility","hidden"); setActive(null); }
+function placeCard(){
+  if (card.hidden || !anchor) return;
+  const p = svgToScreen(anchor), vw = innerWidth, vh = innerHeight, m = 16, gap = 36, mr = mapRect();
+  const rightSpace = vw - mr.r - 2*m, leftSpace = mr.l - 2*m;
+  let left = null, top, cw;
+  // Preferencia: acoplar la ficha al costado derecho (o izquierdo si la guía está cerrada) para no tapar el plano
+  if (rightSpace >= 240) { cw = Math.min(340, rightSpace); card.style.width = cw + "px"; left = vw - m - cw; }
+  else if (leftSpace >= 240 && guide.hidden) { cw = Math.min(340, leftSpace); card.style.width = cw + "px"; left = m; }
+  else { card.style.width = ""; cw = card.offsetWidth; }
+  const ch = card.offsetHeight;
+  if (left !== null) top = Math.max(84, Math.min(p.y - ch * .4, vh - ch - 76));
+  else if (vw < 640) { left = (vw - cw) / 2; top = p.y > vh * .5 ? 64 : vh - ch - 70; }
+  else {
+    left = p.x + gap;
+    if (left + cw > vw - m) left = p.x - gap - cw;
+    if (left < m) left = Math.min(vw - cw - m, Math.max(m, p.x - cw / 2));
+    top = Math.max(84, Math.min(p.y - ch * .4, vh - ch - 76));
+  }
+  top = Math.max(m, top);
+  card.style.left = left + "px"; card.style.top = top + "px";
+  const tx = Math.max(left, Math.min(p.x, left + cw)), ty = Math.max(top, Math.min(p.y, top + ch));
+  const inside = p.x > left && p.x < left + cw && p.y > top && p.y < top + ch;
+  const L = $("leadLine"), D = $("leadDot");
+  L.setAttribute("x1", p.x); L.setAttribute("y1", p.y); L.setAttribute("x2", tx); L.setAttribute("y2", ty);
+  D.setAttribute("cx", p.x); D.setAttribute("cy", p.y);
+  L.setAttribute("visibility", inside ? "hidden" : "visible"); D.setAttribute("visibility", "visible");
+}
+
+function openRoom(id){
+  const r = ROOMS.find(x => x.id === id);
+  setActive(id);
+  if (!S.visited.includes(id)) S.visited.push(id);
+  const before = S.seen.length;
+  let newPiece = false;
+  if (r.piece && !S.seen.includes(id)) { S.seen.push(id); newPiece = true; chime(); }
+  if (newPiece && S.seen.length === UNLOCK_AT && !S.lanternRoom) { S.lanternRoom = id; drawLantern(id); lanternSound(); }
+  let notice = "";
+  if (S.lanternRoom && !S.lanternTaken) {
+    const lr = ROOMS.find(x => x.id === S.lanternRoom);
+    notice = `<div class="notice"><p><b>Apareció una linterna UV</b> en ${esc(lr.name)}. Con ella verás lo que el museo no muestra.</p><button class="btn gold" type="button" id="takeBtn">Tomar la linterna</button></div>`;
+  }
+  const tags = `<div class="tags"><span class="tag">Texto provisional</span>${r.piece ? '<span class="tag">Foto pendiente</span>' : ''}</div>`;
+  let html;
+  if (r.piece) {
+    const p = r.piece;
+    html = `<div class="kicker"><span>Espacio ${r.id} · ${esc(r.name)}</span><span>${p.code}</span></div>
+      <div class="foto"><div><strong>${esc(p.title)}</strong>Fotografía de la pieza</div></div>
+      <h2>${esc(p.title)}</h2><p class="meta">${esc(p.meta)}</p>
+      <p>${esc(p.text)}</p>${notice}${tags}`;
+  } else {
+    html = `<div class="kicker"><span>Espacio ${r.id}</span><span>Sin pieza en exhibición</span></div>
+      <h2>${esc(r.name)}</h2><p>${esc(r.space)}</p>${notice}${tags}`;
+  }
+  openCard(html, "", r.c);
+  activeRoom = id;
+  const tb = $("takeBtn"); if (tb) tb.onclick = takeLantern;
+  syncRoomClasses(); updateHUD();
+  if (S.seen.length !== before) renderGuide();
+}
+
+/* Guía de qué hacer y cómo: acoplada al costado izquierdo (hoja inferior en celular) */
+function renderGuide(){
+  const touch = matchMedia("(pointer:coarse)").matches;
+  let html, mode;
+  if (!S.uv) {
+    mode = "";
+    html = `<div class="kicker"><span>Cómo se recorre</span><span>${S.seen.length}/${PIECE_ROOMS.length} piezas</span></div>
+      <h2>Bienvenido a la Quinta</h2>
+      <p>La casa donde vivió Simón Bolívar en Bogotá. Cada número del plano es un espacio del museo; el punto rojo marca la entrada.</p>
+      <ol class="steps">
+        <li>${touch ? "Toca" : "Pasa el cursor sobre"} un número para ver la pieza que se exhibe allí. El jardín se abre con clic.</li>
+        <li>Al descubrir ${UNLOCK_AT} piezas aparecerá una linterna UV.</li>
+        <li>Con la linterna, la casa se convierte en escena del crimen.</li>
+      </ol>
+      ${S.lanternTaken ? `<p class="meta">Ya tienes la linterna: enciéndela con el botón violeta.</p>` : S.lanternRoom ? `<p class="meta">La linterna ya apareció en el plano. Tómala.</p>` : ""}`;
+  } else {
+    mode = "uvnote";
+    const left = HIDDEN_ROOMS.length - S.found.length;
+    html = `<div class="kicker"><span>Escena abierta</span><span>${S.found.length}/10</span></div>
+      <h2>Lo que no se cuenta</h2>
+      <p>La casa quedó a oscuras. Mueve la luz ultravioleta${touch ? " arrastrando el dedo" : ""} y busca las huellas que brillan dentro del haz, cerca de las cintas amarillas.</p>
+      <p>${left ? `Faltan ${left} evidencias.` : "Encontraste todas las evidencias."}</p>
+      ${left ? "" : `<button class="btn gold" type="button" id="toFinal">Cerrar el expediente</button>`}`;
+  }
+  guide.className = "card guide" + (mode ? " " + mode : "");
+  guide.innerHTML = `<button class="x" type="button" id="closeGuide" aria-label="Ocultar guía">×</button>` + html;
+  $("closeGuide").onclick = () => { guideOpen = false; guide.hidden = true; placeCard(); };
+  const tf = $("toFinal"); if (tf) tf.onclick = showFinal;
+  guide.hidden = !guideOpen;
+  placeGuide();
+}
+function placeGuide(){
+  if (guide.hidden) return;
+  const space = mapRect().l - 32;
+  if (space >= 230) { guide.classList.remove("sheet"); guide.style.width = Math.min(300, space) + "px"; }
+  else { guide.classList.add("sheet"); guide.style.width = ""; }
+}
+$("helpBtn").onclick = () => {
+  guideOpen = guide.hidden;
+  renderGuide();
+  if (guideOpen && guide.classList.contains("sheet")) closeCard();
+  placeCard();
+};
+
+function openHidden(key){
+  const h = HIDDEN[key]; const r = HIDDEN_ROOMS.find(x => x.hidden === key);
+  if (!S.found.includes(key)) { S.found.push(key); revealSound(); }
+  syncMarks(); updateHUD(); renderGuide();
+  const done = S.found.length === HIDDEN_ROOMS.length;
+  openCard(`<div class="kicker"><span>EVIDENCIA N.º ${pad(h.n)}</span><span>${esc(r.name)}</span></div>
+    <span class="stamp">POR VERIFICAR</span>
+    <div class="foto"><div><strong>${esc(h.title)}</strong>IMAGEN DE LA CAPA OCULTA</div></div>
+    <h2>${esc(h.title)}</h2><p class="meta">Fecha: ${esc(h.date)}</p>
+    ${h.quote ? `<p class="quote">«${esc(h.quote)}»</p>` : ""}
+    <p>${esc(h.text)}</p>
+    <div class="fuente"><b>FUENTE:</b><span>${esc(h.src)}</span></div>
+    ${done ? `<button class="btn gold" type="button" id="toFinal">Cerrar el expediente</button>` : `<p class="meta">${S.found.length} de 10 evidencias.</p>`}`, "secret", r.c);
+  const tf = $("toFinal"); if (tf) tf.onclick = showFinal;
+}
+
+/* ============ Linterna UV ============ */
+function toSvg(cx, cy){ const p = plan.createSVGPoint(); p.x = cx; p.y = cy; return p.matrixTransform(plan.getScreenCTM().inverse()); }
+let raf = 0;
+function requestFrame(){ if (!raf) raf = requestAnimationFrame(paint); }
+function paint(){
+  raf = 0;
+  [lmc, tint, ring].forEach(c => { if (c) { c.setAttribute("cx", light.x); c.setAttribute("cy", light.y); } });
+  plan.querySelectorAll(".mark").forEach(g => {
+    const r = HIDDEN_ROOMS.find(x => x.hidden === g.dataset.h);
+    const d = Math.hypot(r.c[0] - light.x, r.c[1] - light.y);
+    let o = Math.max(0, Math.min(1, 1 - (d - R_LIGHT*.3) / (R_LIGHT*.6)));
+    if (S.found.includes(g.dataset.h)) o = Math.max(o, .75);
+    g.style.opacity = S.uv ? o.toFixed(3) : 0;
+    g.classList.toggle("lit", S.uv && o > .45);
+  });
+}
+const follow = e => { if (!S.uv) return; const p = toSvg(e.clientX, e.clientY); light.x = p.x; light.y = p.y; requestFrame(); };
+plan.addEventListener("pointermove", follow);
+plan.addEventListener("pointerdown", follow);
+plan.addEventListener("click", e => { if (!S.uv && !e.target.closest(".room,#lantern")) closeCard(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeCard(); });
+window.addEventListener("resize", () => { placeGuide(); placeCard(); requestFrame(); });
+
+function takeLantern(){
+  S.lanternTaken = true;
+  const l = $("lantern"); if (l) l.remove();
+  light = {x:482, y:640};
+  setUV(true);
+}
+function setUV(on){
+  S.uv = on;
+  document.body.classList.toggle("uv", on);
+  $("uvToggle").hidden = !S.lanternTaken;
+  $("uvToggle").setAttribute("aria-pressed", on);
+  $("rule").textContent = on ? "ESCENA ABIERTA · sigue las pisadas bajo la luz" : "Explora la casa. Algunas cosas no están a la vista.";
+  $("hint").textContent = on ? "Mueve la luz ultravioleta sobre la casa" : "Pasa el cursor o toca un número";
+  closeCard(); syncMarks(); updateHUD(); audioMode();
+  if (on) guideOpen = true;
+  renderGuide();
+}
+
+function updateHUD(){
+  $("cPieces").textContent = `${S.seen.length}/${PIECE_ROOMS.length}`;
+  document.querySelector(".medal.ev").classList.toggle("locked", !S.lanternTaken);
+  $("cHidden").textContent = S.lanternTaken ? `${S.found.length}/10` : "—";
+  $("cHiddenLbl").textContent = S.uv ? "evidencias" : "hallazgos";
+}
+
+/* ============ Expediente final ============ */
+function showFinal(){
+  $("listMuseo").innerHTML = ROOMS.filter(r => r.piece).map(r => `<li><i>${r.id}</i><span>${esc(r.piece.title)}</span></li>`).join("");
+  $("listOculta").innerHTML = Object.values(HIDDEN).sort((a,b) => a.n - b.n).map(h => `<li><i>${pad(h.n)}</i><span>${esc(h.title)} · ${esc(h.date)}</span></li>`).join("");
+  try { $("respuesta").value = localStorage.getItem("quinta-respuesta") || ""; } catch(e) {}
+  $("final").hidden = false; $("final").scrollTop = 0;
+  closeCard();
+}
+$("respuesta").addEventListener("input", e => {
+  try { localStorage.setItem("quinta-respuesta", e.target.value); $("saved").textContent = "Guardado en este navegador."; }
+  catch(err) { $("saved").textContent = ""; }
+});
+$("backBtn").onclick = () => { $("final").hidden = true; };
+$("restartBtn").onclick = () => { $("final").hidden = true; reset(); };
+
+/* ============ Atajos ============ */
+const closeMenu = () => document.querySelector(".proto").removeAttribute("open");
+$("skipSix").onclick = () => {
+  closeMenu(); if (S.lanternTaken) return;
+  const missing = PIECE_ROOMS.filter(id => !S.seen.includes(id));
+  while (S.seen.length < UNLOCK_AT - 1 && missing.length) S.seen.push(missing.shift());
+  if (missing.length) openRoom(missing.shift());
+};
+$("skipAll").onclick = () => {
+  closeMenu();
+  if (!S.lanternTaken) { PIECE_ROOMS.forEach(id => { if (!S.seen.includes(id)) S.seen.push(id); }); S.lanternRoom = S.lanternRoom || PIECE_ROOMS[0]; takeLantern(); }
+  else if (!S.uv) setUV(true);
+  S.found = HIDDEN_ROOMS.map(r => r.hidden);
+  syncMarks(); syncRoomClasses(); updateHUD(); renderGuide();
+};
+$("resetBtn").onclick = () => { closeMenu(); reset(); };
+function reset(){
+  S = {seen:[], visited:[], found:[], lanternRoom:null, lanternTaken:false, uv:false};
+  guideOpen = true;
+  drawPlan(); setUV(false);
+}
+$("uvToggle").onclick = () => setUV(!S.uv);
+
+/* ============ Sonido (WebAudio, sin archivos) ============ */
+let ctx = null, master, busPeriod, busTense, nextT = 0, step = 0, soundOn = false;
+const hz = m => 440 * Math.pow(2, (m - 69) / 12);
+const BARS = [[50,62,65,69],[43,55,58,62],[45,57,61,64],[50,62,65,69],[46,58,62,65],[43,55,58,62],[45,57,61,64],[50,57,62,65]];
+const PATTERN = [0,1,2,3,2,1];
+function initAudio(){
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  master = ctx.createGain(); master.gain.value = .55; master.connect(ctx.destination);
+  busPeriod = ctx.createGain(); busTense = ctx.createGain();
+  busPeriod.gain.value = S.uv ? 0 : 1; busTense.gain.value = S.uv ? 1 : 0;
+  busPeriod.connect(master); busTense.connect(master);
+  const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 280; lp.Q.value = 5;
+  const dg = ctx.createGain(); dg.gain.value = .16; lp.connect(dg); dg.connect(busTense);
+  [73.42, 77.78, 36.71].forEach(f => { const o = ctx.createOscillator(); o.type = "sawtooth"; o.frequency.value = f; o.connect(lp); o.start(); });
+  const lfo = ctx.createOscillator(); lfo.frequency.value = .07; const lg = ctx.createGain(); lg.gain.value = 160; lfo.connect(lg); lg.connect(lp.frequency); lfo.start();
+  nextT = ctx.currentTime + .1;
+  setInterval(schedule, 90);
+}
+function pluck(f, t, dur, vol, bus, type = "triangle"){
+  const o = ctx.createOscillator(), g = ctx.createGain(), fl = ctx.createBiquadFilter();
+  o.type = type; o.frequency.value = f; fl.type = "lowpass"; fl.frequency.value = 2400;
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .006); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+  o.connect(fl); fl.connect(g); g.connect(bus); o.start(t); o.stop(t + dur + .05);
+}
+function schedule(){
+  while (nextT < ctx.currentTime + .35) {
+    const bar = BARS[Math.floor(step / 6) % BARS.length], idx = PATTERN[step % 6];
+    pluck(hz(bar[idx]), nextT, idx === 0 ? 1.6 : 1.0, idx === 0 ? .2 : .11, busPeriod);
+    if (step % 18 === 9) { pluck(hz(85), nextT, 3.2, .06, busTense, "sine"); pluck(hz(86), nextT + .02, 3.0, .04, busTense, "sine"); }
+    nextT += .3; step++;
+  }
+}
+function audioMode(){ if (!ctx) return; const t = ctx.currentTime; busPeriod.gain.setTargetAtTime(S.uv ? 0 : 1, t, .5); busTense.gain.setTargetAtTime(S.uv ? 1 : 0, t, .5); }
+function sfx(fn){ if (ctx && soundOn) fn(ctx.currentTime); }
+function chime(){ sfx(t => { pluck(hz(81), t, .8, .12, master, "sine"); pluck(hz(86), t + .09, 1.1, .1, master, "sine"); }); }
+function lanternSound(){ sfx(t => { [69,74,78,81].forEach((m,i) => pluck(hz(m), t + i*.08, 1.2, .09, master, "sine")); }); }
+function revealSound(){ sfx(t => { pluck(hz(61), t, 1.8, .14, master, "sine"); pluck(hz(67), t + .04, 1.8, .1, master, "sine"); }); }
+$("soundToggle").onclick = async () => {
+  soundOn = !soundOn;
+  try { if (soundOn) { if (!ctx) initAudio(); else await ctx.resume(); audioMode(); } else if (ctx) await ctx.suspend(); }
+  catch(e) { soundOn = false; }
+  $("soundToggle").setAttribute("aria-pressed", soundOn);
+};
+
+/* ============ Arranque ============ */
+function start(data){
+  if (data && Array.isArray(data.seen)) S = Object.assign(S, data);
+  drawPlan();
+  setUV(S.uv);
+}
+window.claude?.hot?.snapshot?.(() => S);
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+})();
+</script>
