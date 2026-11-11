@@ -14,6 +14,7 @@ Abre `index.html` en el navegador. No necesita instalación ni servidor.
   - `plano.css` — el plano y lo que aparece bajo la luz UV.
   - `panel.css` — cartela, guía, contadores y botones.
   - `final.css` — pantalla final.
+  - `carrusel.css` — carrusel de imágenes y fila de números para celular.
   - `responsive.css` — ajustes para celular (se carga de último).
 - `js/` — el comportamiento, un archivo por parte:
   - `datos.js` — **los textos**: espacios, piezas y evidencias. Para corregir un texto, una fecha o una fuente basta con editar este archivo.
@@ -35,4 +36,25 @@ Abre `index.html` en el navegador. No necesita instalación ni servidor.
 3. Sube tus archivos a `imagenes/`, `sonido/` o `texto/`. En GitHub: entra a la carpeta → **Add file** → **Upload files**.
 4. Anota de dónde viene cada archivo y su licencia en `texto/creditos.md` de esa carpeta.
 
-Lo que se sube a `contenido/` no aparece solo en la vista: después hay que conectarlo en `js/datos.js` y `js/panel.js`.
+## Cómo poner imágenes en la vista (carrusel)
+
+Cada espacio y cada evidencia oculta puede mostrar varias imágenes, que se pasan con flechas o deslizando el dedo.
+
+1. Sube la imagen a `contenido/<espacio>/imagenes/`.
+2. Abre [js/datos.js](js/datos.js), busca el espacio (o la evidencia) y agrega la ruta a su lista `imgs`:
+
+```js
+{id:4, name:"Gran salón", imgs:[
+  "contenido/04-gran-salon/imagenes/retrato.jpg",
+  {src:"contenido/04-gran-salon/imagenes/detalle.jpg", pie:"Detalle de la alegoría"}
+], ...
+```
+
+Una ruta sola muestra la imagen; con `{src, pie}` se le añade un pie de foto. Con la lista vacía aparece el recuadro de «foto pendiente». La meta es reunir unas 50 imágenes entre los 17 espacios y las 10 evidencias (dos o tres por cada uno).
+
+Los sonidos y textos de `contenido/` todavía no se cargan solos: hay que conectarlos en `js/datos.js` y `js/panel.js`.
+
+## Reglas del recorrido
+
+- La linterna UV aparece al visitar más de la mitad de los espacios (9 de 17). Se cambia con `UNLOCK_AT` en `js/datos.js`.
+- El tamaño del haz UV es `R_LIGHT` en `js/datos.js`: más pequeño, más difícil encontrar las huellas.

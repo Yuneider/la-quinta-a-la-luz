@@ -10,13 +10,21 @@ function paint(){
   plan.querySelectorAll(".mark").forEach(g => {
     const r = HIDDEN_ROOMS.find(x => x.hidden === g.dataset.h);
     const d = Math.hypot(r.c[0] - light.x, r.c[1] - light.y);
-    let o = Math.max(0, Math.min(1, 1 - (d - R_LIGHT*.3) / (R_LIGHT*.6)));
+    let o = Math.max(0, Math.min(1, 1 - (d - R_LIGHT*.15) / (R_LIGHT*.45)));
     if (S.found.includes(g.dataset.h)) o = Math.max(o, .75);
     g.style.opacity = S.uv ? o.toFixed(3) : 0;
     g.classList.toggle("lit", S.uv && o > .45);
   });
 }
-const follow = e => { if (!S.uv) return; const p = toSvg(e.clientX, e.clientY); light.x = p.x; light.y = p.y; requestFrame(); };
+// En pantallas táctiles la luz va por encima del dedo para que no la tape.
+const follow = e => { if (!S.uv) return; const p = toSvg(e.clientX, e.clientY - (e.pointerType === "touch" ? 56 : 0)); light.x = p.x; light.y = p.y; requestFrame(); };
+// Al levantar el dedo se abre la huella sin descubrir que esté en el centro del haz.
+plan.addEventListener("pointerup", e => {
+  if (!S.uv || e.pointerType !== "touch") return;
+  let best = null, bd = R_LIGHT * .4;
+  HIDDEN_ROOMS.forEach(r => { if (S.found.includes(r.hidden)) return; const d = Math.hypot(r.c[0] - light.x, r.c[1] - light.y); if (d < bd) { bd = d; best = r; } });
+  if (best) openHidden(best.hidden);
+});
 plan.addEventListener("pointermove", follow);
 plan.addEventListener("pointerdown", follow);
 plan.addEventListener("click", e => { if (!S.uv && !e.target.closest(".room,#lantern")) closeCard(); });
@@ -43,7 +51,7 @@ function setUV(on){
 }
 
 function updateHUD(){
-  $("cPieces").textContent = `${S.seen.length}/${PIECE_ROOMS.length}`;
+  $("cPieces").textContent = `${S.visited.length}/${ROOMS.length}`;
   document.querySelector(".medal.ev").classList.toggle("locked", !S.lanternTaken);
   $("cHidden").textContent = S.lanternTaken ? `${S.found.length}/10` : "—";
   $("cHiddenLbl").textContent = S.uv ? "evidencias" : "hallazgos";

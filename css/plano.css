@@ -35,7 +35,10 @@ body.uv .room{pointer-events:none}
 body.uv #crime{opacity:1}
 .tape-band{fill:none;stroke:var(--tape);stroke-width:7}
 .tape-text{font-family:var(--font-mono);font-weight:500;font-size:4.2px;fill:#0B0B0F;letter-spacing:.3px}
-.chalk{fill:none;stroke:#F2F2F2;stroke-width:.9;stroke-dasharray:3 2;opacity:.75}
+.mark .chalk{display:none;fill:none;stroke:#F2F2F2;stroke-width:2.2;stroke-dasharray:7 5;opacity:.75}
+.mark.found .chalk{display:block}
+.mark .hit{fill:transparent}
+.ghost{fill:none;stroke:#8C8C9A;stroke-width:1.2;opacity:.45}
 #uvLayer{opacity:0;transition:opacity 1s;pointer-events:none}
 body.uv #uvLayer{opacity:1}
 #tint{mix-blend-mode:screen}

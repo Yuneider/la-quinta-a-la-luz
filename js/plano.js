@@ -3,6 +3,7 @@
 /* ============ Plano ============ */
 function drawPlan(){
   plan.innerHTML = "";
+  drawChips();
   const defs = el("defs", {}, plan);
   const rg = el("radialGradient", {id:"holeG"}, defs);
   el("stop", {offset:"0", "stop-color":"#000"}, rg); el("stop", {offset:".6", "stop-color":"#000"}, rg); el("stop", {offset:"1", "stop-color":"#fff"}, rg);
@@ -55,11 +56,26 @@ function drawPlan(){
 
   // Oscuridad con el agujero de la linterna
   const uv = el("g", {id:"uvLayer"}, plan);
-  el("rect", {x:-800, y:-800, width:2400, height:2400, fill:"#0B0B0F", opacity:".9", mask:"url(#lightMask)"}, uv);
+  el("rect", {x:-800, y:-800, width:2400, height:2400, fill:"#0B0B0F", opacity:".97", mask:"url(#lightMask)"}, uv);
+  // Contorno tenue para orientarse a oscuras (las cintas y las huellas solo se ven dentro del haz)
+  el("polyline", {points:"470,700 170,700 190,333 200,200 548,282 632,505 632,700 590,700", class:"ghost"}, uv);
+  el("line", {x1:190, y1:333, x2:561, y2:316, class:"ghost"}, uv);
   tint = el("circle", {id:"tint", r:R_LIGHT, fill:"url(#tintG)", cx:light.x, cy:light.y}, uv);
   ring = el("circle", {r:R_LIGHT*.98, class:"lens-ring", cx:light.x, cy:light.y}, uv);
   drawMarks();
   syncRoomClasses();
+}
+
+/* Fila de números para abrir los espacios en pantallas pequeñas */
+function drawChips(){
+  const box = $("chips"); box.innerHTML = "";
+  ROOMS.forEach(r => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.dataset.id = r.id; b.textContent = r.id;
+    b.setAttribute("aria-label", `Espacio ${r.id}: ${r.name}`);
+    b.onclick = () => openRoom(r.id);
+    box.appendChild(b);
+  });
 }
 
 function drawRoom(r, parent){
@@ -88,8 +104,6 @@ function drawRoom(r, parent){
 /* Escena del crimen: solo se ve dentro del haz UV */
 function drawCrime(){
   const g = el("g", {id:"crime", "pointer-events":"none"}, plan);
-  // tiza alrededor de cada evidencia
-  HIDDEN_ROOMS.forEach(r => el("circle", {cx:r.c[0], cy:r.c[1], r:13, class:"chalk"}, g));
   // cinta amarilla
   const TAPES = [[404,474,562,562],[424,383,518,430],[512,326,558,446],[178,446,236,498],[226,262,338,334],[452,428,504,494]];
   TAPES.forEach(([x1,y1,x2,y2],i) => {
@@ -120,6 +134,8 @@ function drawMarks(){
     const h = HIDDEN[r.hidden]; const [x,y] = r.c;
     const g = el("g", {class:"mark", "data-h":r.hidden, transform:`translate(${x},${y}) scale(.42)`, role:"button", "aria-label":`Huella oculta en ${r.name}`}, mg);
     el("circle", {r:30, class:"halo", filter:"url(#glow)"}, g);
+    el("circle", {r:31, class:"chalk"}, g); // la tiza solo aparece cuando la evidencia ya fue encontrada
+    el("circle", {r:48, class:"hit"}, g);   // zona de toque más grande que la huella
     const p = el("g", {class:"print", transform:`rotate(${(h.n*37)%60-30})`}, g);
     [[5,7],[9,12],[13,17],[17,22]].forEach(([rx,ry],i) => el("ellipse", {rx, ry, "stroke-dasharray": i%2 ? "9 4" : "14 5"}, p));
     const tent = el("g", {class:"tent", transform:"translate(20,-30)"}, g);
@@ -133,10 +149,10 @@ function drawMarks(){
 }
 
 function syncRoomClasses(){
-  plan.querySelectorAll(".room").forEach(g => { const id = +g.dataset.id; g.classList.toggle("seen", S.seen.includes(id) || S.visited.includes(id)); });
+  document.querySelectorAll(".room,.chip").forEach(g => { const id = +g.dataset.id; g.classList.toggle("seen", S.seen.includes(id) || S.visited.includes(id)); });
 }
 function syncMarks(){
   plan.querySelectorAll(".mark").forEach(g => { g.classList.toggle("found", S.found.includes(g.dataset.h)); g.setAttribute("tabindex", S.uv ? 0 : -1); });
   requestFrame();
 }
-function setActive(id){ plan.querySelectorAll(".room").forEach(g => g.classList.toggle("active", +g.dataset.id === id)); }
+function setActive(id){ document.querySelectorAll(".room,.chip").forEach(g => g.classList.toggle("active", +g.dataset.id === id)); }
