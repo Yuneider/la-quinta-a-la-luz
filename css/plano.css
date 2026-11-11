@@ -31,10 +31,6 @@ body.uv .room{pointer-events:none}
 @keyframes pulse{0%,100%{transform:scale(.75);opacity:.3}50%{transform:scale(1.25);opacity:.7}}
 
 /* ---------- Bajo la luz UV ---------- */
-#crime{opacity:0;transition:opacity .8s}
-body.uv #crime{opacity:1}
-.tape-band{fill:none;stroke:var(--tape);stroke-width:7}
-.tape-text{font-family:var(--font-mono);font-weight:500;font-size:4.2px;fill:#0B0B0F;letter-spacing:.3px}
 .mark .chalk{display:none;fill:none;stroke:#F2F2F2;stroke-width:2.2;stroke-dasharray:7 5;opacity:.75}
 .mark.found .chalk{display:block}
 .mark .hit{fill:transparent}

@@ -51,7 +51,6 @@ function drawPlan(){
   txt(plan, 590, 712, "Salida", "svg-label");
   ROOMS.filter(r => !r.garden).forEach(r => drawRoom(r, plan));
 
-  drawCrime();
   if (S.lanternRoom && !S.lanternTaken) drawLantern(S.lanternRoom);
 
   // Oscuridad con el agujero de la linterna
@@ -99,19 +98,6 @@ function drawRoom(r, parent){
   g.addEventListener("pointerleave", () => clearTimeout(timer));
   g.addEventListener("click", e => { e.stopPropagation(); if (!S.uv) openRoom(r.id); });
   g.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && !S.uv){ e.preventDefault(); openRoom(r.id); }});
-}
-
-/* Escena del crimen: solo se ve dentro del haz UV */
-function drawCrime(){
-  const g = el("g", {id:"crime", "pointer-events":"none"}, plan);
-  // cinta amarilla
-  const TAPES = [[404,474,562,562],[424,383,518,430],[512,326,558,446],[178,446,236,498],[226,262,338,334],[452,428,504,494]];
-  TAPES.forEach(([x1,y1,x2,y2],i) => {
-    el("path", {id:`tp${i}`, d:`M${x1} ${y1} L${x2} ${y2}`, class:"tape-band"}, g);
-    const t = el("text", {class:"tape-text", dy:"1.6"}, g);
-    const tp = el("textPath", {href:`#tp${i}`, startOffset:"3"}, t);
-    tp.textContent = "NO CRUZAR · ESCENA DEL CRIMEN · NO CRUZAR · ESCENA DEL CRIMEN · NO CRUZAR";
-  });
 }
 
 function drawLantern(id){
