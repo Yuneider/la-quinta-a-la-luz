@@ -1,0 +1,55 @@
+/* El plano de la casa y todo lo que aparece sobre él bajo la luz UV. */
+
+/* ---------- Plano ---------- */
+#plan{width:100%;height:100%;display:block;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+body.uv #plan{cursor:none;touch-action:none}
+.estate{fill:var(--estate);stroke:none}
+.wall{fill:none;stroke:var(--line);stroke-width:2.6;stroke-linejoin:miter}
+.deco{fill:none;stroke:var(--line);stroke-width:.6;opacity:.4}
+.deco-fill{fill:var(--line)}
+.room{cursor:pointer;outline:none}
+.room .shape{fill:var(--room);stroke:var(--line);stroke-width:1.2;transition:fill .2s}
+.room.garden .shape{fill:transparent;stroke:none}
+.room:hover .shape,.room:focus-visible .shape{fill:var(--room-hover)}
+.room.garden:hover .shape,.room.garden:focus-visible .shape{fill:rgba(217,184,102,.08)}
+.room.active .shape{fill:var(--accent);stroke:var(--accent-hi)}
+.room.garden.active .shape{fill:rgba(217,184,102,.14);stroke:none}
+.room .badge{fill:#24150B;stroke:var(--line);stroke-width:.8}
+.room .num{font-family:var(--font-display);font-weight:500;font-size:9px;fill:var(--accent-hi);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.room.seen .badge{fill:var(--accent);stroke:var(--accent-hi)}
+.room.seen .num{fill:var(--on-accent);font-weight:800}
+body.uv .room .badge,body.uv .room.seen .badge{fill:#0B0B0F;stroke:var(--line)}
+body.uv .room .num,body.uv .room.seen .num{fill:#C9C9D4;font-weight:600}
+.svg-label{font-family:var(--font-body);font-style:italic;fill:var(--line);font-size:9.5px}
+body.uv .svg-label{font-family:var(--font-mono);font-style:normal;font-size:7.5px;fill:var(--muted)}
+.here{fill:#C0392B;stroke:var(--accent-hi);stroke-width:.8}
+body.uv .room{pointer-events:none}
+#lantern{cursor:pointer}
+#lantern .beam{fill:var(--uv);animation:pulse 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+#lantern .body{fill:#1A0E06;stroke:var(--accent-hi);stroke-width:.8}
+#lantern .lens{fill:var(--uv)}
+@keyframes pulse{0%,100%{transform:scale(.75);opacity:.3}50%{transform:scale(1.25);opacity:.7}}
+
+/* ---------- Bajo la luz UV ---------- */
+#crime{opacity:0;transition:opacity .8s}
+body.uv #crime{opacity:1}
+.tape-band{fill:none;stroke:var(--tape);stroke-width:7}
+.tape-text{font-family:var(--font-mono);font-weight:500;font-size:4.2px;fill:#0B0B0F;letter-spacing:.3px}
+.chalk{fill:none;stroke:#F2F2F2;stroke-width:.9;stroke-dasharray:3 2;opacity:.75}
+#uvLayer{opacity:0;transition:opacity 1s;pointer-events:none}
+body.uv #uvLayer{opacity:1}
+#tint{mix-blend-mode:screen}
+.lens-ring{fill:none;stroke:var(--uv);stroke-width:.8;opacity:.6}
+#marks{opacity:0;transition:opacity .6s}
+body.uv #marks{opacity:1}
+.mark{opacity:0;pointer-events:none}
+.mark.lit{pointer-events:auto;cursor:pointer}
+.mark .halo{fill:var(--fluo);opacity:.4}
+.mark .print{fill:none;stroke:var(--fluo);stroke-width:1.6;stroke-linecap:round}
+.mark .tent{display:none}
+.mark.found .print{stroke:#EFFFC0;opacity:.7}
+.mark.found .tent{display:block}
+.tent path{fill:var(--tape);stroke:#0B0B0F;stroke-width:1.2}
+.tent text{font-family:var(--font-mono);font-weight:500;font-size:13px;fill:#0B0B0F;text-anchor:middle}
+.hint{position:absolute;left:0;right:0;bottom:2px;text-align:center;font-style:italic;color:var(--muted);font-size:15px;pointer-events:none}
+body.uv .hint{font-family:var(--font-mono);font-style:normal;font-size:12px;letter-spacing:.06em}

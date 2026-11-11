@@ -1,6 +1,6 @@
 # 12 · Huerta
 
-Lo que hoy se ve en la vista para este espacio (texto provisional en `index.html`).
+Lo que hoy se ve en la vista para este espacio (texto provisional en `js/datos.js`).
 
 ## Espacio
 

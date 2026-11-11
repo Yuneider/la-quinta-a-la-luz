@@ -1,6 +1,6 @@
 # 13 · Mirador y baño de asiento
 
-Lo que hoy se ve en la vista para este espacio (texto provisional en `index.html`).
+Lo que hoy se ve en la vista para este espacio (texto provisional en `js/datos.js`).
 
 ## Pieza del museo — Baño de asiento (QB-13)
 

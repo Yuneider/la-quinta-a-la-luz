@@ -1,0 +1,60 @@
+/* Panel izquierdo: cartela del museo, informe UV, guía, contadores y botones. */
+
+/* ---------- Panel: cartela del museo / informe del laboratorio ---------- */
+.card{position:relative;display:grid;gap:11px;align-content:start;margin:5px;padding:18px 22px 20px;background:var(--panel);border:1px solid var(--line);outline:1px solid var(--line-lo);outline-offset:4px}
+body.uv .card{margin:0;padding:14px 0 4px;border:none;border-top:3px solid var(--accent);outline:none}
+#card:not([hidden]) + #guide{display:none}
+.card.pop{animation:pop .28s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card .x{position:absolute;top:4px;right:4px;width:44px;height:44px;border:none;background:none;color:var(--line);font-size:26px;line-height:1;z-index:2}
+.card .x:hover{color:var(--text)}
+.head{display:flex;align-items:baseline;gap:16px;border-bottom:1px solid var(--line-lo);padding:0 40px 10px 0}
+body.uv .head{border-bottom:none;padding-bottom:0}
+.big{font-family:var(--font-display);font-weight:800;font-size:clamp(3rem,5.4vw,4.6rem);line-height:.9;letter-spacing:-.02em;color:var(--accent);font-variant-numeric:tabular-nums}
+.head-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.kicker{font-family:var(--font-label);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+body.uv .kicker{font-size:12px;letter-spacing:.1em}
+.kicker.row{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding-right:40px}
+.room-name{font-family:var(--font-display);font-weight:500;font-size:1.3rem;line-height:1.1}
+body.uv .room-name{font-family:var(--font-mono);font-weight:400;font-size:14px}
+.card h2{margin:0;font-family:var(--font-display);font-weight:800;font-size:1.55rem;line-height:1.14;color:var(--accent-hi);text-wrap:balance}
+body.uv .card h2{font-size:1.75rem;letter-spacing:-.01em;color:var(--text)}
+.card p{margin:0}
+.meta{font-style:italic;color:var(--muted);margin:0}
+body.uv .meta{font-family:var(--font-mono);font-style:normal;font-size:13px}
+.foto{height:128px;display:grid;place-items:center;text-align:center;padding:10px;background:#3A2414;border:6px solid #B8923F;outline:1px solid #F1DB94;outline-offset:-9px;
+  font-family:var(--font-label);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+body.uv .foto{height:104px;background:#121218;border:1px solid var(--line-lo);outline:none;font-size:12px;letter-spacing:.06em}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--font-label);font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line-lo);padding:1px 8px;color:var(--muted)}
+.notice{border:1px solid var(--uv);background:rgba(168,147,255,.12);padding:10px 12px;display:grid;gap:8px}
+.steps{margin:0;padding-left:1.2em;display:grid;gap:4px}
+.quote{font-style:italic;font-size:1.1em;color:var(--accent)}
+.fuente{border:1px solid var(--line-lo);padding:10px 12px;font-family:var(--font-mono);font-size:12.5px;line-height:1.5;color:#C9C9D4}
+.fuente b{font-weight:500;color:var(--accent)}
+
+/* ---------- Contadores y controles ---------- */
+.counters{display:flex;gap:24px}
+.medal{display:flex;align-items:baseline;gap:8px}
+.medal b{font-family:var(--font-display);font-weight:800;font-size:1.6rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.medal span{font-family:var(--font-label);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+body.uv .medal span{font-size:12px;letter-spacing:.08em}
+.medal.locked b,body.uv .medal:not(.ev) b{color:var(--dim)}
+.controls{display:flex;gap:8px;align-items:center}
+.ctl{height:44px;min-width:44px;padding:0 16px;display:grid;place-items:center;background:var(--panel);border:1px solid var(--line);color:var(--accent-hi);font-family:var(--font-body);font-weight:600;font-size:16px;letter-spacing:.04em}
+.ctl:hover{border-color:var(--text)}
+.ctl.help{background:#E2C06A;border-color:var(--line-lo);color:var(--on-accent)}
+.ctl[aria-pressed="true"]{box-shadow:inset 0 -3px 0 var(--accent)}
+.ctl svg{width:20px;height:20px;fill:currentColor;stroke:none}
+.ctl.uvctl{border-color:var(--uv);color:#C9BBFF}
+body.uv .ctl{background:transparent;border:1.5px solid var(--line);color:var(--text);font-size:14px;letter-spacing:0}
+body.uv .ctl.uvctl{background:#5B3FE0;border-color:#5B3FE0;color:#fff;box-shadow:none}
+.proto{position:relative}
+.proto summary{list-style:none;padding:0 10px}
+.proto summary::-webkit-details-marker{display:none}
+.proto-pop{position:absolute;right:0;bottom:calc(100% + 10px);z-index:40;width:min(280px,calc(100vw - 32px));background:var(--panel);border:1px solid var(--line);padding:12px;display:grid;gap:8px;box-shadow:0 12px 30px rgba(0,0,0,.6)}
+.proto-pop p{margin:0;font-size:15px;color:var(--muted)}
+.btn{min-height:40px;border:1px solid var(--line-lo);background:var(--panel);color:var(--accent-hi);padding:8px 12px;font-family:var(--font-body);font-size:15px;text-align:left}
+.btn:hover{border-color:var(--text);color:var(--text)}
+.btn.gold{background:var(--accent);color:var(--on-accent);border-color:var(--line-lo);font-weight:600;text-align:center}
+.btn.gold:hover{filter:brightness(1.08);color:var(--on-accent)}

@@ -1,0 +1,24 @@
+/* Pantalla final: «Dos versiones de la misma casa». */
+
+/* ---------- Expediente final ---------- */
+.final{position:fixed;inset:0;z-index:60;overflow:auto;background:#0B0B0F;color:#F2F2F2;font-family:var(--font-lab);font-size:15.5px;
+  padding:calc(28px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) calc(32px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px))}
+.final-inner{max-width:1040px;margin:0 auto;display:grid;gap:24px}
+.final .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;color:#A8A8B3}
+.final h2{font-family:var(--font-lab);font-weight:800;font-size:clamp(2rem,4.6vw,3.4rem);letter-spacing:-.02em;line-height:1;margin:6px 0 0;text-wrap:balance}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.col{display:grid;gap:10px;align-content:start;min-width:0}
+.col.museo{margin:5px;padding:18px 22px;background:#24150B;color:#F3E8CF;border:1px solid #D9B866;outline:1px solid #7E5E22;outline-offset:4px;font-family:"EB Garamond", Garamond, Georgia, serif;font-size:17px}
+.col.oculta{padding-top:14px;border-top:3px solid #D7FF5A}
+.col h3{margin:0;font-family:"Playfair Display", Georgia, serif;font-weight:800;font-size:1.3rem;color:#F1DB94}
+.col.oculta h3{font-family:var(--font-mono);font-weight:500;font-size:13px;letter-spacing:.1em;color:#D7FF5A}
+.col ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.col li{display:grid;grid-template-columns:2.2em 1fr;gap:6px;border-top:1px solid color-mix(in srgb,currentColor 22%,transparent);padding-top:6px}
+.col li i{font-style:normal;opacity:.75}
+.question{font-weight:800;font-size:clamp(1.6rem,3.6vw,2.4rem);letter-spacing:-.01em;line-height:1.1;margin:0;text-wrap:balance}
+.question em{font-style:normal;color:#D7FF5A}
+.context{max-width:68ch;color:#C9C9D4;margin:0}
+.final label{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#A8A8B3}
+.final textarea{width:100%;min-height:96px;background:#121218;color:#F2F2F2;border:1px solid #4A4A58;padding:10px;font:inherit;resize:vertical}
+.final .row{display:flex;flex-wrap:wrap;gap:10px}
+.saved{font-family:var(--font-mono);font-size:12px;color:#D7FF5A;min-height:1.2em}

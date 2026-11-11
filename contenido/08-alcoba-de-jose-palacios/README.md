@@ -1,6 +1,6 @@
 # 08 · Alcoba de José Palacios
 
-Lo que hoy se ve en la vista para este espacio (texto provisional en `index.html`).
+Lo que hoy se ve en la vista para este espacio (texto provisional en `js/datos.js`).
 
 ## Pieza del museo — Alcoba del mayordomo (QB-08)
 
