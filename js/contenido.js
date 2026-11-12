@@ -116,8 +116,8 @@ const CONTENIDO = {
     "4": {
       "titulo": "El fusilamiento de Piar",
       "fecha": "16 de octubre de 1817",
-      "descripcion": "El general Manuel Piar, pardo nacido en Curazao y vencedor en San Félix, fue juzgado por insubordinación y por promover una guerra de razas. Bolívar confirmó la sentencia y Piar fue fusilado en Angostura.",
-      "fuente": "Proceso y sentencia del consejo de guerra contra Manuel Piar, Angostura, 1817.",
+      "descripcion": "El general Manuel Piar, héroe pardo nacido en Curazao y vencedor en San Félix, fue acusado de insubordinación y de promover una presunta guerra de razas. Bolívar confirmó la sentencia y Piar fue fusilado en Angostura.",
+      "fuente": "Proceso y sentencia del consejo de guerra contra Manuel Piar, 1817.",
       "imgs": []
     },
     "5": {
