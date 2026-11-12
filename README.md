@@ -36,15 +36,13 @@ Abre `index.html` en el navegador. No necesita instalación ni servidor.
 1. Busca en [contenido/](contenido/) la carpeta del espacio (lleva el mismo número que en el plano) o, para la capa oculta, la de la evidencia en [contenido/uv/](contenido/uv/).
 2. Edita los archivos de `texto/` o sube imágenes a `imagenes/`. Su `README.md` dice qué archivo es cada cosa. En GitHub: entra a la carpeta → **Add file** → **Upload files**.
 3. Anota de dónde viene cada archivo y su licencia en `texto/creditos.md` de esa carpeta.
-4. Sincroniza la vista (necesita [Node.js](https://nodejs.org)):
+4. Listo: al llegar el cambio a `main`, una acción de GitHub (`.github/workflows/sincronizar.yml`) corre `scripts/sincronizar.js`, reescribe `js/contenido.js` y lo sube sola. La vista publicada cambia uno o dos minutos después. Si falta algún texto, el aviso queda en el resumen de la acción (pestaña **Actions**).
 
-   ```
-   node scripts/sincronizar.js
-   ```
+Para ver el cambio en tu computador antes de subirlo, corre el mismo comando (necesita [Node.js](https://nodejs.org)):
 
-   El comando reescribe `js/contenido.js` y avisa si a algún espacio o evidencia le falta un texto. Sube ese archivo junto con los cambios de `contenido/`.
-
-**La vista no cambia hasta correr el paso 4.** Si alguien sube archivos desde GitHub, otra persona debe bajar los cambios, correr el comando y subir el resultado.
+```
+node scripts/sincronizar.js
+```
 
 Todas las imágenes de una carpeta salen en su carrusel en orden alfabético; con la carpeta vacía aparece el recuadro de «foto pendiente». La meta es reunir unas 50 imágenes entre los 17 espacios y las 10 evidencias (dos o tres por cada uno).
 

@@ -1,6 +1,6 @@
 # Evidencia UV 06 · La casa que otros mantenían
 
-Aparece con la linterna UV en el espacio 08, [Alcoba de José Palacios](../../08-alcoba-de-jose-palacios/). La vista toma de esta carpeta lo que muestra en la ficha del hallazgo. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../../README.md)).
+Aparece con la linterna UV en el espacio 08, [Alcoba de José Palacios](../../08-alcoba-de-jose-palacios/). La vista toma de esta carpeta lo que muestra en la ficha del hallazgo. La vista se actualiza sola al subir los cambios a `main` (ver [contenido/README.md](../../README.md)).
 
 ## texto/
 

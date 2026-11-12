@@ -1,6 +1,6 @@
 # Evidencia UV 03 · La que salvó al Libertador
 
-Aparece con la linterna UV en el espacio 03, [Salón de Manuelita](../../03-salon-de-manuelita/). La vista toma de esta carpeta lo que muestra en la ficha del hallazgo. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../../README.md)).
+Aparece con la linterna UV en el espacio 03, [Salón de Manuelita](../../03-salon-de-manuelita/). La vista toma de esta carpeta lo que muestra en la ficha del hallazgo. La vista se actualiza sola al subir los cambios a `main` (ver [contenido/README.md](../../README.md)).
 
 ## texto/
 

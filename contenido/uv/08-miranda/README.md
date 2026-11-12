@@ -1,6 +1,6 @@
 # Evidencia UV 08 · La entrega de Miranda
 
-Aparece con la linterna UV en el espacio 06, [Salón de juegos](../../06-salon-de-juegos/). La vista toma de esta carpeta lo que muestra en la ficha del hallazgo. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../../README.md)).
+Aparece con la linterna UV en el espacio 06, [Salón de juegos](../../06-salon-de-juegos/). La vista toma de esta carpeta lo que muestra en la ficha del hallazgo. La vista se actualiza sola al subir los cambios a `main` (ver [contenido/README.md](../../README.md)).
 
 ## texto/
 

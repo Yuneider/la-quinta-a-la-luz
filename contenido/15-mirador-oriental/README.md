@@ -1,6 +1,6 @@
 # 15 · Mirador oriental
 
-La vista toma de esta carpeta lo que muestra para este espacio. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../README.md)).
+La vista toma de esta carpeta lo que muestra para este espacio. La vista se actualiza sola al subir los cambios a `main` (ver [contenido/README.md](../README.md)).
 
 ## texto/
 

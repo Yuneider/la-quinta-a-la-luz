@@ -4,13 +4,13 @@ De aquí salen los textos y las imágenes de la vista. Hay una carpeta por cada 
 
 ## Sincronizar
 
-La vista no lee estas carpetas directamente. Después de cambiar un texto o agregar una imagen hay que correr, desde la raíz del proyecto:
+La vista no lee estas carpetas directamente: carga `js/contenido.js`, que se genera a partir de ellas. Cuando un cambio de `contenido/` llega a `main`, una acción de GitHub lo regenera y lo sube sola; la vista publicada cambia uno o dos minutos después.
+
+Para verlo en tu computador antes de subirlo, corre desde la raíz del proyecto:
 
 ```
 node scripts/sincronizar.js
 ```
-
-Eso reescribe `js/contenido.js`, que es lo que carga la vista, y avisa si falta algún texto.
 
 ## Archivos que lee la vista
 

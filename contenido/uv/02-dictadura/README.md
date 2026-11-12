@@ -1,6 +1,6 @@
 # Evidencia UV 02 · El Libertador dictador
 
-Aparece con la linterna UV en el espacio 07, [Alcoba del Libertador](../../07-alcoba-del-libertador/). La vista toma de esta carpeta lo que muestra en la ficha del hallazgo. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../../README.md)).
+Aparece con la linterna UV en el espacio 07, [Alcoba del Libertador](../../07-alcoba-del-libertador/). La vista toma de esta carpeta lo que muestra en la ficha del hallazgo. La vista se actualiza sola al subir los cambios a `main` (ver [contenido/README.md](../../README.md)).
 
 ## texto/
 

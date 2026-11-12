@@ -1,6 +1,6 @@
 # Evidencia UV 09 · Los prisioneros de La Guaira
 
-Aparece con la linterna UV en el espacio 13, [Mirador y baño de asiento](../../13-mirador-y-bano-de-asiento/). La vista toma de esta carpeta lo que muestra en la ficha del hallazgo. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../../README.md)).
+Aparece con la linterna UV en el espacio 13, [Mirador y baño de asiento](../../13-mirador-y-bano-de-asiento/). La vista toma de esta carpeta lo que muestra en la ficha del hallazgo. La vista se actualiza sola al subir los cambios a `main` (ver [contenido/README.md](../../README.md)).
 
 ## texto/
 

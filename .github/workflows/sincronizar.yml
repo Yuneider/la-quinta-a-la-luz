@@ -1,0 +1,42 @@
+# Regenera js/contenido.js cuando alguien cambia contenido/ (también desde la web de GitHub)
+# y lo sube a main, para que la vista publicada se actualice sola.
+name: Sincronizar contenido
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "contenido/**"
+      - "scripts/sincronizar.js"
+      - "js/datos.js"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sincronizar
+  cancel-in-progress: false
+
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generar js/contenido.js
+        run: node scripts/sincronizar.js | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Subir el resultado si cambió
+        run: |
+          if git diff --quiet -- js/contenido.js; then
+            echo "Sin cambios en js/contenido.js."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add js/contenido.js
+          git commit -m "Sync js/contenido.js with contenido/"
+          git pull --rebase origin main
+          git push origin HEAD:main
