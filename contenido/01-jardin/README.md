@@ -1,15 +1,19 @@
 # 01 · Jardín
 
-Lo que hoy se ve en la vista para este espacio (texto provisional en `js/datos.js`).
+La vista toma de esta carpeta lo que muestra para este espacio. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../README.md)).
 
-## Espacio
+## texto/
 
-Los jardines rodean la casa con senderos, fuentes y árboles centenarios. Es el primer espacio que recorre el visitante al entrar.
+- `descripcion1.txt` — párrafo que describe el espacio (no tiene pieza en exhibición).
 
-## Qué subir aquí
+Cualquier otro archivo de `texto/` (créditos, borradores, fuentes) se guarda pero no sale en la vista.
 
-- `imagenes/` — fotos, pinturas o documentos escaneados de este espacio.
-- `sonido/` — narraciones, ambientes o efectos para este espacio.
-- `texto/` — guion corregido, citas y fuentes (un archivo `.md` o `.txt` por texto).
+## imagenes/
+
+Todas las imágenes de esta carpeta salen en el carrusel, en orden alfabético (`01-frente.jpg`, `02-detalle.jpg`…). Para ponerle pie de foto a una imagen, crea un `.txt` con el mismo nombre: `01-frente.jpg` → `01-frente.txt`.
+
+## sonido/
+
+Narraciones, ambientes o efectos. Todavía no se conectan a la vista.
 
 Anota el origen y la licencia de cada archivo en `texto/creditos.md`.

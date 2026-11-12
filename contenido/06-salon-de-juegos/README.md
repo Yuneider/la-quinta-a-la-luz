@@ -1,25 +1,25 @@
 # 06 · Salón de juegos
 
-Lo que hoy se ve en la vista para este espacio (texto provisional en `js/datos.js`).
+La vista toma de esta carpeta lo que muestra para este espacio. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../README.md)).
 
-## Pieza del museo — Mesa de juego (QB-06)
+## texto/
 
-*Naipes, dados y tablero · siglo XIX*
+- `titulo.txt` — nombre de la pieza del museo.
+- `ficha.txt` — línea bajo el título (autor · fecha · técnica o material).
+- `descripcion6.txt` — párrafo que describe la pieza y el espacio.
 
-Los juegos de mesa eran parte de la vida social de la élite. En las tertulias se jugaba a las cartas mientras se discutía de política.
+Cualquier otro archivo de `texto/` (créditos, borradores, fuentes) se guarda pero no sale en la vista.
 
-## Capa oculta — evidencia 8: La entrega de Miranda
+## Capa oculta
 
-*Fecha: 31 de julio de 1812*
+Bajo la luz UV este espacio revela la evidencia 8, «La entrega de Miranda». Su material va en [../uv/08-miranda/](../uv/08-miranda/).
 
-Tras la caída de la Primera República de Venezuela, un grupo de oficiales, entre ellos Bolívar, arrestó en La Guaira a Francisco de Miranda. Miranda quedó en manos españolas y murió preso en Cádiz en 1816. Bolívar obtuvo un pasaporte para salir del país.
+## imagenes/
 
-**Fuente:** Documentos de la capitulación de 1812 y del arresto de Miranda en La Guaira.
+Todas las imágenes de esta carpeta salen en el carrusel, en orden alfabético (`01-frente.jpg`, `02-detalle.jpg`…). Para ponerle pie de foto a una imagen, crea un `.txt` con el mismo nombre: `01-frente.jpg` → `01-frente.txt`.
 
-## Qué subir aquí
+## sonido/
 
-- `imagenes/` — fotos, pinturas o documentos escaneados de este espacio y de la pieza y de la evidencia oculta.
-- `sonido/` — narraciones, ambientes o efectos para este espacio.
-- `texto/` — guion corregido, citas y fuentes (un archivo `.md` o `.txt` por texto).
+Narraciones, ambientes o efectos. Todavía no se conectan a la vista.
 
 Anota el origen y la licencia de cada archivo en `texto/creditos.md`.

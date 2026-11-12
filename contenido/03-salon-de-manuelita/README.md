@@ -1,25 +1,25 @@
 # 03 · Salón de Manuelita
 
-Lo que hoy se ve en la vista para este espacio (texto provisional en `js/datos.js`).
+La vista toma de esta carpeta lo que muestra para este espacio. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../README.md)).
 
-## Pieza del museo — Salón de Manuelita (QB-03)
+## texto/
 
-*Mobiliario de época · retrato de Manuela Sáenz*
+- `titulo.txt` — nombre de la pieza del museo.
+- `ficha.txt` — línea bajo el título (autor · fecha · técnica o material).
+- `descripcion3.txt` — párrafo que describe la pieza y el espacio.
 
-El museo dedica este salón a Manuela Sáenz, compañera de Bolívar, que vivió temporadas en la Quinta y organizó aquí reuniones y celebraciones.
+Cualquier otro archivo de `texto/` (créditos, borradores, fuentes) se guarda pero no sale en la vista.
 
-## Capa oculta — evidencia 3: La que salvó al Libertador
+## Capa oculta
 
-*Fecha: 25 de septiembre de 1828*
+Bajo la luz UV este espacio revela la evidencia 3, «La que salvó al Libertador». Su material va en [../uv/03-manuela/](../uv/03-manuela/).
 
-La noche de la conspiración septembrina, en el Palacio de San Carlos, Manuela Sáenz enfrentó a los conjurados mientras Bolívar escapaba por una ventana. Tras la muerte de él fue expulsada de Colombia (1834) y murió pobre en Paita, Perú, en 1856. Buena parte de sus cartas se quemaron.
+## imagenes/
 
-**Fuente:** Relatos de la conspiración del 25 de septiembre; correspondencia de Manuela Sáenz.
+Todas las imágenes de esta carpeta salen en el carrusel, en orden alfabético (`01-frente.jpg`, `02-detalle.jpg`…). Para ponerle pie de foto a una imagen, crea un `.txt` con el mismo nombre: `01-frente.jpg` → `01-frente.txt`.
 
-## Qué subir aquí
+## sonido/
 
-- `imagenes/` — fotos, pinturas o documentos escaneados de este espacio y de la pieza y de la evidencia oculta.
-- `sonido/` — narraciones, ambientes o efectos para este espacio.
-- `texto/` — guion corregido, citas y fuentes (un archivo `.md` o `.txt` por texto).
+Narraciones, ambientes o efectos. Todavía no se conectan a la vista.
 
 Anota el origen y la licencia de cada archivo en `texto/creditos.md`.

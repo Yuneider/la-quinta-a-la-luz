@@ -1,25 +1,23 @@
 # 11 · Graneros y caballerizas
 
-Lo que hoy se ve en la vista para este espacio (texto provisional en `js/datos.js`).
+La vista toma de esta carpeta lo que muestra para este espacio. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../README.md)).
 
-## Espacio
+## texto/
 
-Aquí se guardaban los granos y los caballos de la Quinta. Los caballos fueron decisivos en las campañas libertadoras.
+- `descripcion11.txt` — párrafo que describe el espacio (no tiene pieza en exhibición).
 
-## Capa oculta — evidencia 10: Guerra a muerte
+Cualquier otro archivo de `texto/` (créditos, borradores, fuentes) se guarda pero no sale en la vista.
 
-*Fecha: 15 de junio de 1813*
+## Capa oculta
 
-> Españoles y canarios, contad con la muerte, aun siendo indiferentes. Americanos, contad con la vida, aun cuando seáis culpables.
+Bajo la luz UV este espacio revela la evidencia 10, «Guerra a muerte». Su material va en [../uv/10-guerramuerte/](../uv/10-guerramuerte/).
 
-Durante la Campaña Admirable, Bolívar firmó en Trujillo el decreto que convirtió la guerra de independencia en una guerra sin cuartel contra los civiles peninsulares.
+## imagenes/
 
-**Fuente:** Decreto de Guerra a Muerte, Trujillo, 15 de junio de 1813.
+Todas las imágenes de esta carpeta salen en el carrusel, en orden alfabético (`01-frente.jpg`, `02-detalle.jpg`…). Para ponerle pie de foto a una imagen, crea un `.txt` con el mismo nombre: `01-frente.jpg` → `01-frente.txt`.
 
-## Qué subir aquí
+## sonido/
 
-- `imagenes/` — fotos, pinturas o documentos escaneados de este espacio y de la evidencia oculta.
-- `sonido/` — narraciones, ambientes o efectos para este espacio.
-- `texto/` — guion corregido, citas y fuentes (un archivo `.md` o `.txt` por texto).
+Narraciones, ambientes o efectos. Todavía no se conectan a la vista.
 
 Anota el origen y la licencia de cada archivo en `texto/creditos.md`.

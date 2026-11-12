@@ -1,25 +1,25 @@
 # 13 · Mirador y baño de asiento
 
-Lo que hoy se ve en la vista para este espacio (texto provisional en `js/datos.js`).
+La vista toma de esta carpeta lo que muestra para este espacio. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../README.md)).
 
-## Pieza del museo — Baño de asiento (QB-13)
+## texto/
 
-*Piedra · jardín*
+- `titulo.txt` — nombre de la pieza del museo.
+- `ficha.txt` — línea bajo el título (autor · fecha · técnica o material).
+- `descripcion13.txt` — párrafo que describe la pieza y el espacio.
 
-Un pequeño baño en el jardín, junto a un mirador hacia la sabana. Bañarse con agua fría de la montaña era parte de la rutina de la casa.
+Cualquier otro archivo de `texto/` (créditos, borradores, fuentes) se guarda pero no sale en la vista.
 
-## Capa oculta — evidencia 9: Los prisioneros de La Guaira
+## Capa oculta
 
-*Fecha: Febrero de 1814*
+Bajo la luz UV este espacio revela la evidencia 9, «Los prisioneros de La Guaira». Su material va en [../uv/09-laguaira/](../uv/09-laguaira/).
 
-En plena Guerra a Muerte, Bolívar ordenó ejecutar a los prisioneros españoles y canarios recluidos en Caracas y La Guaira. Murieron más de ochocientas personas, muchas de ellas civiles.
+## imagenes/
 
-**Fuente:** Órdenes de Bolívar al comandante de La Guaira, febrero de 1814.
+Todas las imágenes de esta carpeta salen en el carrusel, en orden alfabético (`01-frente.jpg`, `02-detalle.jpg`…). Para ponerle pie de foto a una imagen, crea un `.txt` con el mismo nombre: `01-frente.jpg` → `01-frente.txt`.
 
-## Qué subir aquí
+## sonido/
 
-- `imagenes/` — fotos, pinturas o documentos escaneados de este espacio y de la pieza y de la evidencia oculta.
-- `sonido/` — narraciones, ambientes o efectos para este espacio.
-- `texto/` — guion corregido, citas y fuentes (un archivo `.md` o `.txt` por texto).
+Narraciones, ambientes o efectos. Todavía no se conectan a la vista.
 
 Anota el origen y la licencia de cada archivo en `texto/creditos.md`.

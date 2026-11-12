@@ -1,23 +1,23 @@
 # 15 · Mirador oriental
 
-Lo que hoy se ve en la vista para este espacio (texto provisional en `js/datos.js`).
+La vista toma de esta carpeta lo que muestra para este espacio. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../README.md)).
 
-## Espacio
+## texto/
 
-Terraza alta con vista sobre los jardines y los cerros orientales.
+- `descripcion15.txt` — párrafo que describe el espacio (no tiene pieza en exhibición).
 
-## Capa oculta — evidencia 4: El fusilamiento de Piar
+Cualquier otro archivo de `texto/` (créditos, borradores, fuentes) se guarda pero no sale en la vista.
 
-*Fecha: 16 de octubre de 1817*
+## Capa oculta
 
-El general Manuel Piar, pardo nacido en Curazao y vencedor en San Félix, fue juzgado por insubordinación y por promover una guerra de razas. Bolívar confirmó la sentencia y Piar fue fusilado en Angostura.
+Bajo la luz UV este espacio revela la evidencia 4, «El fusilamiento de Piar». Su material va en [../uv/04-piar/](../uv/04-piar/).
 
-**Fuente:** Proceso y sentencia del consejo de guerra contra Manuel Piar, Angostura, 1817.
+## imagenes/
 
-## Qué subir aquí
+Todas las imágenes de esta carpeta salen en el carrusel, en orden alfabético (`01-frente.jpg`, `02-detalle.jpg`…). Para ponerle pie de foto a una imagen, crea un `.txt` con el mismo nombre: `01-frente.jpg` → `01-frente.txt`.
 
-- `imagenes/` — fotos, pinturas o documentos escaneados de este espacio y de la evidencia oculta.
-- `sonido/` — narraciones, ambientes o efectos para este espacio.
-- `texto/` — guion corregido, citas y fuentes (un archivo `.md` o `.txt` por texto).
+## sonido/
+
+Narraciones, ambientes o efectos. Todavía no se conectan a la vista.
 
 Anota el origen y la licencia de cada archivo en `texto/creditos.md`.

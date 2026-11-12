@@ -1,25 +1,25 @@
 # 04 · Gran salón
 
-Lo que hoy se ve en la vista para este espacio (texto provisional en `js/datos.js`).
+La vista toma de esta carpeta lo que muestra para este espacio. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../README.md)).
 
-## Pieza del museo — Bolívar con la alegoría de América (QB-04)
+## texto/
 
-*Pedro José Figueroa · 1819 · óleo sobre tela*
+- `titulo.txt` — nombre de la pieza del museo.
+- `ficha.txt` — línea bajo el título (autor · fecha · técnica o material).
+- `descripcion4.txt` — párrafo que describe la pieza y el espacio.
 
-Bolívar aparece junto a una mujer indígena que representa a América. Es uno de los retratos más tempranos del Libertador pintados en la Nueva Granada.
+Cualquier otro archivo de `texto/` (créditos, borradores, fuentes) se guarda pero no sale en la vista.
 
-## Capa oculta — evidencia 1: La América que pagaba tributo
+## Capa oculta
 
-*Fecha: 1821 · 1828*
+Bajo la luz UV este espacio revela la evidencia 1, «La América que pagaba tributo». Su material va en [../uv/01-tributo/](../uv/01-tributo/).
 
-El retrato pone a una mujer indígena al lado del héroe. En 1821 el Congreso de Cúcuta abolió el tributo que pagaban los indígenas. En 1828, ya con poderes de dictador, Bolívar lo restableció como «contribución personal de indígenas» para financiar al Estado.
+## imagenes/
 
-**Fuente:** Decreto de 15 de octubre de 1828 sobre la contribución de indígenas; Ley del Congreso de Cúcuta de 1821.
+Todas las imágenes de esta carpeta salen en el carrusel, en orden alfabético (`01-frente.jpg`, `02-detalle.jpg`…). Para ponerle pie de foto a una imagen, crea un `.txt` con el mismo nombre: `01-frente.jpg` → `01-frente.txt`.
 
-## Qué subir aquí
+## sonido/
 
-- `imagenes/` — fotos, pinturas o documentos escaneados de este espacio y de la pieza y de la evidencia oculta.
-- `sonido/` — narraciones, ambientes o efectos para este espacio.
-- `texto/` — guion corregido, citas y fuentes (un archivo `.md` o `.txt` por texto).
+Narraciones, ambientes o efectos. Todavía no se conectan a la vista.
 
 Anota el origen y la licencia de cada archivo en `texto/creditos.md`.

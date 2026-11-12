@@ -1,25 +1,25 @@
 # 07 · Alcoba del Libertador
 
-Lo que hoy se ve en la vista para este espacio (texto provisional en `js/datos.js`).
+La vista toma de esta carpeta lo que muestra para este espacio. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../README.md)).
 
-## Pieza del museo — Cama del Libertador (QB-07)
+## texto/
 
-*Cama de madera con dosel*
+- `titulo.txt` — nombre de la pieza del museo.
+- `ficha.txt` — línea bajo el título (autor · fecha · técnica o material).
+- `descripcion7.txt` — párrafo que describe la pieza y el espacio.
 
-La alcoba de Bolívar conserva su mobiliario de descanso. Es una de las salas más visitadas del museo.
+Cualquier otro archivo de `texto/` (créditos, borradores, fuentes) se guarda pero no sale en la vista.
 
-## Capa oculta — evidencia 2: El Libertador dictador
+## Capa oculta
 
-*Fecha: 27 de agosto de 1828*
+Bajo la luz UV este espacio revela la evidencia 2, «El Libertador dictador». Su material va en [../uv/02-dictadura/](../uv/02-dictadura/).
 
-Tras el fracaso de la Convención de Ocaña, Bolívar asumió el «poder supremo» con el Decreto Orgánico. Eliminó la vicepresidencia que ocupaba Santander y gobernó por decreto hasta 1830.
+## imagenes/
 
-**Fuente:** Decreto Orgánico de la Dictadura, Bogotá, 27 de agosto de 1828.
+Todas las imágenes de esta carpeta salen en el carrusel, en orden alfabético (`01-frente.jpg`, `02-detalle.jpg`…). Para ponerle pie de foto a una imagen, crea un `.txt` con el mismo nombre: `01-frente.jpg` → `01-frente.txt`.
 
-## Qué subir aquí
+## sonido/
 
-- `imagenes/` — fotos, pinturas o documentos escaneados de este espacio y de la pieza y de la evidencia oculta.
-- `sonido/` — narraciones, ambientes o efectos para este espacio.
-- `texto/` — guion corregido, citas y fuentes (un archivo `.md` o `.txt` por texto).
+Narraciones, ambientes o efectos. Todavía no se conectan a la vista.
 
 Anota el origen y la licencia de cada archivo en `texto/creditos.md`.

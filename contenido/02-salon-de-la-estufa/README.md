@@ -1,25 +1,25 @@
 # 02 · Salón de la estufa
 
-Lo que hoy se ve en la vista para este espacio (texto provisional en `js/datos.js`).
+La vista toma de esta carpeta lo que muestra para este espacio. Después de cambiar algo hay que correr `node scripts/sincronizar.js` (ver [contenido/README.md](../README.md)).
 
-## Pieza del museo — La estufa (QB-02)
+## texto/
 
-*Hogar de leña · siglo XIX*
+- `titulo.txt` — nombre de la pieza del museo.
+- `ficha.txt` — línea bajo el título (autor · fecha · técnica o material).
+- `descripcion2.txt` — párrafo que describe la pieza y el espacio.
 
-En una ciudad fría como Santafé, el salón con estufa era el lugar de reunión de la casa en las noches. Aquí se conversaba, se leía y se recibía a los amigos.
+Cualquier otro archivo de `texto/` (créditos, borradores, fuentes) se guarda pero no sale en la vista.
 
-## Capa oculta — evidencia 5: Libros prohibidos
+## Capa oculta
 
-*Fecha: 12 de marzo de 1828*
+Bajo la luz UV este espacio revela la evidencia 5, «Libros prohibidos». Su material va en [../uv/05-bentham/](../uv/05-bentham/).
 
-Por decreto, Bolívar prohibió enseñar en las universidades los Tratados de legislación de Jeremy Bentham, que Santander había incluido en el plan de estudios. La disputa era sobre qué ideas debían formar a los futuros abogados.
+## imagenes/
 
-**Fuente:** Decreto de 12 de marzo de 1828 sobre el plan de estudios.
+Todas las imágenes de esta carpeta salen en el carrusel, en orden alfabético (`01-frente.jpg`, `02-detalle.jpg`…). Para ponerle pie de foto a una imagen, crea un `.txt` con el mismo nombre: `01-frente.jpg` → `01-frente.txt`.
 
-## Qué subir aquí
+## sonido/
 
-- `imagenes/` — fotos, pinturas o documentos escaneados de este espacio y de la pieza y de la evidencia oculta.
-- `sonido/` — narraciones, ambientes o efectos para este espacio.
-- `texto/` — guion corregido, citas y fuentes (un archivo `.md` o `.txt` por texto).
+Narraciones, ambientes o efectos. Todavía no se conectan a la vista.
 
 Anota el origen y la licencia de cada archivo en `texto/creditos.md`.

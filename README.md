@@ -17,7 +17,8 @@ Abre `index.html` en el navegador. No necesita instalación ni servidor.
   - `carrusel.css` — carrusel de imágenes y fila de números para celular.
   - `responsive.css` — ajustes para celular (se carga de último).
 - `js/` — el comportamiento, un archivo por parte:
-  - `datos.js` — **los textos**: espacios, piezas y evidencias. Para corregir un texto, una fecha o una fuente basta con editar este archivo.
+  - `contenido.js` — **los textos y las imágenes**, generado desde `contenido/` con `node scripts/sincronizar.js`. No se edita a mano.
+  - `datos.js` — la estructura: geometría de los espacios sobre el plano, cuáles tienen pieza y cuál evidencia oculta guarda cada uno.
   - `estado.js` — estado del recorrido y funciones de ayuda.
   - `plano.js` — dibuja el plano, la linterna, las cintas y las huellas.
   - `panel.js` — cartela de cada espacio, guía y ficha de cada hallazgo.
@@ -27,32 +28,27 @@ Abre `index.html` en el navegador. No necesita instalación ni servidor.
   - `sonido.js` — música y efectos generados.
   - `app.js` — arranque (se carga de último).
 - `assets/` — archivos que la vista ya usa (el plano oficial del museo).
-- `contenido/` — material que aporta el equipo: una carpeta por espacio, cada una con `imagenes/`, `sonido/` y `texto/`. Ver [contenido/README.md](contenido/README.md).
+- `contenido/` — **la fuente de los textos e imágenes**: una carpeta por espacio y, en `contenido/uv/`, una por evidencia de la capa oculta; cada una con `imagenes/`, `sonido/` y `texto/`. Ver [contenido/README.md](contenido/README.md).
+- `scripts/sincronizar.js` — pasa lo que hay en `contenido/` a `js/contenido.js`.
 
-## Cómo colaborar
+## Cómo cambiar textos e imágenes
 
-1. Busca en [contenido/](contenido/) la carpeta del espacio (lleva el mismo número que en el plano).
-2. Lee su `README.md`: muestra lo que hoy dice la vista para ese espacio.
-3. Sube tus archivos a `imagenes/`, `sonido/` o `texto/`. En GitHub: entra a la carpeta → **Add file** → **Upload files**.
-4. Anota de dónde viene cada archivo y su licencia en `texto/creditos.md` de esa carpeta.
+1. Busca en [contenido/](contenido/) la carpeta del espacio (lleva el mismo número que en el plano) o, para la capa oculta, la de la evidencia en [contenido/uv/](contenido/uv/).
+2. Edita los archivos de `texto/` o sube imágenes a `imagenes/`. Su `README.md` dice qué archivo es cada cosa. En GitHub: entra a la carpeta → **Add file** → **Upload files**.
+3. Anota de dónde viene cada archivo y su licencia en `texto/creditos.md` de esa carpeta.
+4. Sincroniza la vista (necesita [Node.js](https://nodejs.org)):
 
-## Cómo poner imágenes en la vista (carrusel)
+   ```
+   node scripts/sincronizar.js
+   ```
 
-Cada espacio y cada evidencia oculta puede mostrar varias imágenes, que se pasan con flechas o deslizando el dedo.
+   El comando reescribe `js/contenido.js` y avisa si a algún espacio o evidencia le falta un texto. Sube ese archivo junto con los cambios de `contenido/`.
 
-1. Sube la imagen a `contenido/<espacio>/imagenes/`.
-2. Abre [js/datos.js](js/datos.js), busca el espacio (o la evidencia) y agrega la ruta a su lista `imgs`:
+**La vista no cambia hasta correr el paso 4.** Si alguien sube archivos desde GitHub, otra persona debe bajar los cambios, correr el comando y subir el resultado.
 
-```js
-{id:4, name:"Gran salón", imgs:[
-  "contenido/04-gran-salon/imagenes/retrato.jpg",
-  {src:"contenido/04-gran-salon/imagenes/detalle.jpg", pie:"Detalle de la alegoría"}
-], ...
-```
+Todas las imágenes de una carpeta salen en su carrusel en orden alfabético; con la carpeta vacía aparece el recuadro de «foto pendiente». La meta es reunir unas 50 imágenes entre los 17 espacios y las 10 evidencias (dos o tres por cada uno).
 
-Una ruta sola muestra la imagen; con `{src, pie}` se le añade un pie de foto. Con la lista vacía aparece el recuadro de «foto pendiente». La meta es reunir unas 50 imágenes entre los 17 espacios y las 10 evidencias (dos o tres por cada uno).
-
-Los sonidos y textos de `contenido/` todavía no se cargan solos: hay que conectarlos en `js/datos.js` y `js/panel.js`.
+Los sonidos de `contenido/` todavía no se conectan a la vista.
 
 ## Reglas del recorrido
 
