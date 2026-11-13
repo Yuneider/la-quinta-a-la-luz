@@ -95,21 +95,21 @@ const CONTENIDO = {
     "1": {
       "titulo": "La América que pagaba tributo",
       "fecha": "1821 · 1828",
-      "descripcion": "El retrato pone a una mujer indígena al lado del héroe. En 1821 el Congreso de Cúcuta abolió el tributo que pagaban los indígenas. En 1828, ya con poderes de dictador, Bolívar lo restableció como «contribución personal de indígenas» para financiar al Estado.",
+      "descripcion": "A pesar de la abolición del tributo indígena decretada por el Congreso de Cúcuta en 1821, Bolívar lo restableció en 1828 bajo el nombre de «contribución personal de indígenas» para financiar las urgencias fiscales del Estado.",
       "fuente": "Decreto de 15 de octubre de 1828 sobre la contribución de indígenas; Ley del Congreso de Cúcuta de 1821.",
       "imgs": []
     },
     "2": {
       "titulo": "El Libertador dictador",
       "fecha": "27 de agosto de 1828",
-      "descripcion": "Tras el fracaso de la Convención de Ocaña, Bolívar asumió el «poder supremo» con el Decreto Orgánico. Eliminó la vicepresidencia que ocupaba Santander y gobernó por decreto hasta 1830.",
-      "fuente": "Decreto Orgánico de la Dictadura, Bogotá, 27 de agosto de 1828.",
+      "descripcion": "Tras el colapso de la Convención de Ocaña, Bolívar asumió el poder supremo mediante el Decreto Orgánico, suprimiendo la vicepresidencia de Francisco de Paula Santander y gobernando por decreto autocrático hasta 1830.",
+      "fuente": "Decreto Orgánico de la Dictadura, Bogotá, 1828.",
       "imgs": []
     },
     "3": {
       "titulo": "La que salvó al Libertador",
       "fecha": "25 de septiembre de 1828",
-      "descripcion": "La noche de la conspiración septembrina, en el Palacio de San Carlos, Manuela Sáenz enfrentó a los conjurados mientras Bolívar escapaba por una ventana. Tras la muerte de él fue expulsada de Colombia (1834) y murió pobre en Paita, Perú, en 1856. Buena parte de sus cartas se quemaron.",
+      "descripcion": "Durante la Noche Septembrina en el Palacio de San Carlos, Manuela Sáenz enfrentó a los conjurados para dar tiempo a que Bolívar escapara por una ventana. Tras su muerte, Manuela fue desterrada y murió en la pobreza en Paita (1856).",
       "fuente": "Relatos de la conspiración del 25 de septiembre; correspondencia de Manuela Sáenz.",
       "imgs": []
     },
@@ -123,35 +123,35 @@ const CONTENIDO = {
     "5": {
       "titulo": "Libros prohibidos",
       "fecha": "12 de marzo de 1828",
-      "descripcion": "Por decreto, Bolívar prohibió enseñar en las universidades los Tratados de legislación de Jeremy Bentham, que Santander había incluido en el plan de estudios. La disputa era sobre qué ideas debían formar a los futuros abogados.",
-      "fuente": "Decreto de 12 de marzo de 1828 sobre el plan de estudios.",
+      "descripcion": "Por decreto, Bolívar prohibió la enseñanza en las universidades de los Tratados de legislación de Jeremy Bentham, introducidos por Santander, al considerar que sus doctrinas utilitaristas corrompían la moral y la obediencia de los jóvenes estudiantes.",
+      "fuente": "Decreto sobre el plan de estudios, 1828.",
       "imgs": []
     },
     "6": {
       "titulo": "La casa que otros mantenían",
-      "fecha": "1816 · 1821 · 1851",
-      "descripcion": "José Palacios nació esclavizado en la casa de los Bolívar en Caracas. La familia tuvo haciendas trabajadas por personas esclavizadas. En 1816 Bolívar ofreció la libertad a quienes se unieran al ejército; la libertad de vientres llegó en 1821 y la abolición total en Colombia en 1851, veinte años después de su muerte.",
-      "fuente": "Decreto de Carúpano, 2 de junio de 1816; Ley de 21 de julio de 1821; Ley de 21 de mayo de 1851.",
+      "fecha": "1816, 1821-1851",
+      "descripcion": "José Palacios nació esclavizado en la familia Bolívar. Aunque en 1816 Bolívar ofreció libertad a combatientes esclavizados, la abolición total en Colombia solo llegó en 1851, dos décadas después de su muerte, manteniéndose el sistema esclavista en haciendas de la élite.",
+      "fuente": "Decreto de Carúpano (1816); Leyes de manumisión de 1821 y 1851.",
       "imgs": []
     },
     "7": {
       "titulo": "El almirante fusilado",
       "fecha": "2 de octubre de 1828",
-      "descripcion": "José Prudencio Padilla, almirante pardo de Riohacha y héroe de la batalla del lago de Maracaibo, fue fusilado en Bogotá acusado de participar en la conspiración septembrina. Santander, también condenado a muerte, recibió el destierro.",
+      "descripcion": "José Prudencio Padilla, almirante pardo de Riohacha y héroe de la Batalla del Lago de Maracaibo, fue fusilado en Bogotá bajo acusaciones de participar en la conspiración septembrina, en un contexto de persecución contra líderes pardos.",
       "fuente": "Sentencias de los juicios por la conspiración de septiembre de 1828; cartas de Bolívar sobre la «pardocracia».",
       "imgs": []
     },
     "8": {
       "titulo": "La entrega de Miranda",
       "fecha": "31 de julio de 1812",
-      "descripcion": "Tras la caída de la Primera República de Venezuela, un grupo de oficiales, entre ellos Bolívar, arrestó en La Guaira a Francisco de Miranda. Miranda quedó en manos españolas y murió preso en Cádiz en 1816. Bolívar obtuvo un pasaporte para salir del país.",
+      "descripcion": "Tras el colapso de la Primera República de Venezuela, un grupo de oficiales patriotas, entre los que figuraba Bolívar, arrestó en La Guaira a Francisco de Miranda, entregándolo a los españoles a cambio de pasaportes para salir al exilio.",
       "fuente": "Documentos de la capitulación de 1812 y del arresto de Miranda en La Guaira.",
       "imgs": []
     },
     "9": {
       "titulo": "Los prisioneros de La Guaira",
       "fecha": "Febrero de 1814",
-      "descripcion": "En plena Guerra a Muerte, Bolívar ordenó ejecutar a los prisioneros españoles y canarios recluidos en Caracas y La Guaira. Murieron más de ochocientas personas, muchas de ellas civiles.",
+      "descripcion": "En plena aplicación del Decreto de Guerra a Muerte, Bolívar ordenó la ejecución sumaria de los prisioneros españoles y canarios recluidos en Caracas y La Guaira. Más de ochocientas personas, incluidos civiles, fueron ejecutadas.",
       "fuente": "Órdenes de Bolívar al comandante de La Guaira, febrero de 1814.",
       "imgs": []
     },
@@ -159,7 +159,7 @@ const CONTENIDO = {
       "titulo": "Guerra a muerte",
       "fecha": "15 de junio de 1813",
       "cita": "Españoles y canarios, contad con la muerte, aun siendo indiferentes. Americanos, contad con la vida, aun cuando seáis culpables.",
-      "descripcion": "Durante la Campaña Admirable, Bolívar firmó en Trujillo el decreto que convirtió la guerra de independencia en una guerra sin cuartel contra los civiles peninsulares.",
+      "descripcion": "«Españoles y canarios, contad con la muerte, aun siendo indiferentes. Americanos, contad con la vida, aun cuando seáis culpables.» Durante la Campaña Admirable, Bolívar firmó en Trujillo el decreto que convirtió la independencia en una guerra sin cuartel contra civiles peninsulares.",
       "fuente": "Decreto de Guerra a Muerte, Trujillo, 15 de junio de 1813.",
       "imgs": []
     }
