@@ -4,79 +4,127 @@ const CONTENIDO = {
   "espacios": {
     "1": {
       "descripcion": "Los jardines de la Quinta de Bolívar rodean la casona con senderos empedrados, fuentes de piedra y árboles centenarios como eucaliptos y sauces. Este espacio verde sirvió como área de descanso y esparcimiento para el Libertador y sus visitantes durante sus estancias en Santafé entre 1820 y 1830.",
-      "imgs": []
+      "imgs": [
+        "contenido/01-jardin/imagenes/ARBOL_LAUREL_CONMEMORATIVO.jpg",
+        "contenido/01-jardin/imagenes/BUSTO_BOLIVAR_FUNDADOR_DE_LA_REPUBLICA.jpg",
+        "contenido/01-jardin/imagenes/CANON_DEL_JARDIN_2.jpg",
+        "contenido/01-jardin/imagenes/COLOMBIA.jpg",
+        "contenido/01-jardin/imagenes/JARDIN_ARCO_Y_SENDERO_2.jpeg",
+        "contenido/01-jardin/imagenes/JARDIN_FUENTE_2.jpg",
+        "contenido/01-jardin/imagenes/MONUMENTO_CENTRAL_VENEZUELA_COLOMBIA.jpg",
+        "contenido/01-jardin/imagenes/PAISES_PLAZA_DE_BANDERAS_1.jpg"
+      ]
     },
     "2": {
       "titulo": "La estufa",
       "ficha": "Hogar de leña · siglo XIX",
       "descripcion": "En la fría Santafé del siglo XIX, este salón provisto de un hogar de leña era el centro de reunión nocturna de la casa. Aquí Bolívar y sus colaboradores departían, leían correspondencia y recibían a figuras clave de la política y la sociedad granadina.",
-      "imgs": []
+      "imgs": [
+        "contenido/02-salon-de-la-estufa/imagenes/SALON_DE_LA_ESTUFA_1.jpg",
+        "contenido/02-salon-de-la-estufa/imagenes/SALON_DE_LA_ESTUFA_ADORNO_MESA.jpg"
+      ]
     },
     "3": {
       "titulo": "Salón de Manuelita",
       "ficha": "Mobiliario de época · retrato de Manuela Sáenz",
       "descripcion": "Espacio dedicado a Manuela Sáenz, compañera sentimental y política de Bolívar. Manuela residió largas temporadas en la Quinta, convirtiéndola en un epicentro de tertulias, celebraciones y reuniones políticas de alto nivel en defensa del proyecto bolivariano.",
-      "imgs": []
+      "imgs": [
+        "contenido/03-salon-de-manuelita/imagenes/RETRATO_MANUELA_SAENZ.jpg",
+        "contenido/03-salon-de-manuelita/imagenes/SALON_DE_MANUELITA_2.jpg"
+      ]
     },
     "4": {
       "titulo": "Bolívar con la alegoría de América",
       "ficha": "Pedro José Figueroa · 1819 · óleo sobre tela",
       "descripcion": "Exhibe el óleo sobre tela pintado por Pedro José Figueroa en 1819. En esta obra emblemática, Bolívar aparece acompañado por una figura alegórica femenina indígena que representa a América, siendo uno de los primeros retratos oficiales del Libertador elaborados en la Nueva Granada.",
-      "imgs": []
+      "imgs": [
+        "contenido/04-gran-salon/imagenes/GRAN_SALON_1.jpg",
+        "contenido/04-gran-salon/imagenes/GRAN_SALON_4.jpg"
+      ]
     },
     "5": {
       "titulo": "Mesa del comedor",
       "ficha": "Madera y vajilla de época",
       "descripcion": "Salón formal dotado de mobiliario de madera noble y vajilla de época. En este espacio, Bolívar agasajaba a oficiales militares, diplomáticos extranjeros y miembros prominentes de la élite santafereña con banquetes protocolarios.",
-      "imgs": []
+      "imgs": [
+        "contenido/05-comedor/imagenes/COMEDOR_1.jpg",
+        "contenido/05-comedor/imagenes/COMEDOR_2.jpg"
+      ]
     },
     "6": {
       "titulo": "Mesa de juego",
       "ficha": "Naipes, dados y tablero · siglo XIX",
       "descripcion": "Área destinada al ocio de la élite criolla, equipada con naipes, dados y tableros del siglo XIX. Las tertulias en este salón combinaban el entretenimiento con la discusión de intrigas políticas y decisiones de gobierno.",
-      "imgs": []
+      "imgs": [
+        "contenido/06-salon-de-juegos/imagenes/SALON_DE_JUEGOS_2.jpg",
+        "contenido/06-salon-de-juegos/imagenes/SALON_DE_JUEGOS_NAIPES_DETALLE.jpeg"
+      ]
     },
     "7": {
       "titulo": "Cama del Libertador",
       "ficha": "Cama de madera con dosel",
       "descripcion": "Dormitorio privado que conserva la cama de madera con dosel utilizada por Simón Bolívar. Es una de las estancias más custodiadas del museo, testigo de sus momentos de reposo y de sus crisis de salud.",
-      "imgs": []
+      "imgs": [
+        "contenido/07-alcoba-del-libertador/imagenes/ALCOBA_DEL_LIBERTADOR_1.webp",
+        "contenido/07-alcoba-del-libertador/imagenes/ALCOBA_DEL_LIBERTADOR_2.jpg"
+      ]
     },
     "8": {
       "titulo": "Alcoba del mayordomo",
       "ficha": "Catre y baúl de viaje",
       "descripcion": "Habitación austera dotada de catre y baúl de viaje. Está dedicada a José Palacios, fiel mayordomo que acompañó a Bolívar desde su juventud y permaneció a su lado hasta su fallecimiento en la Quinta de San Pedro Alejandrino en Santa Marta (1830).",
-      "imgs": []
+      "imgs": [
+        "contenido/08-alcoba-de-jose-palacios/imagenes/ALCOBA_JOSE_PALACIOS_1.jpg",
+        "contenido/08-alcoba-de-jose-palacios/imagenes/ALCOBA_JOSE_PALACIOS_2.jpg"
+      ]
     },
     "9": {
       "descripcion": "Depósito y almacén de víveres, granos, vinos y provisiones secas indispensables para el sostenimiento cotidiano de la residencia y la atención a comitivas y huéspedes.",
-      "imgs": []
+      "imgs": [
+        "contenido/09-despensa/imagenes/DESPENSA_BARRILES_Y_ALACENA.jpeg",
+        "contenido/09-despensa/imagenes/DESPENSA_MESA_Y_PROVISIONES_1.jpeg"
+      ]
     },
     "10": {
       "titulo": "Fogón de leña",
       "ficha": "Utensilios de cobre y barro",
       "descripcion": "Área de preparación de alimentos equipada con utensilios de cobre, barro y hierro forjado. Por motivos de seguridad contra incendios y para evitar que el humo afectara la zona habitacional, la cocina se ubicaba separada del cuerpo principal de la casona.",
-      "imgs": []
+      "imgs": [
+        "contenido/10-cocina/imagenes/COCINA_OLLAS_DE_BARRO_1.jpg",
+        "contenido/10-cocina/imagenes/COCINA_VISTA_GENERAL_2.jpg"
+      ]
     },
     "11": {
       "descripcion": "Zona destinada al almacenamiento de forraje y al alojamiento de los corceles de la Quinta. Los equinos desempeñaron un papel logístico crucial en las campañas libertadoras lideradas por Bolívar.",
-      "imgs": []
+      "imgs": [
+        "contenido/11-graneros-y-caballerizas/imagenes/CABALLERIZAS_1.jpg",
+        "contenido/11-graneros-y-caballerizas/imagenes/MONTURAS_Y_ESTRIBOS.jpg"
+      ]
     },
     "12": {
       "descripcion": "Terreno de cultivo destinado a la producción autosuficiente de hortalizas, legumbres y hierbas aromáticas frescas que abastecían directamente la cocina de la casa.",
-      "imgs": []
+      "imgs": [
+        "contenido/12-huerta/imagenes/HUERTA_PLANTAS_Y_CULTIVOS.jpg",
+        "contenido/12-huerta/imagenes/HUERTA_SENDERO_Y_PLANTAS_2.jpeg"
+      ]
     },
     "13": {
       "titulo": "Baño de asiento",
       "ficha": "Piedra · jardín",
       "descripcion": "Pequeña instalación sanitaria exterior situada junto a un mirador con vistas hacia la sabana de Bogotá. El uso de agua fría de montaña para el baño diario formaba parte de los hábitos de disciplina física y salud de Bolívar.",
-      "imgs": []
+      "imgs": [
+        "contenido/13-mirador-y-bano-de-asiento/imagenes/MIRADOR_EXTERIOR.jpeg",
+        "contenido/13-mirador-y-bano-de-asiento/imagenes/MIRADOR_Y_BANO_DE_ASIENTO.jpg"
+      ]
     },
     "14": {
       "titulo": "La alberca",
       "ficha": "Estanque de piedra",
       "descripcion": "Estanque de piedra alimentado por las corrientes de agua que descendían directamente de los cerros orientales. Los registros históricos y relatos de época señalan que Bolívar acostumbraba bañarse allí en las mañanas.",
-      "imgs": []
+      "imgs": [
+        "contenido/14-alberca/imagenes/ALBERCA_ENTRADA_EXTERIOR.jpg",
+        "contenido/14-alberca/imagenes/ALBERCA_INTERIOR_1.jpg"
+      ]
     },
     "15": {
       "descripcion": "Terraza elevada orientada hacia los cerros de Monserrate y Guadalupe, utilizada por el Libertador como espacio de contemplación, lectura y tranquilidad lejos del bullicio urbano.",
