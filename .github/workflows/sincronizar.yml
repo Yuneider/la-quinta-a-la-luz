@@ -8,7 +8,9 @@ on:
     paths:
       - "contenido/**"
       - "scripts/sincronizar.js"
-      - "js/datos.js"
+      - "js/**"
+      - "css/**"
+      - "index.html"
       - "package.json"
   workflow_dispatch:
 
@@ -30,13 +32,13 @@ jobs:
           cache: npm
       - name: Instalar sharp (optimiza las imágenes)
         run: npm ci
-      - name: Generar js/contenido.js y optimizadas/
+      - name: Generar js/contenido.js, optimizadas/ y versiones de index.html
         run: node scripts/sincronizar.js | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Subir el resultado si cambió
         run: |
-          git add -A -- js/contenido.js optimizadas
+          git add -A -- js/contenido.js optimizadas index.html
           if git diff --cached --quiet; then
-            echo "Sin cambios en js/contenido.js ni en optimizadas/."
+            echo "Sin cambios en js/contenido.js, optimizadas/ ni index.html."
             exit 0
           fi
           git config user.name "github-actions[bot]"

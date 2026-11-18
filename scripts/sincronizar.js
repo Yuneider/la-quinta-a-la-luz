@@ -189,6 +189,18 @@ const CONTENIDO = ${JSON.stringify(datos, null, 2)};
 const cambio = !fs.existsSync(SALIDA) || fs.readFileSync(SALIDA, "utf8") !== salida;
 if (cambio) fs.writeFileSync(SALIDA, salida);
 
+/* Versiona los .js y .css que carga index.html («js/panel.js?v=<hash>»): cuando un archivo cambia,
+   cambia su URL y el navegador no se queda con la copia vieja en caché. */
+const INDICE = path.join(RAIZ, "index.html");
+const html = fs.readFileSync(INDICE, "utf8");
+const versionado = html.replace(/((?:src|href)=")((?:js|css)\/[^"?]+\.(?:js|css))(?:\?v=[^"]*)?"/g, (todo, attr, archivo) => {
+  const p = path.join(RAIZ, archivo);
+  if (!fs.existsSync(p)) return todo;
+  const v = crypto.createHash("sha1").update(fs.readFileSync(p)).digest("hex").slice(0, 8);
+  return `${attr}${archivo}?v=${v}"`;
+});
+if (versionado !== html) { fs.writeFileSync(INDICE, versionado); console.log("index.html: versiones de js/css actualizadas."); }
+
 const total = grupo => Object.values(grupo).reduce((s, i) => s + i.imgs.length, 0);
 console.log(`${Object.keys(datos.espacios).length} espacios (${total(datos.espacios)} imágenes), ${Object.keys(datos.uv).length} evidencias UV (${total(datos.uv)} imágenes).`);
 console.log(cambio ? "js/contenido.js actualizado." : "js/contenido.js ya estaba al día.");
