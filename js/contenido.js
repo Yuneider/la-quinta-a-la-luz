@@ -7,48 +7,56 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/01-jardin/imagenes/01_PAISES_PLAZA_DE_BANDERAS_1.webp",
+          "med": "optimizadas/01-jardin/imagenes/01_PAISES_PLAZA_DE_BANDERAS_1-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "Plaza de las banderas: bustos y banderas de las naciones bolivarianas a lo largo del sendero."
         },
         {
           "src": "optimizadas/01-jardin/imagenes/ARBOL_LAUREL_CONMEMORATIVO.webp",
+          "med": "optimizadas/01-jardin/imagenes/ARBOL_LAUREL_CONMEMORATIVO-m.webp",
           "w": 1200,
           "h": 1600,
           "pie": "Laurel sembrado en conmemoración de la entrada triunfal del Libertador a Santafé."
         },
         {
           "src": "optimizadas/01-jardin/imagenes/BUSTO_BOLIVAR_FUNDADOR_DE_LA_REPUBLICA.webp",
+          "med": "optimizadas/01-jardin/imagenes/BUSTO_BOLIVAR_FUNDADOR_DE_LA_REPUBLICA-m.webp",
           "w": 1200,
           "h": 1600,
           "pie": "Busto de Bolívar, «fundador de la República», entre la vegetación del jardín."
         },
         {
           "src": "optimizadas/01-jardin/imagenes/CANON_DEL_JARDIN_2.webp",
+          "med": "optimizadas/01-jardin/imagenes/CANON_DEL_JARDIN_2-m.webp",
           "w": 900,
           "h": 1600,
           "pie": "Cañón antiguo sobre un pedestal de piedra en un rincón del jardín."
         },
         {
           "src": "optimizadas/01-jardin/imagenes/COLOMBIA.webp",
+          "med": "optimizadas/01-jardin/imagenes/COLOMBIA-m.webp",
           "w": 1200,
           "h": 1600,
           "pie": "Medallón con el escudo de Colombia, parte del conjunto de las naciones bolivarianas."
         },
         {
           "src": "optimizadas/01-jardin/imagenes/JARDIN_ARCO_Y_SENDERO_2.webp",
+          "med": "optimizadas/01-jardin/imagenes/JARDIN_ARCO_Y_SENDERO_2-m.webp",
           "w": 1201,
           "h": 1600,
           "pie": "Arco vegetal sobre el sendero empedrado del jardín."
         },
         {
           "src": "optimizadas/01-jardin/imagenes/JARDIN_FUENTE_2.webp",
+          "med": "optimizadas/01-jardin/imagenes/JARDIN_FUENTE_2-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "Fuente de piedra rodeada de flores y árboles centenarios."
         },
         {
           "src": "optimizadas/01-jardin/imagenes/MONUMENTO_CENTRAL_VENEZUELA_COLOMBIA.webp",
+          "med": "optimizadas/01-jardin/imagenes/MONUMENTO_CENTRAL_VENEZUELA_COLOMBIA-m.webp",
           "w": 1200,
           "h": 1600,
           "pie": "Monumento central, flanqueado por las banderas de Venezuela y Colombia."
@@ -62,12 +70,14 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/02-salon-de-la-estufa/imagenes/01_SALON_DE_LA_ESTUFA_1.webp",
+          "med": "optimizadas/02-salon-de-la-estufa/imagenes/01_SALON_DE_LA_ESTUFA_1-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "El salón de la estufa: mesa, sillas y escritorio de época junto a la ventana."
         },
         {
           "src": "optimizadas/02-salon-de-la-estufa/imagenes/SALON_DE_LA_ESTUFA_ADORNO_MESA.webp",
+          "med": "optimizadas/02-salon-de-la-estufa/imagenes/SALON_DE_LA_ESTUFA_ADORNO_MESA-m.webp",
           "w": 1200,
           "h": 1600,
           "pie": "Adorno decorativo sobre una mesa de madera del salón."
@@ -81,12 +91,14 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/03-salon-de-manuelita/imagenes/01_SALON_DE_MANUELITA_2.webp",
+          "med": "optimizadas/03-salon-de-manuelita/imagenes/01_SALON_DE_MANUELITA_2-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "El salón de Manuelita, con sus sofás tapizados en rojo y su mobiliario de época."
         },
         {
           "src": "optimizadas/03-salon-de-manuelita/imagenes/RETRATO_MANUELA_SAENZ.webp",
+          "med": "optimizadas/03-salon-de-manuelita/imagenes/RETRATO_MANUELA_SAENZ-m.webp",
           "w": 1200,
           "h": 1600,
           "pie": "Retrato de Manuela Sáenz que se exhibe en el salón."
@@ -100,18 +112,21 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/04-gran-salon/imagenes/01_BOLIVAR_CON_LA_ALEGORIA_DE_AMERICA.webp",
+          "med": "optimizadas/04-gran-salon/imagenes/01_BOLIVAR_CON_LA_ALEGORIA_DE_AMERICA-m.webp",
           "w": 1200,
           "h": 1600,
           "pie": "Pedro José Figueroa, «Bolívar con la alegoría de América» (1819), óleo sobre tela."
         },
         {
           "src": "optimizadas/04-gran-salon/imagenes/GRAN_SALON_1.webp",
+          "med": "optimizadas/04-gran-salon/imagenes/GRAN_SALON_1-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "Vista general del Gran salón, con sus sillas y canapés de época bajo la lámpara de cristal."
         },
         {
           "src": "optimizadas/04-gran-salon/imagenes/GRAN_SALON_4.webp",
+          "med": "optimizadas/04-gran-salon/imagenes/GRAN_SALON_4-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "Rincón del Gran salón, con una pieza en vitrina y cortinas rojas."
@@ -125,12 +140,14 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/05-comedor/imagenes/01_COMEDOR_1.webp",
+          "med": "optimizadas/05-comedor/imagenes/01_COMEDOR_1-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "El comedor, con la mesa servida como para un banquete de época."
         },
         {
           "src": "optimizadas/05-comedor/imagenes/COMEDOR_2.webp",
+          "med": "optimizadas/05-comedor/imagenes/COMEDOR_2-m.webp",
           "w": 900,
           "h": 1600,
           "pie": "La mesa del comedor y su lámpara de cristal vistas desde la entrada."
@@ -144,12 +161,14 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/06-salon-de-juegos/imagenes/01_SALON_DE_JUEGOS_2.webp",
+          "med": "optimizadas/06-salon-de-juegos/imagenes/01_SALON_DE_JUEGOS_2-m.webp",
           "w": 900,
           "h": 1600,
           "pie": "Mesa de juego con tapete verde y naipes."
         },
         {
           "src": "optimizadas/06-salon-de-juegos/imagenes/SALON_DE_JUEGOS_NAIPES_DETALLE.webp",
+          "med": "optimizadas/06-salon-de-juegos/imagenes/SALON_DE_JUEGOS_NAIPES_DETALLE-m.webp",
           "w": 1600,
           "h": 900,
           "pie": "Detalle de los naipes sobre la mesa."
@@ -163,12 +182,14 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/07-alcoba-del-libertador/imagenes/01_ALCOBA_DEL_LIBERTADOR_2.webp",
+          "med": "optimizadas/07-alcoba-del-libertador/imagenes/01_ALCOBA_DEL_LIBERTADOR_2-m.webp",
           "w": 1000,
           "h": 750,
           "pie": "La cama con dosel del Libertador, con su baúl al pie."
         },
         {
           "src": "optimizadas/07-alcoba-del-libertador/imagenes/ALCOBA_DEL_LIBERTADOR_1.webp",
+          "med": "optimizadas/07-alcoba-del-libertador/imagenes/ALCOBA_DEL_LIBERTADOR_1-m.webp",
           "w": 943,
           "h": 1023,
           "pie": "La alcoba del Libertador vista de frente."
@@ -182,12 +203,14 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/08-alcoba-de-jose-palacios/imagenes/01_ALCOBA_JOSE_PALACIOS_1.webp",
+          "med": "optimizadas/08-alcoba-de-jose-palacios/imagenes/01_ALCOBA_JOSE_PALACIOS_1-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "Alcoba de José Palacios: catre sencillo, baúl y mesa."
         },
         {
           "src": "optimizadas/08-alcoba-de-jose-palacios/imagenes/ALCOBA_JOSE_PALACIOS_2.webp",
+          "med": "optimizadas/08-alcoba-de-jose-palacios/imagenes/ALCOBA_JOSE_PALACIOS_2-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "El armario de madera tallada y el catre del mayordomo."
@@ -199,12 +222,14 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/09-despensa/imagenes/01_DESPENSA_MESA_Y_PROVISIONES_1.webp",
+          "med": "optimizadas/09-despensa/imagenes/01_DESPENSA_MESA_Y_PROVISIONES_1-m.webp",
           "w": 1600,
           "h": 900,
           "pie": "Mesa de la despensa con víveres, vasijas y botellas."
         },
         {
           "src": "optimizadas/09-despensa/imagenes/DESPENSA_BARRILES_Y_ALACENA.webp",
+          "med": "optimizadas/09-despensa/imagenes/DESPENSA_BARRILES_Y_ALACENA-m.webp",
           "w": 1600,
           "h": 900,
           "pie": "Barriles de madera y alacena para granos y vinos."
@@ -218,12 +243,14 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/10-cocina/imagenes/01_COCINA_VISTA_GENERAL_2.webp",
+          "med": "optimizadas/10-cocina/imagenes/01_COCINA_VISTA_GENERAL_2-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "La cocina, con su fogón, pilón de piedra y canastos."
         },
         {
           "src": "optimizadas/10-cocina/imagenes/COCINA_OLLAS_DE_BARRO_1.webp",
+          "med": "optimizadas/10-cocina/imagenes/COCINA_OLLAS_DE_BARRO_1-m.webp",
           "w": 1200,
           "h": 1600,
           "pie": "Ollas de barro y utensilios junto al fogón."
@@ -235,12 +262,14 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/11-graneros-y-caballerizas/imagenes/01_CABALLERIZAS_1.webp",
+          "med": "optimizadas/11-graneros-y-caballerizas/imagenes/01_CABALLERIZAS_1-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "Interior de las caballerizas, con barriles y piso empedrado."
         },
         {
           "src": "optimizadas/11-graneros-y-caballerizas/imagenes/MONTURAS_Y_ESTRIBOS.webp",
+          "med": "optimizadas/11-graneros-y-caballerizas/imagenes/MONTURAS_Y_ESTRIBOS-m.webp",
           "w": 1200,
           "h": 1600,
           "pie": "Monturas y estribos colgados en el muro de las caballerizas."
@@ -252,12 +281,14 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/12-huerta/imagenes/01_HUERTA_SENDERO_Y_PLANTAS_2.webp",
+          "med": "optimizadas/12-huerta/imagenes/01_HUERTA_SENDERO_Y_PLANTAS_2-m.webp",
           "w": 1600,
           "h": 893,
           "pie": "La huerta junto a las construcciones de la Quinta."
         },
         {
           "src": "optimizadas/12-huerta/imagenes/HUERTA_PLANTAS_Y_CULTIVOS.webp",
+          "med": "optimizadas/12-huerta/imagenes/HUERTA_PLANTAS_Y_CULTIVOS-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "Plantas, árboles y cultivos de la huerta."
@@ -271,12 +302,14 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/13-mirador-y-bano-de-asiento/imagenes/01_MIRADOR_Y_BANO_DE_ASIENTO.webp",
+          "med": "optimizadas/13-mirador-y-bano-de-asiento/imagenes/01_MIRADOR_Y_BANO_DE_ASIENTO-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "El baño de asiento: pileta de piedra alimentada por un chorro de agua."
         },
         {
           "src": "optimizadas/13-mirador-y-bano-de-asiento/imagenes/MIRADOR_EXTERIOR.webp",
+          "med": "optimizadas/13-mirador-y-bano-de-asiento/imagenes/MIRADOR_EXTERIOR-m.webp",
           "w": 1600,
           "h": 900,
           "pie": "El mirador visto desde el jardín."
@@ -290,12 +323,14 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/14-alberca/imagenes/01_ALBERCA_INTERIOR_1.webp",
+          "med": "optimizadas/14-alberca/imagenes/01_ALBERCA_INTERIOR_1-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "La alberca, estanque de piedra rodeado de vegetación."
         },
         {
           "src": "optimizadas/14-alberca/imagenes/ALBERCA_ENTRADA_EXTERIOR.webp",
+          "med": "optimizadas/14-alberca/imagenes/ALBERCA_ENTRADA_EXTERIOR-m.webp",
           "w": 1600,
           "h": 1200,
           "pie": "Muro exterior y puerta de reja de la alberca."
@@ -312,6 +347,7 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/uv/01-tributo/imagenes/01_LA_AMERICA_QUE_PAGABA_TRIBUTO.webp",
+          "med": "optimizadas/uv/01-tributo/imagenes/01_LA_AMERICA_QUE_PAGABA_TRIBUTO-m.webp",
           "w": 1280,
           "h": 1017,
           "pie": "«Carguero de la montaña de Sonsón, Estado de Antioquia», lámina de la Comisión Corográfica (siglo XIX)."
@@ -326,6 +362,7 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/uv/02-dictadura/imagenes/02_EL_LIBERTADOR_DICTADOR.webp",
+          "med": "optimizadas/uv/02-dictadura/imagenes/02_EL_LIBERTADOR_DICTADOR-m.webp",
           "w": 832,
           "h": 1200,
           "pie": "Retrato de Simón Bolívar en uniforme de gala."
@@ -340,6 +377,7 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/uv/03-manuela/imagenes/03_LA_QUE_SALVO_AL_LIBERTADOR.webp",
+          "med": "optimizadas/uv/03-manuela/imagenes/03_LA_QUE_SALVO_AL_LIBERTADOR-m.webp",
           "w": 1280,
           "h": 1543,
           "pie": "Retrato de Manuela Sáenz."
@@ -354,6 +392,7 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/uv/04-piar/imagenes/04_EL_FUSILAMIENTO_DE_PIAR.webp",
+          "med": "optimizadas/uv/04-piar/imagenes/04_EL_FUSILAMIENTO_DE_PIAR-m.webp",
           "w": 879,
           "h": 744,
           "pie": "«Soldados, derecho al corazón»: grabado del fusilamiento de Manuel Piar."
@@ -368,6 +407,7 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/uv/05-bentham/imagenes/05_LIBROS_PROHIBIDOS.webp",
+          "med": "optimizadas/uv/05-bentham/imagenes/05_LIBROS_PROHIBIDOS-m.webp",
           "w": 1280,
           "h": 947,
           "pie": "Naturaleza muerta con libros, papeles y objetos de estudio."
@@ -382,6 +422,7 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/uv/06-esclavitud/imagenes/06_LA_CASA_QUE_OTROS_MANTENIAN.webp",
+          "med": "optimizadas/uv/06-esclavitud/imagenes/06_LA_CASA_QUE_OTROS_MANTENIAN-m.webp",
           "w": 1280,
           "h": 871,
           "pie": "Johann Moritz Rugendas, «Nègres à fond de cale» (c. 1835): africanos esclavizados en la bodega de un barco negrero."
@@ -396,6 +437,7 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/uv/07-padilla/imagenes/07_EL_ALMIRANTE_FUSILADO.webp",
+          "med": "optimizadas/uv/07-padilla/imagenes/07_EL_ALMIRANTE_FUSILADO-m.webp",
           "w": 961,
           "h": 1036,
           "pie": "Retrato del almirante José Prudencio Padilla."
@@ -410,6 +452,7 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/uv/08-miranda/imagenes/08_LA_ENTREGA_DE_MIRANDA.webp",
+          "med": "optimizadas/uv/08-miranda/imagenes/08_LA_ENTREGA_DE_MIRANDA-m.webp",
           "w": 1280,
           "h": 1018,
           "pie": "Arturo Michelena, «Miranda en La Carraca» (1896)."
@@ -424,6 +467,7 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/uv/09-laguaira/imagenes/09_LOS_PRISIONEROS_DE_LA_GUAIRA.webp",
+          "med": "optimizadas/uv/09-laguaira/imagenes/09_LOS_PRISIONEROS_DE_LA_GUAIRA-m.webp",
           "w": 1280,
           "h": 887,
           "pie": "Francisco de Goya, «No se puede mirar», de la serie «Los desastres de la guerra»."
@@ -439,6 +483,7 @@ const CONTENIDO = {
       "imgs": [
         {
           "src": "optimizadas/uv/10-guerramuerte/imagenes/10_GUERRA_A_MUERTE.webp",
+          "med": "optimizadas/uv/10-guerramuerte/imagenes/10_GUERRA_A_MUERTE-m.webp",
           "w": 930,
           "h": 657,
           "pie": "Recreación pictórica de Bolívar firmando un decreto ante sus oficiales."
@@ -452,96 +497,112 @@ const CONTENIDO = {
     "imgs": [
       {
         "src": "optimizadas/alrededores/imagenes/01_FUENTE_Y_ENTRADA_QUINTA_DE_BOLIVAR.webp",
+        "med": "optimizadas/alrededores/imagenes/01_FUENTE_Y_ENTRADA_QUINTA_DE_BOLIVAR-m.webp",
         "w": 1600,
         "h": 1200,
         "pie": "Plazoleta y fuente frente a la portada de entrada a la Quinta."
       },
       {
         "src": "optimizadas/alrededores/imagenes/BROCHE_ESCUDO_ESCUELA_MILITAR_CORDOVA.webp",
+        "med": "optimizadas/alrededores/imagenes/BROCHE_ESCUDO_ESCUELA_MILITAR_CORDOVA-m.webp",
         "w": 1200,
         "h": 1600,
         "pie": "Broche con el escudo de la Escuela Militar José María Córdova, en la entrada del museo."
       },
       {
         "src": "optimizadas/alrededores/imagenes/CANON_EL_ARAGON_CON_CURENA_3.webp",
+        "med": "optimizadas/alrededores/imagenes/CANON_EL_ARAGON_CON_CURENA_3-m.webp",
         "w": 1600,
         "h": 1200,
         "pie": "El cañón «El Aragón» sobre su cureña de madera."
       },
       {
         "src": "optimizadas/alrededores/imagenes/CANON_LA_CATIN_Y_LA_VICTORIEUSE.webp",
+        "med": "optimizadas/alrededores/imagenes/CANON_LA_CATIN_Y_LA_VICTORIEUSE-m.webp",
         "w": 1600,
         "h": 1200,
         "pie": "Los cañones «La Catin» y «La Victorieuse» en la exposición de artillería."
       },
       {
         "src": "optimizadas/alrededores/imagenes/CORREDOR_EXPOSICION_CANONES_1.webp",
+        "med": "optimizadas/alrededores/imagenes/CORREDOR_EXPOSICION_CANONES_1-m.webp",
         "w": 1600,
         "h": 1200,
         "pie": "Corredor de la exposición «Cuando los cañones tenían nombre»."
       },
       {
         "src": "optimizadas/alrededores/imagenes/GUION_CUANDO_LOS_CANONES_TENIAN_NOMBRE.webp",
+        "med": "optimizadas/alrededores/imagenes/GUION_CUANDO_LOS_CANONES_TENIAN_NOMBRE-m.webp",
         "w": 1200,
         "h": 1600,
         "pie": "Panel de presentación de la colección de artillería de la Casa Museo."
       },
       {
         "src": "optimizadas/alrededores/imagenes/GUION_HISTORIA_Y_MEMORIA_DEL_LUGAR.webp",
+        "med": "optimizadas/alrededores/imagenes/GUION_HISTORIA_Y_MEMORIA_DEL_LUGAR-m.webp",
         "w": 1200,
         "h": 1600,
         "pie": "Panel «Historia y memoria del lugar»."
       },
       {
         "src": "optimizadas/alrededores/imagenes/GUION_PLACA_VENEZUELA_A_SIMON_BOLIVAR.webp",
+        "med": "optimizadas/alrededores/imagenes/GUION_PLACA_VENEZUELA_A_SIMON_BOLIVAR-m.webp",
         "w": 1600,
         "h": 1200,
         "pie": "Placa de Venezuela «a la memoria de su hijo insigne el Libertador Simón Bolívar, en el centenario de su muerte» (1930)."
       },
       {
         "src": "optimizadas/alrededores/imagenes/GUION_PLACAS_DE_BATALLAS.webp",
+        "med": "optimizadas/alrededores/imagenes/GUION_PLACAS_DE_BATALLAS-m.webp",
         "w": 1600,
         "h": 1200,
         "pie": "Placas con los nombres y fechas de batallas de la Independencia."
       },
       {
         "src": "optimizadas/alrededores/imagenes/GUION_PLANO_RECORRIDO_MUSEO.webp",
+        "med": "optimizadas/alrededores/imagenes/GUION_PLANO_RECORRIDO_MUSEO-m.webp",
         "w": 1600,
         "h": 1200,
         "pie": "Plano del recorrido del museo, con la numeración de sus espacios."
       },
       {
         "src": "optimizadas/alrededores/imagenes/GUION_Y_BUSTO_ALEJANDRO_PETION_2.webp",
+        "med": "optimizadas/alrededores/imagenes/GUION_Y_BUSTO_ALEJANDRO_PETION_2-m.webp",
         "w": 1200,
         "h": 1600,
         "pie": "Busto de Alejandro Petión, presidente de Haití y aliado de Bolívar."
       },
       {
         "src": "optimizadas/alrededores/imagenes/MONUMENTO_SIMON_BOLIVAR_Y_BANDERAS_3.webp",
+        "med": "optimizadas/alrededores/imagenes/MONUMENTO_SIMON_BOLIVAR_Y_BANDERAS_3-m.webp",
         "w": 1600,
         "h": 1200,
         "pie": "Monumento a Simón Bolívar entre banderas, frente a la entrada."
       },
       {
         "src": "optimizadas/alrededores/imagenes/MURO_PLACAS_CONMEMORATIVAS_Y_DE_BATALLA.webp",
+        "med": "optimizadas/alrededores/imagenes/MURO_PLACAS_CONMEMORATIVAS_Y_DE_BATALLA-m.webp",
         "w": 1600,
         "h": 1200,
         "pie": "Muro con placas conmemorativas y de batallas."
       },
       {
         "src": "optimizadas/alrededores/imagenes/OBUS_Y_BALAS_DE_CANON.webp",
+        "med": "optimizadas/alrededores/imagenes/OBUS_Y_BALAS_DE_CANON-m.webp",
         "w": 1600,
         "h": 1200,
         "pie": "Obús y balas de cañón de hierro en la exposición de artillería."
       },
       {
         "src": "optimizadas/alrededores/imagenes/PLAZOLETA_Y_FUENTE_EXTERIOR_3.webp",
+        "med": "optimizadas/alrededores/imagenes/PLAZOLETA_Y_FUENTE_EXTERIOR_3-m.webp",
         "w": 1600,
         "h": 1200,
         "pie": "La fuente de la plazoleta exterior y los senderos del parque."
       },
       {
         "src": "optimizadas/alrededores/imagenes/RETRATO_GENERAL_JOSE_MARIA_CORDOVA_2.webp",
+        "med": "optimizadas/alrededores/imagenes/RETRATO_GENERAL_JOSE_MARIA_CORDOVA_2-m.webp",
         "w": 1200,
         "h": 1600,
         "pie": "Retrato del general José María Córdova."

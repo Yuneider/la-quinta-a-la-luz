@@ -51,7 +51,7 @@ ROOMS.forEach(r => {
   const c = CONTENIDO.espacios[r.id] || {};
   r.imgs = c.imgs || [];
   if (r.piece) Object.assign(r.piece, {title:c.titulo || r.name, meta:c.ficha || "", text:c.descripcion || PENDIENTE});
-  else r.space = c.descripcion || PENDIENTE;
+  else { r.space = c.descripcion || PENDIENTE; r.title = c.titulo || ""; }
 });
 Object.values(HIDDEN).forEach(h => {
   const c = CONTENIDO.uv[h.n] || {};

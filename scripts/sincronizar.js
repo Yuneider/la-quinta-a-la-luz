@@ -18,8 +18,9 @@
    Los textos también pueden ser .md. Cualquier otro archivo (creditos.md, etc.) se ignora.
 
    Imágenes: las fotos originales pesan varios MB. Si está instalado «sharp» (npm install), cada
-   imagen se copia a optimizadas/ en .webp de máximo 1600 px, ya girada según su EXIF, y la vista
-   carga esa copia. Solo se procesan las imágenes nuevas o cambiadas (optimizadas/manifiesto.json).
+   imagen se copia a optimizadas/ en .webp, ya girada según su EXIF, en dos tamaños: una copia
+   mediana (máximo 900 px, «-m.webp») que carga el carrusel y una grande (máximo 1600 px) que solo
+   se pide al ampliar la foto. Solo se procesan las imágenes nuevas o cambiadas (optimizadas/manifiesto.json).
    Sin sharp se reutilizan las copias que ya existan y, si no hay, se usa el original. */
 const fs = require("fs");
 const path = require("path");
@@ -31,7 +32,8 @@ const CONTENIDO = path.join(RAIZ, "contenido");
 const SALIDA = path.join(RAIZ, "js", "contenido.js");
 const OPTIMIZADAS = path.join(RAIZ, "optimizadas");
 const MANIFIESTO = path.join(OPTIMIZADAS, "manifiesto.json");
-const LADO_MAX = 1600, CALIDAD = 78;
+const LADO_MAX = 1600, CALIDAD = 78;   // copia grande: vista ampliada
+const LADO_MED = 900, CALIDAD_MED = 72; // copia mediana: carrusel del panel
 const IMAGEN = /\.(jpe?g|png|webp|gif|avif|svg)$/i;
 const RASTER = /\.(jpe?g|png|webp|avif)$/i;
 const avisos = [];
@@ -61,21 +63,26 @@ function nombreLegible(archivo){
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-/* Devuelve {src, w, h} de la copia web de `original` (la crea si hace falta). */
+/* Devuelve {src, med, w, h} de las copias web de `original` (las crea si hace falta). */
 async function optimizar(original){
   const clave = rel(original);
   if (!RASTER.test(original)) return {src:clave};
   const hash = crypto.createHash("sha1").update(fs.readFileSync(original)).digest("hex");
   const destino = path.join(OPTIMIZADAS, path.relative(CONTENIDO, original).replace(/\.[^.]+$/, ".webp"));
+  const mediana = destino.replace(/\.webp$/, "-m.webp");
   const previo = manifiesto[clave];
   usadas.add(clave);
-  if (previo && previo.hash === hash && fs.existsSync(path.join(RAIZ, previo.src))) return previo;
-  if (!sharp) { sinOptimizar++; return {src:clave}; }
+  const existe = f => f && fs.existsSync(path.join(RAIZ, f));
+  if (previo && previo.hash === hash && existe(previo.src) && existe(previo.med)) return previo;
+  if (!sharp) { sinOptimizar++; return previo && existe(previo.src) ? previo : {src:clave}; }
   fs.mkdirSync(path.dirname(destino), {recursive:true});
-  const info = await sharp(original).rotate().resize(LADO_MAX, LADO_MAX, {fit:"inside", withoutEnlargement:true})
+  const base = () => sharp(original).rotate();
+  const info = await base().resize(LADO_MAX, LADO_MAX, {fit:"inside", withoutEnlargement:true})
     .webp({quality:CALIDAD, effort:5}).toFile(destino);
+  await base().resize(LADO_MED, LADO_MED, {fit:"inside", withoutEnlargement:true})
+    .webp({quality:CALIDAD_MED, effort:5}).toFile(mediana);
   procesadas++;
-  return manifiesto[clave] = {src:rel(destino), w:info.width, h:info.height, hash};
+  return manifiesto[clave] = {src:rel(destino), med:rel(mediana), w:info.width, h:info.height, hash};
 }
 
 /* Lee contenido/pies-de-foto/<carpeta>.txt: líneas «ARCHIVO.jpg | pie». La clave es el nombre sin
@@ -101,12 +108,12 @@ async function imagenes(carpeta){
   const {pies, archivo} = piesDe(carpeta);
   const out = [];
   for (const f of listar(dir).filter(f => IMAGEN.test(f))) {
-    const {src, w, h} = await optimizar(path.join(dir, f));
+    const {src, med, w, h} = await optimizar(path.join(dir, f));
     const propio = ["txt", "md"].map(e => path.join(dir, f.replace(/\.[^.]+$/, "." + e))).find(fs.existsSync);
     const enLista = pies.get(sinExt(f));
     pies.delete(sinExt(f));
     const textoPie = propio ? leer(propio) : enLista ? enLista.texto : "";
-    out.push(Object.assign({src}, w ? {w, h} : {}, textoPie ? {pie:textoPie} : {alt:nombreLegible(f)}));
+    out.push(Object.assign({src}, med ? {med} : {}, w ? {w, h} : {}, textoPie ? {pie:textoPie} : {alt:nombreLegible(f)}));
   }
   for (const [nombre, {linea}] of pies) avisos.push(`${rel(archivo)}, línea ${linea}: no hay ninguna imagen «${nombre}» en ${rel(dir)}`);
   return out;
@@ -148,8 +155,10 @@ const datos = {
 /* Borra las copias web de imágenes que ya no están en contenido/ y guarda el manifiesto. */
 for (const clave of Object.keys(manifiesto)) {
   if (usadas.has(clave)) continue;
-  const copia = path.join(RAIZ, manifiesto[clave].src);
-  if (fs.existsSync(copia)) fs.unlinkSync(copia);
+  for (const f of [manifiesto[clave].src, manifiesto[clave].med].filter(Boolean)) {
+    const copia = path.join(RAIZ, f);
+    if (fs.existsSync(copia)) fs.unlinkSync(copia);
+  }
   delete manifiesto[clave];
 }
 if (procesadas || Object.keys(manifiesto).length !== usadas.size || !fs.existsSync(MANIFIESTO)) {

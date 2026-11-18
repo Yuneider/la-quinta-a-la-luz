@@ -11,7 +11,8 @@ function mapRect(){ const a = svgToScreen([164,192]), b = svgToScreen([646,720])
 function gallery(imgs, label){
   const list = (imgs || []).map(i => typeof i === "string" ? {src:i} : i);
   if (!list.length) return `<div class="foto">${esc(label)}</div>`;
-  const slides = list.map((im, i) => `<figure class="slide"><span class="blur" aria-hidden="true"></span><img src="${esc(im.src)}" alt="${esc(im.pie || im.alt || label)}"${im.w ? ` width="${im.w}" height="${im.h}"` : ""} loading="${i ? "lazy" : "eager"}" decoding="async">${im.pie ? `<figcaption>${esc(im.pie)}</figcaption>` : ""}</figure>`).join("");
+  // El carrusel carga la copia mediana (`med`); la grande (`src`) solo se pide en la vista ampliada.
+  const slides = list.map((im, i) => `<figure class="slide"><span class="blur" aria-hidden="true"></span><img src="${esc(im.med || im.src)}" data-full="${esc(im.src)}" alt="${esc(im.pie || im.alt || label)}"${im.w ? ` width="${im.w}" height="${im.h}"` : ""}${i ? "" : ` fetchpriority="high"`} decoding="async">${im.pie ? `<figcaption>${esc(im.pie)}</figcaption>` : ""}</figure>`).join("");
   const nav = list.length > 1 ? `<button class="gbtn prev" type="button" aria-label="Imagen anterior">‹</button><button class="gbtn next" type="button" aria-label="Imagen siguiente">›</button><span class="gcount">1 / ${list.length}</span>` : "";
   const zoom = `<button class="gzoom" type="button" aria-label="Ver imagen ampliada"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>`;
   return `<div class="gal"><div class="track" tabindex="0" role="group" aria-label="Imágenes: ${esc(label)}">${slides}</div>${nav}${zoom}</div>`;
@@ -53,7 +54,10 @@ let lbImgs = [], lbAt = 0, lbTrack = null;
 function showLightbox(i){
   lbAt = (i + lbImgs.length) % lbImgs.length;
   const src = lbImgs[lbAt], img = lightbox.querySelector("img");
+  // Mientras llega la copia grande se ve la mediana (ya en caché), sin pantalla vacía.
   img.src = src.getAttribute("src"); img.alt = src.alt;
+  const full = src.dataset.full;
+  if (full && full !== img.getAttribute("src")) { const big = new Image(); big.onload = () => { if (lbImgs[lbAt] === src) img.src = full; }; big.src = full; }
   const pie = src.parentNode.querySelector("figcaption");
   lightbox.querySelector("figcaption").textContent = pie ? pie.textContent : src.alt;
   lightbox.querySelector(".gcount").textContent = lbImgs.length > 1 ? `${lbAt + 1} / ${lbImgs.length}` : "";
@@ -108,8 +112,9 @@ function openRoom(id){
       ${gallery(r.imgs, "Fotografía de la pieza")}
       <p>${esc(p.text)}</p>${notice}`;
   } else {
-    html = `<div class="head"><span class="big">${pad(r.id)}</span><div class="head-txt"><span class="kicker">Espacio</span><span class="room-name">Sin pieza en exhibición</span></div></div>
-      <h2>${esc(r.name)}</h2>${r.imgs.length ? gallery(r.imgs, r.name) : ""}<p>${esc(r.space)}</p>${notice}`;
+    // Espacio sin una pieza destacada (jardín, despensa…): se presenta el espacio con sus fotos.
+    html = `<div class="head"><span class="big">${pad(r.id)}</span><div class="head-txt"><span class="kicker">Espacio del recorrido</span><span class="room-name">${esc(r.name)}</span></div></div>
+      ${r.title ? `<h2>${esc(r.title)}</h2>` : ""}${r.imgs.length ? gallery(r.imgs, r.name) : `<p class="meta">Sin pieza en exhibición.</p>`}<p>${esc(r.space)}</p>${notice}`;
   }
   openCard(html, "", r.c);
   activeRoom = id;
@@ -182,3 +187,22 @@ function openHidden(key){
     ${done ? `<button class="btn gold" type="button" id="toFinal">Cerrar el expediente</button>` : `<p class="meta">${S.found.length} de 10 evidencias.</p>`}`, "secret", r.c);
   const tf = $("toFinal"); if (tf) tf.onclick = showFinal;
 }
+
+/* Precarga en segundo plano: cuando la página ya cargó, se piden una a una las fotos del carrusel
+   (primero la portada de cada espacio, luego las demás), para que al abrir un espacio ya estén en
+   caché. Se omite si el visitante pidió ahorrar datos. */
+function preloadImages(){
+  if (navigator.connection && navigator.connection.saveData) return;
+  const src = im => typeof im === "string" ? im : (im.med || im.src);
+  const groups = ROOMS.map(r => r.imgs).concat([AROUND.imgs], Object.values(HIDDEN).map(h => h.imgs));
+  const queue = [...new Set([...groups.map(g => g[0]), ...groups.flatMap(g => g.slice(1))].filter(Boolean).map(src))];
+  const idle = window.requestIdleCallback || (f => setTimeout(f, 200));
+  const next = () => {
+    const url = queue.shift(); if (!url) return;
+    const im = new Image(); im.decoding = "async";
+    im.onload = im.onerror = () => idle(next);
+    im.src = url;
+  };
+  idle(next);
+}
+if (document.readyState === "complete") preloadImages(); else addEventListener("load", preloadImages);

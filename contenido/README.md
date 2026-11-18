@@ -13,7 +13,7 @@ npm install                 (solo la primera vez: instala el optimizador de imá
 node scripts/sincronizar.js
 ```
 
-Las fotos se pueden subir tal como salen de la cámara: la sincronización crea en `optimizadas/` una copia `.webp` de máximo 1600 px, ya girada, y esa copia es la que carga la vista. Los originales quedan intactos en `contenido/`. El orden del carrusel es alfabético: la foto de portada lleva el prefijo `01_` (para ordenar las demás, usa `02_`, `03_`…).
+Las fotos se pueden subir tal como salen de la cámara: la sincronización crea en `optimizadas/` dos copias `.webp` ya giradas: una mediana (máximo 900 px, `-m.webp`) que carga el carrusel y una grande (máximo 1600 px) que solo se pide al ampliar la foto. La vista además precarga en segundo plano las fotos de todos los espacios, para que al abrir uno ya estén listas. Los originales quedan intactos en `contenido/`. El orden del carrusel es alfabético: la foto de portada lleva el prefijo `01_` (para ordenar las demás, usa `02_`, `03_`…).
 
 ## Archivos que lee la vista
 
