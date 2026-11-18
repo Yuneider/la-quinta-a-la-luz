@@ -49,6 +49,10 @@ function drawPlan(){
   el("circle", {cx:ENTRY[0], cy:ENTRY[1], r:4.5, class:"here"}, plan);
   txt(plan, 470, 712, "Entrada", "svg-label", {"text-anchor":"end"});
   txt(plan, 590, 712, "Salida", "svg-label");
+  BUILDINGS.forEach(b => {
+    const g = el("g", {class:"building", "aria-hidden":"true"}, plan);
+    b.rects.forEach(([x,y,w,h]) => el("rect", {x,y,width:w,height:h,class:"shape"}, g));
+  });
   ROOMS.filter(r => !r.garden).forEach(r => drawRoom(r, plan));
 
   if (S.lanternRoom && !S.lanternTaken) drawLantern(S.lanternRoom);

@@ -1,0 +1,5 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_MIRADOR_Y_BANO_DE_ASIENTO.jpg | El baño de asiento: pileta de piedra alimentada por un chorro de agua.
+MIRADOR_EXTERIOR.jpeg | El mirador visto desde el jardín.

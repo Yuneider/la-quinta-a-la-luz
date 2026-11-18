@@ -1,6 +1,6 @@
 # La Quinta a la luz
 
-Recorrido interactivo por la Casa Museo Quinta de Bolívar: un plano con 17 espacios, las piezas que muestra el museo y una capa oculta que aparece con la linterna UV.
+Recorrido interactivo por la Casa Museo Quinta de Bolívar: un plano con 14 espacios, sus alrededores, las piezas que muestra el museo y una capa oculta que aparece con la linterna UV.
 
 ## Verlo
 
@@ -29,7 +29,8 @@ Abre `index.html` en el navegador. No necesita instalación ni servidor.
   - `app.js` — arranque (se carga de último).
 - `assets/` — archivos que la vista ya usa (el plano oficial del museo).
 - `contenido/` — **la fuente de los textos e imágenes**: una carpeta por espacio y, en `contenido/uv/`, una por evidencia de la capa oculta; cada una con `imagenes/`, `sonido/` y `texto/`. Ver [contenido/README.md](contenido/README.md).
-- `scripts/sincronizar.js` — pasa lo que hay en `contenido/` a `js/contenido.js`.
+- `scripts/sincronizar.js` — pasa lo que hay en `contenido/` a `js/contenido.js` y crea las copias web de las imágenes.
+- `optimizadas/` — copias `.webp` de las imágenes que carga la vista. Se generan solas; no se editan a mano.
 
 ## Cómo cambiar textos e imágenes
 
@@ -44,11 +45,11 @@ Para ver el cambio en tu computador antes de subirlo, corre el mismo comando (ne
 node scripts/sincronizar.js
 ```
 
-Todas las imágenes de una carpeta salen en su carrusel en orden alfabético; con la carpeta vacía aparece el recuadro de «foto pendiente». La meta es reunir unas 50 imágenes entre los 17 espacios y las 10 evidencias (dos o tres por cada uno).
+Todas las imágenes de una carpeta salen en su carrusel en orden alfabético; la que empieza por `01_` es la portada. Las fotos se suben tal como salen de la cámara: `scripts/sincronizar.js` crea en `optimizadas/` una copia `.webp` liviana (necesita `npm install` una vez; la acción de GitHub lo hace sola). Los pies de foto se editan en [contenido/pies-de-foto/](contenido/pies-de-foto/).
 
 Los sonidos de `contenido/` todavía no se conectan a la vista.
 
 ## Reglas del recorrido
 
-- La linterna UV aparece al visitar más de la mitad de los espacios (9 de 17). Se cambia con `UNLOCK_AT` en `js/datos.js`.
+- La linterna UV aparece al visitar más de la mitad de los espacios (8 de 14). Se cambia con `UNLOCK_AT` en `js/datos.js`.
 - El tamaño del haz UV es `R_LIGHT` en `js/datos.js`: más pequeño, más difícil encontrar las huellas.

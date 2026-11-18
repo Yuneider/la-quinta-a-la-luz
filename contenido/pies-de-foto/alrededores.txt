@@ -1,0 +1,19 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_FUENTE_Y_ENTRADA_QUINTA_DE_BOLIVAR.jpg | Plazoleta y fuente frente a la portada de entrada a la Quinta.
+BROCHE_ESCUDO_ESCUELA_MILITAR_CORDOVA.jpg | Broche con el escudo de la Escuela Militar José María Córdova, en la entrada del museo.
+CANON_EL_ARAGON_CON_CURENA_3.jpg | El cañón «El Aragón» sobre su cureña de madera.
+CANON_LA_CATIN_Y_LA_VICTORIEUSE.jpg | Los cañones «La Catin» y «La Victorieuse» en la exposición de artillería.
+CORREDOR_EXPOSICION_CANONES_1.jpg | Corredor de la exposición «Cuando los cañones tenían nombre».
+GUION_CUANDO_LOS_CANONES_TENIAN_NOMBRE.jpg | Panel de presentación de la colección de artillería de la Casa Museo.
+GUION_HISTORIA_Y_MEMORIA_DEL_LUGAR.jpg | Panel «Historia y memoria del lugar».
+GUION_PLACAS_DE_BATALLAS.jpg | Placas con los nombres y fechas de batallas de la Independencia.
+GUION_PLACA_VENEZUELA_A_SIMON_BOLIVAR.jpg | Placa de Venezuela «a la memoria de su hijo insigne el Libertador Simón Bolívar, en el centenario de su muerte» (1930).
+GUION_PLANO_RECORRIDO_MUSEO.jpg | Plano del recorrido del museo, con la numeración de sus espacios.
+GUION_Y_BUSTO_ALEJANDRO_PETION_2.jpg | Busto de Alejandro Petión, presidente de Haití y aliado de Bolívar.
+MONUMENTO_SIMON_BOLIVAR_Y_BANDERAS_3.jpg | Monumento a Simón Bolívar entre banderas, frente a la entrada.
+MURO_PLACAS_CONMEMORATIVAS_Y_DE_BATALLA.jpg | Muro con placas conmemorativas y de batallas.
+OBUS_Y_BALAS_DE_CANON.jpg | Obús y balas de cañón de hierro en la exposición de artillería.
+PLAZOLETA_Y_FUENTE_EXTERIOR_3.jpg | La fuente de la plazoleta exterior y los senderos del parque.
+RETRATO_GENERAL_JOSE_MARIA_CORDOVA_2.jpg | Retrato del general José María Córdova.

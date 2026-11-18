@@ -1,0 +1,368 @@
+{
+  "contenido/01-jardin/imagenes/01_PAISES_PLAZA_DE_BANDERAS_1.jpg": {
+    "src": "optimizadas/01-jardin/imagenes/01_PAISES_PLAZA_DE_BANDERAS_1.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "dc15c41f3792c6ba4841a49fd434af2c0f9b279b"
+  },
+  "contenido/01-jardin/imagenes/ARBOL_LAUREL_CONMEMORATIVO.jpg": {
+    "src": "optimizadas/01-jardin/imagenes/ARBOL_LAUREL_CONMEMORATIVO.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "85c872fe03e47964913f274af628fa5ef862832f"
+  },
+  "contenido/01-jardin/imagenes/BUSTO_BOLIVAR_FUNDADOR_DE_LA_REPUBLICA.jpg": {
+    "src": "optimizadas/01-jardin/imagenes/BUSTO_BOLIVAR_FUNDADOR_DE_LA_REPUBLICA.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "f9f58b8fb6ec9bfde8946835fec25f1dcba918fd"
+  },
+  "contenido/01-jardin/imagenes/CANON_DEL_JARDIN_2.jpg": {
+    "src": "optimizadas/01-jardin/imagenes/CANON_DEL_JARDIN_2.webp",
+    "w": 900,
+    "h": 1600,
+    "hash": "9fc8848d2a5c040610015c2b1b583eab901d54a1"
+  },
+  "contenido/01-jardin/imagenes/COLOMBIA.jpg": {
+    "src": "optimizadas/01-jardin/imagenes/COLOMBIA.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "30eed00e3cf1465b98c25ec418ff26e8e4fdaf90"
+  },
+  "contenido/01-jardin/imagenes/JARDIN_ARCO_Y_SENDERO_2.jpeg": {
+    "src": "optimizadas/01-jardin/imagenes/JARDIN_ARCO_Y_SENDERO_2.webp",
+    "w": 1201,
+    "h": 1600,
+    "hash": "697f81873c2cb4a2809707ae1f3e7e219e8bea5c"
+  },
+  "contenido/01-jardin/imagenes/JARDIN_FUENTE_2.jpg": {
+    "src": "optimizadas/01-jardin/imagenes/JARDIN_FUENTE_2.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "3c5505c323fbb846f3ef83997753c31003871dff"
+  },
+  "contenido/01-jardin/imagenes/MONUMENTO_CENTRAL_VENEZUELA_COLOMBIA.jpg": {
+    "src": "optimizadas/01-jardin/imagenes/MONUMENTO_CENTRAL_VENEZUELA_COLOMBIA.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "351fbb5f30f590175440abeac5e16fea3beac4eb"
+  },
+  "contenido/02-salon-de-la-estufa/imagenes/01_SALON_DE_LA_ESTUFA_1.jpg": {
+    "src": "optimizadas/02-salon-de-la-estufa/imagenes/01_SALON_DE_LA_ESTUFA_1.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "80d394898c75a0383c8745b56556d70fa5076db2"
+  },
+  "contenido/02-salon-de-la-estufa/imagenes/SALON_DE_LA_ESTUFA_ADORNO_MESA.jpg": {
+    "src": "optimizadas/02-salon-de-la-estufa/imagenes/SALON_DE_LA_ESTUFA_ADORNO_MESA.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "c24ab5a82d9f500ba1c9b4bad5327302b95ea3a3"
+  },
+  "contenido/03-salon-de-manuelita/imagenes/01_SALON_DE_MANUELITA_2.jpg": {
+    "src": "optimizadas/03-salon-de-manuelita/imagenes/01_SALON_DE_MANUELITA_2.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "e23b423b0e7f575540b5096707e5c7111fe95307"
+  },
+  "contenido/03-salon-de-manuelita/imagenes/RETRATO_MANUELA_SAENZ.jpg": {
+    "src": "optimizadas/03-salon-de-manuelita/imagenes/RETRATO_MANUELA_SAENZ.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "26eb2e86d989afccb5655cfc96cc59fe42a489c2"
+  },
+  "contenido/04-gran-salon/imagenes/01_BOLIVAR_CON_LA_ALEGORIA_DE_AMERICA.jpg": {
+    "src": "optimizadas/04-gran-salon/imagenes/01_BOLIVAR_CON_LA_ALEGORIA_DE_AMERICA.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "5b1b19dc4afb469617c594ae6bb0dc7ca28632c2"
+  },
+  "contenido/04-gran-salon/imagenes/GRAN_SALON_1.jpg": {
+    "src": "optimizadas/04-gran-salon/imagenes/GRAN_SALON_1.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "2a58387789a79bb18dc75051a140cc0bd8be8bb6"
+  },
+  "contenido/04-gran-salon/imagenes/GRAN_SALON_4.jpg": {
+    "src": "optimizadas/04-gran-salon/imagenes/GRAN_SALON_4.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "8bea98d56da9c91a799106c758cdd1ef85b02ecd"
+  },
+  "contenido/05-comedor/imagenes/01_COMEDOR_1.jpg": {
+    "src": "optimizadas/05-comedor/imagenes/01_COMEDOR_1.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "40159f2a0d52702e08a4e549d60ce4a82a4e22c4"
+  },
+  "contenido/05-comedor/imagenes/COMEDOR_2.jpg": {
+    "src": "optimizadas/05-comedor/imagenes/COMEDOR_2.webp",
+    "w": 900,
+    "h": 1600,
+    "hash": "988decd58e6ff192689a83c0a3e64901fbcffa62"
+  },
+  "contenido/06-salon-de-juegos/imagenes/01_SALON_DE_JUEGOS_2.jpg": {
+    "src": "optimizadas/06-salon-de-juegos/imagenes/01_SALON_DE_JUEGOS_2.webp",
+    "w": 900,
+    "h": 1600,
+    "hash": "f5502891443a5218b4def6239e4192c7e15b3af2"
+  },
+  "contenido/06-salon-de-juegos/imagenes/SALON_DE_JUEGOS_NAIPES_DETALLE.jpeg": {
+    "src": "optimizadas/06-salon-de-juegos/imagenes/SALON_DE_JUEGOS_NAIPES_DETALLE.webp",
+    "w": 1600,
+    "h": 900,
+    "hash": "d43e6c28cb14fd6ae259d7766d853b1dd3cad764"
+  },
+  "contenido/07-alcoba-del-libertador/imagenes/01_ALCOBA_DEL_LIBERTADOR_2.jpg": {
+    "src": "optimizadas/07-alcoba-del-libertador/imagenes/01_ALCOBA_DEL_LIBERTADOR_2.webp",
+    "w": 1000,
+    "h": 750,
+    "hash": "f88b570c408007acbc3592315166edec50448522"
+  },
+  "contenido/07-alcoba-del-libertador/imagenes/ALCOBA_DEL_LIBERTADOR_1.webp": {
+    "src": "optimizadas/07-alcoba-del-libertador/imagenes/ALCOBA_DEL_LIBERTADOR_1.webp",
+    "w": 943,
+    "h": 1023,
+    "hash": "ec1394d0b85704e62d10d892abfb9869afd2f292"
+  },
+  "contenido/08-alcoba-de-jose-palacios/imagenes/01_ALCOBA_JOSE_PALACIOS_1.jpg": {
+    "src": "optimizadas/08-alcoba-de-jose-palacios/imagenes/01_ALCOBA_JOSE_PALACIOS_1.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "7203631a007326276df8248df261d87bedcef3d0"
+  },
+  "contenido/08-alcoba-de-jose-palacios/imagenes/ALCOBA_JOSE_PALACIOS_2.jpg": {
+    "src": "optimizadas/08-alcoba-de-jose-palacios/imagenes/ALCOBA_JOSE_PALACIOS_2.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "cfae3343642c6653db87c9a18e86a4e400c05b19"
+  },
+  "contenido/09-despensa/imagenes/01_DESPENSA_MESA_Y_PROVISIONES_1.jpeg": {
+    "src": "optimizadas/09-despensa/imagenes/01_DESPENSA_MESA_Y_PROVISIONES_1.webp",
+    "w": 1600,
+    "h": 900,
+    "hash": "91484122da555a321708e06b701f2a340e790192"
+  },
+  "contenido/09-despensa/imagenes/DESPENSA_BARRILES_Y_ALACENA.jpeg": {
+    "src": "optimizadas/09-despensa/imagenes/DESPENSA_BARRILES_Y_ALACENA.webp",
+    "w": 1600,
+    "h": 900,
+    "hash": "63522eafd64be7374c186401da5a084bee3499bb"
+  },
+  "contenido/10-cocina/imagenes/01_COCINA_VISTA_GENERAL_2.jpg": {
+    "src": "optimizadas/10-cocina/imagenes/01_COCINA_VISTA_GENERAL_2.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "e24a8050ab99cfc0a223de3f046f83ff49920526"
+  },
+  "contenido/10-cocina/imagenes/COCINA_OLLAS_DE_BARRO_1.jpg": {
+    "src": "optimizadas/10-cocina/imagenes/COCINA_OLLAS_DE_BARRO_1.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "a3f29c595e9f5adf82450160280d35e89a2d9863"
+  },
+  "contenido/11-graneros-y-caballerizas/imagenes/01_CABALLERIZAS_1.jpg": {
+    "src": "optimizadas/11-graneros-y-caballerizas/imagenes/01_CABALLERIZAS_1.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "3bfbb9a68afda4bbe5ca3b916c47a4afede42cc3"
+  },
+  "contenido/11-graneros-y-caballerizas/imagenes/MONTURAS_Y_ESTRIBOS.jpg": {
+    "src": "optimizadas/11-graneros-y-caballerizas/imagenes/MONTURAS_Y_ESTRIBOS.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "2b5e8ed976382bafe837eb2cd3a31c015fb7e2e8"
+  },
+  "contenido/12-huerta/imagenes/01_HUERTA_SENDERO_Y_PLANTAS_2.jpeg": {
+    "src": "optimizadas/12-huerta/imagenes/01_HUERTA_SENDERO_Y_PLANTAS_2.webp",
+    "w": 1600,
+    "h": 893,
+    "hash": "389f08bb7b97dda1be92baaba4a5886cbd356db8"
+  },
+  "contenido/12-huerta/imagenes/HUERTA_PLANTAS_Y_CULTIVOS.jpg": {
+    "src": "optimizadas/12-huerta/imagenes/HUERTA_PLANTAS_Y_CULTIVOS.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "9060d2d7f4a5b03d1984085ddb872933cf7119cb"
+  },
+  "contenido/13-mirador-y-bano-de-asiento/imagenes/01_MIRADOR_Y_BANO_DE_ASIENTO.jpg": {
+    "src": "optimizadas/13-mirador-y-bano-de-asiento/imagenes/01_MIRADOR_Y_BANO_DE_ASIENTO.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "c185944af896940c2922571644de9c915551d08b"
+  },
+  "contenido/13-mirador-y-bano-de-asiento/imagenes/MIRADOR_EXTERIOR.jpeg": {
+    "src": "optimizadas/13-mirador-y-bano-de-asiento/imagenes/MIRADOR_EXTERIOR.webp",
+    "w": 1600,
+    "h": 900,
+    "hash": "5a17a5eff79421d67a3a0e118c0dfae6a1f55462"
+  },
+  "contenido/14-alberca/imagenes/01_ALBERCA_INTERIOR_1.jpg": {
+    "src": "optimizadas/14-alberca/imagenes/01_ALBERCA_INTERIOR_1.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "06dd779c96a963098f283f27f8a96785813ad4a0"
+  },
+  "contenido/14-alberca/imagenes/ALBERCA_ENTRADA_EXTERIOR.jpg": {
+    "src": "optimizadas/14-alberca/imagenes/ALBERCA_ENTRADA_EXTERIOR.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "c275b8e8004debd2b510db174d41362952a549af"
+  },
+  "contenido/alrededores/imagenes/01_FUENTE_Y_ENTRADA_QUINTA_DE_BOLIVAR.jpg": {
+    "src": "optimizadas/alrededores/imagenes/01_FUENTE_Y_ENTRADA_QUINTA_DE_BOLIVAR.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "59ba90142fba7668caaa917452b684339da0d57d"
+  },
+  "contenido/alrededores/imagenes/BROCHE_ESCUDO_ESCUELA_MILITAR_CORDOVA.jpg": {
+    "src": "optimizadas/alrededores/imagenes/BROCHE_ESCUDO_ESCUELA_MILITAR_CORDOVA.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "b92ac45625e8952a3582f79405853efc5b0db2d2"
+  },
+  "contenido/alrededores/imagenes/CANON_EL_ARAGON_CON_CURENA_3.jpg": {
+    "src": "optimizadas/alrededores/imagenes/CANON_EL_ARAGON_CON_CURENA_3.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "136038071e1d298ccbe1bd5de3a803a0494393dd"
+  },
+  "contenido/alrededores/imagenes/CANON_LA_CATIN_Y_LA_VICTORIEUSE.jpg": {
+    "src": "optimizadas/alrededores/imagenes/CANON_LA_CATIN_Y_LA_VICTORIEUSE.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "e1ffb26e43a1b94d5d7f98afff9ff9c5af7b0324"
+  },
+  "contenido/alrededores/imagenes/CORREDOR_EXPOSICION_CANONES_1.jpg": {
+    "src": "optimizadas/alrededores/imagenes/CORREDOR_EXPOSICION_CANONES_1.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "cb1d434fd84a86a813414f5dabee73d8aae714c3"
+  },
+  "contenido/alrededores/imagenes/GUION_CUANDO_LOS_CANONES_TENIAN_NOMBRE.jpg": {
+    "src": "optimizadas/alrededores/imagenes/GUION_CUANDO_LOS_CANONES_TENIAN_NOMBRE.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "287d8bd3d363485a2100e41626aa87d6cff0a41e"
+  },
+  "contenido/alrededores/imagenes/GUION_HISTORIA_Y_MEMORIA_DEL_LUGAR.jpg": {
+    "src": "optimizadas/alrededores/imagenes/GUION_HISTORIA_Y_MEMORIA_DEL_LUGAR.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "edee72ed6199d7db08ddf9985f712807282c158f"
+  },
+  "contenido/alrededores/imagenes/GUION_PLACA_VENEZUELA_A_SIMON_BOLIVAR.jpg": {
+    "src": "optimizadas/alrededores/imagenes/GUION_PLACA_VENEZUELA_A_SIMON_BOLIVAR.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "0c546f556c9721a6da93acc57a2e50ee682d06a0"
+  },
+  "contenido/alrededores/imagenes/GUION_PLACAS_DE_BATALLAS.jpg": {
+    "src": "optimizadas/alrededores/imagenes/GUION_PLACAS_DE_BATALLAS.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "44c9101177b09a8ee492c5b3fa040d9918318334"
+  },
+  "contenido/alrededores/imagenes/GUION_PLANO_RECORRIDO_MUSEO.jpg": {
+    "src": "optimizadas/alrededores/imagenes/GUION_PLANO_RECORRIDO_MUSEO.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "fdd341748a102329fd7ed6c5e213762728aead1f"
+  },
+  "contenido/alrededores/imagenes/GUION_Y_BUSTO_ALEJANDRO_PETION_2.jpg": {
+    "src": "optimizadas/alrededores/imagenes/GUION_Y_BUSTO_ALEJANDRO_PETION_2.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "c64e1acc932aa9d15fa890c72f97a1a7fe57d367"
+  },
+  "contenido/alrededores/imagenes/MONUMENTO_SIMON_BOLIVAR_Y_BANDERAS_3.jpg": {
+    "src": "optimizadas/alrededores/imagenes/MONUMENTO_SIMON_BOLIVAR_Y_BANDERAS_3.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "1c482f9c961a8e148a100828877398f1092e9e15"
+  },
+  "contenido/alrededores/imagenes/MURO_PLACAS_CONMEMORATIVAS_Y_DE_BATALLA.jpg": {
+    "src": "optimizadas/alrededores/imagenes/MURO_PLACAS_CONMEMORATIVAS_Y_DE_BATALLA.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "0cd6d5b4b2414db8df56af7f91074e81f2bbf92d"
+  },
+  "contenido/alrededores/imagenes/OBUS_Y_BALAS_DE_CANON.jpg": {
+    "src": "optimizadas/alrededores/imagenes/OBUS_Y_BALAS_DE_CANON.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "46f075c3727ff41bf031ce5450ea7f3579868078"
+  },
+  "contenido/alrededores/imagenes/PLAZOLETA_Y_FUENTE_EXTERIOR_3.jpg": {
+    "src": "optimizadas/alrededores/imagenes/PLAZOLETA_Y_FUENTE_EXTERIOR_3.webp",
+    "w": 1600,
+    "h": 1200,
+    "hash": "3e8824f033ae3386fda98805f4ad07b6d6de4249"
+  },
+  "contenido/alrededores/imagenes/RETRATO_GENERAL_JOSE_MARIA_CORDOVA_2.jpg": {
+    "src": "optimizadas/alrededores/imagenes/RETRATO_GENERAL_JOSE_MARIA_CORDOVA_2.webp",
+    "w": 1200,
+    "h": 1600,
+    "hash": "5071415d598243148a9f81a77d810943878e0c65"
+  },
+  "contenido/uv/01-tributo/imagenes/01_LA_AMERICA_QUE_PAGABA_TRIBUTO.jpg": {
+    "src": "optimizadas/uv/01-tributo/imagenes/01_LA_AMERICA_QUE_PAGABA_TRIBUTO.webp",
+    "w": 1280,
+    "h": 1017,
+    "hash": "cd85ab5750065f24b744a6c3eb6a3aca862cb4d7"
+  },
+  "contenido/uv/02-dictadura/imagenes/02_EL_LIBERTADOR_DICTADOR.jpg": {
+    "src": "optimizadas/uv/02-dictadura/imagenes/02_EL_LIBERTADOR_DICTADOR.webp",
+    "w": 832,
+    "h": 1200,
+    "hash": "4b72cc8a4c2b8b28a4c351a9173a9adaa7c00295"
+  },
+  "contenido/uv/03-manuela/imagenes/03_LA_QUE_SALVO_AL_LIBERTADOR.jpg": {
+    "src": "optimizadas/uv/03-manuela/imagenes/03_LA_QUE_SALVO_AL_LIBERTADOR.webp",
+    "w": 1280,
+    "h": 1543,
+    "hash": "9ed85e079f003b4eb0c15dad594441765838064d"
+  },
+  "contenido/uv/04-piar/imagenes/04_EL_FUSILAMIENTO_DE_PIAR.jpg": {
+    "src": "optimizadas/uv/04-piar/imagenes/04_EL_FUSILAMIENTO_DE_PIAR.webp",
+    "w": 879,
+    "h": 744,
+    "hash": "c113f896744ae620aa078f3dd6f60a15df88023c"
+  },
+  "contenido/uv/05-bentham/imagenes/05_LIBROS_PROHIBIDOS.jpg": {
+    "src": "optimizadas/uv/05-bentham/imagenes/05_LIBROS_PROHIBIDOS.webp",
+    "w": 1280,
+    "h": 947,
+    "hash": "abfd497410831667d4a42fbb2dc9d6b0c380ab4f"
+  },
+  "contenido/uv/06-esclavitud/imagenes/06_LA_CASA_QUE_OTROS_MANTENIAN.jpg": {
+    "src": "optimizadas/uv/06-esclavitud/imagenes/06_LA_CASA_QUE_OTROS_MANTENIAN.webp",
+    "w": 1280,
+    "h": 871,
+    "hash": "2ac581e1adc95978e9603c54b7cda43a10ff8e9e"
+  },
+  "contenido/uv/07-padilla/imagenes/07_EL_ALMIRANTE_FUSILADO.jpg": {
+    "src": "optimizadas/uv/07-padilla/imagenes/07_EL_ALMIRANTE_FUSILADO.webp",
+    "w": 961,
+    "h": 1036,
+    "hash": "2457673e01254cc93ed7d5ca056c3d4d205f248f"
+  },
+  "contenido/uv/08-miranda/imagenes/08_LA_ENTREGA_DE_MIRANDA.jpg": {
+    "src": "optimizadas/uv/08-miranda/imagenes/08_LA_ENTREGA_DE_MIRANDA.webp",
+    "w": 1280,
+    "h": 1018,
+    "hash": "b58f111d016233f7488127001d156c33a470c21c"
+  },
+  "contenido/uv/09-laguaira/imagenes/09_LOS_PRISIONEROS_DE_LA_GUAIRA.jpg": {
+    "src": "optimizadas/uv/09-laguaira/imagenes/09_LOS_PRISIONEROS_DE_LA_GUAIRA.webp",
+    "w": 1280,
+    "h": 887,
+    "hash": "5bbbd56b542c6f43a344324e388f2981eb663718"
+  },
+  "contenido/uv/10-guerramuerte/imagenes/10_GUERRA_A_MUERTE.jpg": {
+    "src": "optimizadas/uv/10-guerramuerte/imagenes/10_GUERRA_A_MUERTE.webp",
+    "w": 930,
+    "h": 657,
+    "hash": "a4c8f127ba72d4d353cfb68e5d442bf342d13184"
+  }
+}

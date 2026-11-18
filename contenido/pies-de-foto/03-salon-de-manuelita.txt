@@ -1,0 +1,5 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_SALON_DE_MANUELITA_2.jpg | El salón de Manuelita, con sus sofás tapizados en rojo y su mobiliario de época.
+RETRATO_MANUELA_SAENZ.jpg | Retrato de Manuela Sáenz que se exhibe en el salón.

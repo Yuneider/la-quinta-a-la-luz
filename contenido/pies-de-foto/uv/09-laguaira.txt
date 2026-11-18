@@ -1,0 +1,4 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+09_LOS_PRISIONEROS_DE_LA_GUAIRA.jpg | Francisco de Goya, «No se puede mirar», de la serie «Los desastres de la guerra».

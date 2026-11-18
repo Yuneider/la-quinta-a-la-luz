@@ -1,0 +1,4 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_LA_AMERICA_QUE_PAGABA_TRIBUTO.jpg | «Carguero de la montaña de Sonsón, Estado de Antioquia», lámina de la Comisión Corográfica (siglo XIX).

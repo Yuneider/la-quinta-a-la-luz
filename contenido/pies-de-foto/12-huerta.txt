@@ -1,0 +1,5 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_HUERTA_SENDERO_Y_PLANTAS_2.jpeg | La huerta junto a las construcciones de la Quinta.
+HUERTA_PLANTAS_Y_CULTIVOS.jpg | Plantas, árboles y cultivos de la huerta.

@@ -1,0 +1,6 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_BOLIVAR_CON_LA_ALEGORIA_DE_AMERICA.jpg | Pedro José Figueroa, «Bolívar con la alegoría de América» (1819), óleo sobre tela.
+GRAN_SALON_1.jpg | Vista general del Gran salón, con sus sillas y canapés de época bajo la lámpara de cristal.
+GRAN_SALON_4.jpg | Rincón del Gran salón, con una pieza en vitrina y cortinas rojas.

@@ -16,7 +16,7 @@ Bajo la luz UV este espacio revela la evidencia 7, «El almirante fusilado». Su
 
 ## imagenes/
 
-Todas las imágenes de esta carpeta salen en el carrusel, en orden alfabético (`01-frente.jpg`, `02-detalle.jpg`…). Para ponerle pie de foto a una imagen, crea un `.txt` con el mismo nombre: `01-frente.jpg` → `01-frente.txt`.
+Todas las imágenes de esta carpeta salen en el carrusel, en orden alfabético; la que empieza por `01_` es la portada. Se pueden subir tal como salen de la cámara: la sincronización crea la copia liviana. Los pies de foto están en [../pies-de-foto/05-comedor.txt](../pies-de-foto/05-comedor.txt).
 
 ## sonido/
 

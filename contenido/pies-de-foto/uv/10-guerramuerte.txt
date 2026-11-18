@@ -1,0 +1,4 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+10_GUERRA_A_MUERTE.jpg | Recreación pictórica de Bolívar firmando un decreto ante sus oficiales.

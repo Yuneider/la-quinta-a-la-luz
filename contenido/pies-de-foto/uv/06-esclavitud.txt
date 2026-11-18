@@ -1,0 +1,4 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+06_LA_CASA_QUE_OTROS_MANTENIAN.jpg | Johann Moritz Rugendas, «Nègres à fond de cale» (c. 1835): africanos esclavizados en la bodega de un barco negrero.

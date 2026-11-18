@@ -1,0 +1,5 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_CABALLERIZAS_1.jpg | Interior de las caballerizas, con barriles y piso empedrado.
+MONTURAS_Y_ESTRIBOS.jpg | Monturas y estribos colgados en el muro de las caballerizas.

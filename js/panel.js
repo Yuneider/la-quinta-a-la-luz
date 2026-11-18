@@ -6,12 +6,15 @@ const guide = $("guide");
 function svgToScreen([x,y]){ const p = plan.createSVGPoint(); p.x = x; p.y = y; const s = p.matrixTransform(plan.getScreenCTM()); return {x:s.x, y:s.y}; }
 function mapRect(){ const a = svgToScreen([164,192]), b = svgToScreen([646,720]); return {l:a.x, t:a.y, r:b.x, b:b.y}; }
 /* Carrusel: varias imágenes por espacio o evidencia (lista `imgs` en datos.js) */
+/* Cada foto se muestra completa (sin recortar) sobre una copia difuminada de sí misma, así las
+   verticales, horizontales y panorámicas llenan el mismo marco sin franjas vacías. */
 function gallery(imgs, label){
   const list = (imgs || []).map(i => typeof i === "string" ? {src:i} : i);
   if (!list.length) return `<div class="foto">${esc(label)}</div>`;
-  const slides = list.map((im, i) => `<figure class="slide"><img src="${esc(im.src)}" alt="${esc(im.alt || im.pie || label)}" loading="${i ? "lazy" : "eager"}">${im.pie ? `<figcaption>${esc(im.pie)}</figcaption>` : ""}</figure>`).join("");
+  const slides = list.map((im, i) => `<figure class="slide"><span class="blur" aria-hidden="true"></span><img src="${esc(im.src)}" alt="${esc(im.pie || im.alt || label)}"${im.w ? ` width="${im.w}" height="${im.h}"` : ""} loading="${i ? "lazy" : "eager"}" decoding="async">${im.pie ? `<figcaption>${esc(im.pie)}</figcaption>` : ""}</figure>`).join("");
   const nav = list.length > 1 ? `<button class="gbtn prev" type="button" aria-label="Imagen anterior">‹</button><button class="gbtn next" type="button" aria-label="Imagen siguiente">›</button><span class="gcount">1 / ${list.length}</span>` : "";
-  return `<div class="gal"><div class="track" tabindex="0" role="group" aria-label="Imágenes: ${esc(label)}">${slides}</div>${nav}</div>`;
+  const zoom = `<button class="gzoom" type="button" aria-label="Ver imagen ampliada"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>`;
+  return `<div class="gal"><div class="track" tabindex="0" role="group" aria-label="Imágenes: ${esc(label)}">${slides}</div>${nav}${zoom}</div>`;
 }
 function initGallery(root){
   root.querySelectorAll(".gal").forEach(g => {
@@ -20,11 +23,58 @@ function initGallery(root){
     const go = d => track.scrollTo({left: Math.max(0, Math.min(n - 1, idx() + d)) * track.clientWidth, behavior:"smooth"});
     g.querySelector(".prev")?.addEventListener("click", () => go(-1));
     g.querySelector(".next")?.addEventListener("click", () => go(1));
+    g.querySelector(".gzoom").addEventListener("click", () => openLightbox(track, idx()));
     track.addEventListener("scroll", () => { if (count) count.textContent = `${idx() + 1} / ${n}`; }, {passive:true});
-    track.addEventListener("keydown", e => { if (e.key === "ArrowRight"){ e.preventDefault(); go(1); } if (e.key === "ArrowLeft"){ e.preventDefault(); go(-1); } });
-    track.querySelectorAll("img").forEach(img => img.addEventListener("error", () => { const f = img.parentNode; f.classList.add("missing"); f.textContent = "No se encontró la imagen: " + img.getAttribute("src"); }));
+    track.addEventListener("keydown", e => {
+      if (e.key === "ArrowRight"){ e.preventDefault(); go(1); }
+      if (e.key === "ArrowLeft"){ e.preventDefault(); go(-1); }
+      if (e.key === "Enter"){ e.preventDefault(); openLightbox(track, idx()); }
+    });
+    track.querySelectorAll("img").forEach((img, i) => {
+      const fig = img.parentNode;
+      const ready = () => { fig.querySelector(".blur").style.backgroundImage = `url("${img.currentSrc || img.src}")`; fig.classList.add("ready"); };
+      if (img.complete && img.naturalWidth) ready(); else img.addEventListener("load", ready);
+      img.addEventListener("click", () => openLightbox(track, i));
+      img.addEventListener("error", () => { fig.classList.add("missing"); fig.textContent = "No se encontró la imagen: " + img.getAttribute("src"); });
+    });
   });
 }
+
+/* Vista ampliada: la foto a pantalla completa, con el mismo marco y flechas del carrusel. */
+const lightbox = document.createElement("dialog");
+lightbox.className = "lightbox";
+lightbox.setAttribute("aria-label", "Imagen ampliada");
+lightbox.innerHTML = `<figure><img alt=""><figcaption></figcaption></figure>
+  <button class="x" type="button" aria-label="Cerrar imagen ampliada">×</button>
+  <button class="gbtn prev" type="button" aria-label="Imagen anterior">‹</button><button class="gbtn next" type="button" aria-label="Imagen siguiente">›</button>
+  <span class="gcount"></span>`;
+document.body.appendChild(lightbox);
+let lbImgs = [], lbAt = 0, lbTrack = null;
+function showLightbox(i){
+  lbAt = (i + lbImgs.length) % lbImgs.length;
+  const src = lbImgs[lbAt], img = lightbox.querySelector("img");
+  img.src = src.getAttribute("src"); img.alt = src.alt;
+  const pie = src.parentNode.querySelector("figcaption");
+  lightbox.querySelector("figcaption").textContent = pie ? pie.textContent : src.alt;
+  lightbox.querySelector(".gcount").textContent = lbImgs.length > 1 ? `${lbAt + 1} / ${lbImgs.length}` : "";
+  lightbox.classList.toggle("single", lbImgs.length < 2);
+}
+function openLightbox(track, i){
+  lbImgs = [...track.querySelectorAll("img")]; lbTrack = track;
+  if (!lbImgs.length) return;
+  showLightbox(i);
+  lightbox.showModal();
+}
+lightbox.querySelector(".x").onclick = () => lightbox.close();
+lightbox.querySelector(".prev").onclick = () => showLightbox(lbAt - 1);
+lightbox.querySelector(".next").onclick = () => showLightbox(lbAt + 1);
+lightbox.addEventListener("click", e => { if (e.target === lightbox || e.target.tagName === "FIGURE") lightbox.close(); });
+lightbox.addEventListener("keydown", e => {
+  if (e.key === "ArrowRight") showLightbox(lbAt + 1);
+  if (e.key === "ArrowLeft") showLightbox(lbAt - 1);
+});
+// Al cerrar, el carrusel queda en la misma foto que se estaba viendo ampliada.
+lightbox.addEventListener("close", () => { if (lbTrack && lbTrack.isConnected) { lbTrack.scrollTo({left: lbAt * lbTrack.clientWidth}); lbTrack.focus({preventScroll:true}); } });
 
 function openCard(html, mode, pt){
   card.className = "card" + (mode ? " " + mode : "");
@@ -34,7 +84,7 @@ function openCard(html, mode, pt){
   $("closeCard").onclick = closeCard;
   placeCard();
 }
-function closeCard(){ if (!card.hidden) closedAt = Date.now(); card.hidden = true; anchor = null; activeRoom = null; setActive(null); }
+function closeCard(){ if (lightbox.open) lightbox.close(); if (!card.hidden) closedAt = Date.now(); card.hidden = true; anchor = null; activeRoom = null; setActive(null); }
 function placeCard(){}
 
 function openRoom(id){
@@ -50,17 +100,16 @@ function openRoom(id){
     const lr = ROOMS.find(x => x.id === S.lanternRoom);
     notice = `<div class="notice"><p><b>Apareció una linterna UV</b> en ${esc(lr.name)}. Con ella verás lo que el museo no muestra.</p><button class="btn gold" type="button" id="takeBtn">Tomar la linterna</button></div>`;
   }
-  const tags = `<div class="tags"><span class="tag">Texto provisional</span>${r.piece && !r.imgs.length ? '<span class="tag">Foto pendiente</span>' : ''}</div>`;
   let html;
   if (r.piece) {
     const p = r.piece;
     html = `<div class="head"><span class="big">${pad(r.id)}</span><div class="head-txt"><span class="kicker">Espacio · ${p.code}</span><span class="room-name">${esc(r.name)}</span></div></div>
       <h2>${esc(p.title)}</h2><p class="meta">${esc(p.meta)}</p>
       ${gallery(r.imgs, "Fotografía de la pieza")}
-      <p>${esc(p.text)}</p>${notice}${tags}`;
+      <p>${esc(p.text)}</p>${notice}`;
   } else {
     html = `<div class="head"><span class="big">${pad(r.id)}</span><div class="head-txt"><span class="kicker">Espacio</span><span class="room-name">Sin pieza en exhibición</span></div></div>
-      <h2>${esc(r.name)}</h2>${r.imgs.length ? gallery(r.imgs, r.name) : ""}<p>${esc(r.space)}</p>${notice}${tags}`;
+      <h2>${esc(r.name)}</h2>${r.imgs.length ? gallery(r.imgs, r.name) : ""}<p>${esc(r.space)}</p>${notice}`;
   }
   openCard(html, "", r.c);
   activeRoom = id;
@@ -83,7 +132,8 @@ function renderGuide(){
         <li>Cuando hayas visitado más de la mitad de los espacios (${UNLOCK_AT} de ${ROOMS.length}) aparecerá una linterna UV.</li>
         <li>Con la linterna, la sala se apaga y la casa se examina como una escena del crimen.</li>
       </ol>
-      ${S.lanternTaken ? `<p class="meta">Ya tienes la linterna: enciéndela con el botón violeta.</p>` : S.lanternRoom ? `<p class="meta">La linterna ya apareció en el plano. Tómala.</p>` : ""}`;
+      ${S.lanternTaken ? `<p class="meta">Ya tienes la linterna: enciéndela con el botón violeta.</p>` : S.lanternRoom ? `<p class="meta">La linterna ya apareció en el plano. Tómala.</p>` : ""}
+      ${AROUND.imgs.length ? `<button class="btn" type="button" id="aroundBtn">Ver los alrededores de la Quinta ›</button>` : ""}`;
   } else {
     mode = "uvnote";
     const left = HIDDEN_ROOMS.length - S.found.length;
@@ -97,6 +147,7 @@ function renderGuide(){
   guide.innerHTML = `<button class="x" type="button" id="closeGuide" aria-label="Ocultar guía">×</button>` + html;
   $("closeGuide").onclick = () => { guideOpen = false; guide.hidden = true; placeCard(); };
   const tf = $("toFinal"); if (tf) tf.onclick = showFinal;
+  const ab = $("aroundBtn"); if (ab) ab.onclick = openAround;
   guide.hidden = !guideOpen;
   placeGuide();
 }
@@ -106,6 +157,16 @@ $("helpBtn").onclick = () => {
   if (guideOpen) closeCard();
   renderGuide();
 };
+
+/* Alrededores: lo que se ve antes de entrar (no es un espacio del plano ni cuenta en el recorrido). */
+const AROUND = CONTENIDO.alrededores || {imgs:[]};
+function openAround(){
+  setActive(null);
+  openCard(`<div class="head"><span class="big">✦</span><div class="head-txt"><span class="kicker">Antes de entrar</span><span class="room-name">Fuera del plano</span></div></div>
+    <h2>${esc(AROUND.titulo || "Los alrededores de la Quinta")}</h2>
+    ${gallery(AROUND.imgs, "Alrededores de la Quinta")}
+    ${AROUND.descripcion ? `<p>${esc(AROUND.descripcion)}</p>` : ""}`, "", ENTRY);
+}
 
 function openHidden(key){
   const h = HIDDEN[key]; const r = HIDDEN_ROOMS.find(x => x.hidden === key);
@@ -118,7 +179,6 @@ function openHidden(key){
     <p>${esc(h.text)}</p>
     ${gallery(h.imgs, "Imagen de la capa oculta")}
     <div class="fuente"><b>FUENTE</b> — ${esc(h.src)}</div>
-    <div class="tags"><span class="tag">Por verificar</span></div>
     ${done ? `<button class="btn gold" type="button" id="toFinal">Cerrar el expediente</button>` : `<p class="meta">${S.found.length} de 10 evidencias.</p>`}`, "secret", r.c);
   const tf = $("toFinal"); if (tf) tf.onclick = showFinal;
 }

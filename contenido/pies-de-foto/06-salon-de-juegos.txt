@@ -1,0 +1,5 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_SALON_DE_JUEGOS_2.jpg | Mesa de juego con tapete verde y naipes.
+SALON_DE_JUEGOS_NAIPES_DETALLE.jpeg | Detalle de los naipes sobre la mesa.

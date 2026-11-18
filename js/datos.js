@@ -1,4 +1,4 @@
-/* ESTRUCTURA: los 17 espacios (geometría sobre el plano oficial, assets/Mapa.jpeg), qué espacios
+/* ESTRUCTURA: los 14 espacios (geometría sobre el plano oficial, assets/Mapa.jpeg), qué espacios
    tienen pieza y cuál evidencia oculta guarda cada uno.
 
    Los TEXTOS y las IMÁGENES no van aquí: salen de las carpetas de contenido/ y llegan por
@@ -28,10 +28,15 @@ const ROOMS = [
   {id:13, name:"Mirador y baño de asiento", diamond:[203,466,15], badges:[[223,483]],
     piece:{code:"QB-13"}, hidden:"laguaira"},
   {id:14, name:"Alberca", oct:[258,351,16],
-    piece:{code:"QB-14"}},
-  {id:15, name:"Mirador oriental", rects:[[240,271,83,51]], hidden:"piar"},
-  {id:16, name:"Oficinas", rects:[[212,274,28,48]]},
-  {id:17, name:"Auditorio", rects:[[576,455,24,85]]}
+    piece:{code:"QB-14"}, hidden:"piar"}
+];
+
+/* Construcciones del plano que no forman parte del recorrido (mirador oriental, oficinas y
+   auditorio: no se pudieron fotografiar). Se dibujan apagadas, sin número ni interacción. */
+const BUILDINGS = [
+  {name:"Mirador oriental", rects:[[240,271,83,51]]},
+  {name:"Oficinas", rects:[[212,274,28,48]]},
+  {name:"Auditorio", rects:[[576,455,24,85]]}
 ];
 
 /* Evidencias de la capa oculta: su número es el de su carpeta en contenido/uv/. */

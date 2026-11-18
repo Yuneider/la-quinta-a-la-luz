@@ -9,6 +9,7 @@ on:
       - "contenido/**"
       - "scripts/sincronizar.js"
       - "js/datos.js"
+      - "package.json"
   workflow_dispatch:
 
 permissions:
@@ -26,17 +27,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Generar js/contenido.js
+          cache: npm
+      - name: Instalar sharp (optimiza las imágenes)
+        run: npm ci
+      - name: Generar js/contenido.js y optimizadas/
         run: node scripts/sincronizar.js | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Subir el resultado si cambió
         run: |
-          if git diff --quiet -- js/contenido.js; then
-            echo "Sin cambios en js/contenido.js."
+          git add -A -- js/contenido.js optimizadas
+          if git diff --cached --quiet; then
+            echo "Sin cambios en js/contenido.js ni en optimizadas/."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add js/contenido.js
           git commit -m "Sync js/contenido.js with contenido/"
           git pull --rebase origin main
           git push origin HEAD:main

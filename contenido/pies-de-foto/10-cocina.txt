@@ -1,0 +1,5 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_COCINA_VISTA_GENERAL_2.jpg | La cocina, con su fogón, pilón de piedra y canastos.
+COCINA_OLLAS_DE_BARRO_1.jpg | Ollas de barro y utensilios junto al fogón.

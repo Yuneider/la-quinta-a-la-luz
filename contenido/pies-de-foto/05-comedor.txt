@@ -1,0 +1,5 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_COMEDOR_1.jpg | El comedor, con la mesa servida como para un banquete de época.
+COMEDOR_2.jpg | La mesa del comedor y su lámpara de cristal vistas desde la entrada.

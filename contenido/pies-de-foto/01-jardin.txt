@@ -1,0 +1,11 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_PAISES_PLAZA_DE_BANDERAS_1.jpg | Plaza de las banderas: bustos y banderas de las naciones bolivarianas a lo largo del sendero.
+ARBOL_LAUREL_CONMEMORATIVO.jpg | Laurel sembrado en conmemoración de la entrada triunfal del Libertador a Santafé.
+BUSTO_BOLIVAR_FUNDADOR_DE_LA_REPUBLICA.jpg | Busto de Bolívar, «fundador de la República», entre la vegetación del jardín.
+CANON_DEL_JARDIN_2.jpg | Cañón antiguo sobre un pedestal de piedra en un rincón del jardín.
+COLOMBIA.jpg | Medallón con el escudo de Colombia, parte del conjunto de las naciones bolivarianas.
+JARDIN_ARCO_Y_SENDERO_2.jpeg | Arco vegetal sobre el sendero empedrado del jardín.
+JARDIN_FUENTE_2.jpg | Fuente de piedra rodeada de flores y árboles centenarios.
+MONUMENTO_CENTRAL_VENEZUELA_COLOMBIA.jpg | Monumento central, flanqueado por las banderas de Venezuela y Colombia.

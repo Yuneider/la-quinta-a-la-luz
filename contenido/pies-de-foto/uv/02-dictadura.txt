@@ -1,0 +1,4 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+02_EL_LIBERTADOR_DICTADOR.jpg | Retrato de Simón Bolívar en uniforme de gala.

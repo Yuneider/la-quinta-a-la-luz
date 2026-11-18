@@ -1,0 +1,4 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+03_LA_QUE_SALVO_AL_LIBERTADOR.jpg | Retrato de Manuela Sáenz.

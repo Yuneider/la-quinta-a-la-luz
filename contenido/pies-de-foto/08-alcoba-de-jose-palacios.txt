@@ -1,0 +1,5 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_ALCOBA_JOSE_PALACIOS_1.jpg | Alcoba de José Palacios: catre sencillo, baúl y mesa.
+ALCOBA_JOSE_PALACIOS_2.jpg | El armario de madera tallada y el catre del mayordomo.

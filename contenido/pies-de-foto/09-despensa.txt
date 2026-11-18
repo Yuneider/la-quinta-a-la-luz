@@ -1,0 +1,5 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_DESPENSA_MESA_Y_PROVISIONES_1.jpeg | Mesa de la despensa con víveres, vasijas y botellas.
+DESPENSA_BARRILES_Y_ALACENA.jpeg | Barriles de madera y alacena para granos y vinos.

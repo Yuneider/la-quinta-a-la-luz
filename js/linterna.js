@@ -28,7 +28,8 @@ plan.addEventListener("pointerup", e => {
 plan.addEventListener("pointermove", follow);
 plan.addEventListener("pointerdown", follow);
 plan.addEventListener("click", e => { if (!S.uv && !e.target.closest(".room,#lantern")) closeCard(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeCard(); });
+// Con la vista ampliada abierta, Escape solo la cierra a ella (lo hace el <dialog>), no la cartela.
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !lightbox.open) closeCard(); });
 window.addEventListener("resize", () => { placeGuide(); placeCard(); requestFrame(); });
 
 function takeLantern(){

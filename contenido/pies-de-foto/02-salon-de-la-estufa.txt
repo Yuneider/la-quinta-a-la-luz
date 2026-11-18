@@ -1,0 +1,5 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_SALON_DE_LA_ESTUFA_1.jpg | El salón de la estufa: mesa, sillas y escritorio de época junto a la ventana.
+SALON_DE_LA_ESTUFA_ADORNO_MESA.jpg | Adorno decorativo sobre una mesa de madera del salón.

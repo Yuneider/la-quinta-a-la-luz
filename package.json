@@ -1,0 +1,11 @@
+{
+  "name": "la-quinta-a-la-luz",
+  "private": true,
+  "description": "Recorrido interactivo por la Casa Museo Quinta de Bolívar.",
+  "scripts": {
+    "sincronizar": "node scripts/sincronizar.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.0"
+  }
+}

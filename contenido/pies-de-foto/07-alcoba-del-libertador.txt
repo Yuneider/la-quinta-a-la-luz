@@ -1,0 +1,5 @@
+# Pies de foto (BORRADOR: revisar y corregir). Una línea por imagen: ARCHIVO | pie de foto.
+# Las líneas que empiezan por # no salen en la vista. Ver ../pies-de-foto/README.md
+
+01_ALCOBA_DEL_LIBERTADOR_2.jpg | La cama con dosel del Libertador, con su baúl al pie.
+ALCOBA_DEL_LIBERTADOR_1.webp | La alcoba del Libertador vista de frente.
