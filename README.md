@@ -25,7 +25,7 @@ Abre `index.html` en el navegador. No necesita instalación ni servidor.
   - `linterna.js` — la luz UV.
   - `final.js` — pantalla final y respuesta del visitante.
   - `atajos.js` — atajos del prototipo y reinicio.
-  - `sonido.js` — música y efectos generados.
+  - `sonido.js` — música de fondo, ambiente UV y efectos.
   - `app.js` — arranque (se carga de último).
 - `assets/` — archivos que la vista ya usa (el plano oficial del museo).
 - `contenido/` — **la fuente de los textos e imágenes**: una carpeta por espacio y, en `contenido/uv/`, una por evidencia de la capa oculta; cada una con `imagenes/`, `sonido/` y `texto/`. Ver [contenido/README.md](contenido/README.md).
@@ -47,7 +47,7 @@ node scripts/sincronizar.js
 
 Todas las imágenes de una carpeta salen en su carrusel en orden alfabético; la que empieza por `01_` es la portada. Las fotos se suben tal como salen de la cámara: `scripts/sincronizar.js` crea en `optimizadas/` una copia `.webp` liviana (necesita `npm install` una vez; la acción de GitHub lo hace sola). Los pies de foto se editan en [contenido/pies-de-foto/](contenido/pies-de-foto/).
 
-Los sonidos de `contenido/` todavía no se conectan a la vista.
+La música de fondo de la versión normal es `contenido/general/sonido/Instrumental1.mp3` (se cambia en `MUSICA_VOL` y la ruta al inicio de `js/sonido.js`). Los demás sonidos de `contenido/` todavía no se conectan a la vista.
 
 ## Reglas del recorrido
 

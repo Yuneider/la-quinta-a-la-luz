@@ -1,16 +1,29 @@
-/* Música y efectos generados con WebAudio (sin archivos de sonido). */
+/* Sonido: en la versión normal suena el instrumental de contenido/general/sonido;
+   con la luz UV, un ambiente tenso generado con WebAudio. Los efectos también se generan. */
 
-/* ============ Sonido (WebAudio, sin archivos) ============ */
-let ctx = null, master, busPeriod, busTense, nextT = 0, step = 0, soundOn = false;
+/* ============ Música de fondo (versión normal) ============ */
+const MUSICA_VOL = .5;
+const musica = new Audio("contenido/general/sonido/Instrumental1.mp3");
+musica.loop = true; musica.preload = "none"; musica.volume = 0;
+let fadeId = null;
+function fadeMusica(to){
+  clearInterval(fadeId);
+  if (to > 0 && musica.paused) musica.play().catch(() => {});
+  const from = musica.volume, PASOS = 15; let n = 0;
+  /* Por pasos contados: en iOS el volumen no se puede cambiar y aun así hay que pausar al final. */
+  fadeId = setInterval(() => {
+    n++; musica.volume = from + (to - from) * n / PASOS;
+    if (n >= PASOS) { clearInterval(fadeId); if (to === 0) musica.pause(); }
+  }, 60);
+}
+
+/* ============ Ambiente UV y efectos (WebAudio, sin archivos) ============ */
+let ctx = null, master, busTense, nextT = 0, step = 0, soundOn = false;
 const hz = m => 440 * Math.pow(2, (m - 69) / 12);
-const BARS = [[50,62,65,69],[43,55,58,62],[45,57,61,64],[50,62,65,69],[46,58,62,65],[43,55,58,62],[45,57,61,64],[50,57,62,65]];
-const PATTERN = [0,1,2,3,2,1];
 function initAudio(){
   ctx = new (window.AudioContext || window.webkitAudioContext)();
   master = ctx.createGain(); master.gain.value = .55; master.connect(ctx.destination);
-  busPeriod = ctx.createGain(); busTense = ctx.createGain();
-  busPeriod.gain.value = S.uv ? 0 : 1; busTense.gain.value = S.uv ? 1 : 0;
-  busPeriod.connect(master); busTense.connect(master);
+  busTense = ctx.createGain(); busTense.gain.value = S.uv ? 1 : 0; busTense.connect(master);
   const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 280; lp.Q.value = 5;
   const dg = ctx.createGain(); dg.gain.value = .16; lp.connect(dg); dg.connect(busTense);
   [73.42, 77.78, 36.71].forEach(f => { const o = ctx.createOscillator(); o.type = "sawtooth"; o.frequency.value = f; o.connect(lp); o.start(); });
@@ -26,20 +39,20 @@ function pluck(f, t, dur, vol, bus, type = "triangle"){
 }
 function schedule(){
   while (nextT < ctx.currentTime + .35) {
-    const bar = BARS[Math.floor(step / 6) % BARS.length], idx = PATTERN[step % 6];
-    pluck(hz(bar[idx]), nextT, idx === 0 ? 1.6 : 1.0, idx === 0 ? .2 : .11, busPeriod);
     if (step % 18 === 9) { pluck(hz(85), nextT, 3.2, .06, busTense, "sine"); pluck(hz(86), nextT + .02, 3.0, .04, busTense, "sine"); }
     nextT += .3; step++;
   }
 }
-function audioMode(){ if (!ctx) return; const t = ctx.currentTime; busPeriod.gain.setTargetAtTime(S.uv ? 0 : 1, t, .5); busTense.gain.setTargetAtTime(S.uv ? 1 : 0, t, .5); }
+function audioMode(){ if (!ctx) return; fadeMusica(soundOn && !S.uv ? MUSICA_VOL : 0); const t = ctx.currentTime; busTense.gain.setTargetAtTime(S.uv ? 1 : 0, t, .5); }
 function sfx(fn){ if (ctx && soundOn) fn(ctx.currentTime); }
 function chime(){ sfx(t => { pluck(hz(81), t, .8, .12, master, "sine"); pluck(hz(86), t + .09, 1.1, .1, master, "sine"); }); }
 function lanternSound(){ sfx(t => { [69,74,78,81].forEach((m,i) => pluck(hz(m), t + i*.08, 1.2, .09, master, "sine")); }); }
 function revealSound(){ sfx(t => { pluck(hz(61), t, 1.8, .14, master, "sine"); pluck(hz(67), t + .04, 1.8, .1, master, "sine"); }); }
 $("soundToggle").onclick = async () => {
   soundOn = !soundOn;
+  /* La música arranca dentro del clic: algunos navegadores bloquean play() después de un await. */
+  fadeMusica(soundOn && !S.uv ? MUSICA_VOL : 0);
   try { if (soundOn) { if (!ctx) initAudio(); else await ctx.resume(); audioMode(); } else if (ctx) await ctx.suspend(); }
-  catch(e) { soundOn = false; }
+  catch(e) { soundOn = false; fadeMusica(0); }
   $("soundToggle").setAttribute("aria-pressed", soundOn);
 };
