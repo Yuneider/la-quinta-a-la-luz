@@ -142,7 +142,7 @@ function renderGuide(){
   } else {
     mode = "uvnote";
     const left = HIDDEN_ROOMS.length - S.found.length;
-    html = `<div class="kicker row"><span>Examen UV</span><span>${S.found.length}/10</span></div>
+    html = `<div class="kicker row"><span>Examen UV</span><span>${S.found.length}/${HIDDEN_ROOMS.length}</span></div>
       <h2>Lo que no se cuenta</h2>
       <p>La casa quedó a oscuras. ${touch ? "Arrastra el dedo: la luz va un poco por encima de él. Cuando una huella brille, levanta el dedo." : "Mueve la luz despacio: las huellas solo brillan cuando el centro del haz pasa justo encima."}</p>
       <p>${left ? `Faltan ${left} evidencias.` : "Encontraste todas las evidencias."}</p>
@@ -184,7 +184,7 @@ function openHidden(key){
     <p>${esc(h.text)}</p>
     ${gallery(h.imgs, "Imagen de la capa oculta")}
     <div class="fuente"><b>FUENTE</b> — ${esc(h.src)}</div>
-    ${done ? `<button class="btn gold" type="button" id="toFinal">Cerrar el expediente</button>` : `<p class="meta">${S.found.length} de 10 evidencias.</p>`}`, "secret", r.c);
+    ${done ? `<button class="btn gold" type="button" id="toFinal">Cerrar el expediente</button>` : `<p class="meta">${S.found.length} de ${HIDDEN_ROOMS.length} evidencias.</p>`}`, "secret", r.c);
   const tf = $("toFinal"); if (tf) tf.onclick = showFinal;
 }
 

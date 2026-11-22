@@ -5,6 +5,7 @@ function showFinal(){
   $("listMuseo").innerHTML = ROOMS.filter(r => r.piece).map(r => `<li><i>${r.id}</i><span>${esc(r.piece.title)}</span></li>`).join("");
   $("listOculta").innerHTML = Object.values(HIDDEN).sort((a,b) => a.n - b.n).map(h => `<li><i>${pad(h.n)}</i><span>${esc(h.title)} · ${esc(h.date)}</span></li>`).join("");
   try { $("respuesta").value = localStorage.getItem("quinta-respuesta") || ""; } catch(e) {}
+  $("finalEyebrow").textContent = `Expediente cerrado · ${S.found.length} de ${HIDDEN_ROOMS.length} evidencias`;
   $("final").hidden = false; $("final").scrollTop = 0;
   closeCard();
 }

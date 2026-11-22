@@ -2,7 +2,8 @@
 
 /* ============ Arranque ============ */
 function start(data){
-  if (data && Array.isArray(data.seen)) S = Object.assign(S, data);
+  if (!(data && Array.isArray(data.seen))) data = loadState();
+  if (data) S = Object.assign(S, data);
   drawPlan();
   setUV(S.uv);
 }

@@ -19,6 +19,6 @@ $("resetBtn").onclick = () => { closeMenu(); reset(); };
 function reset(){
   S = {seen:[], visited:[], found:[], lanternRoom:null, lanternTaken:false, uv:false};
   guideOpen = true;
-  drawPlan(); setUV(false);
+  drawPlan(); setUV(false); saveState();
 }
 $("uvToggle").onclick = () => setUV(!S.uv);

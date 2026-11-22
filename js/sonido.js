@@ -55,4 +55,11 @@ $("soundToggle").onclick = async () => {
   try { if (soundOn) { if (!ctx) initAudio(); else await ctx.resume(); audioMode(); } else if (ctx) await ctx.suspend(); }
   catch(e) { soundOn = false; fadeMusica(0); }
   $("soundToggle").setAttribute("aria-pressed", soundOn);
+  $("soundToggle").textContent = soundOn ? "Sonido: sí" : "Sonido: no";
 };
+/* Con la pestaña oculta o el celular bloqueado no suena nada; al volver sigue donde iba. */
+document.addEventListener("visibilitychange", () => {
+  if (!soundOn) return;
+  if (document.hidden) { clearInterval(fadeId); musica.pause(); if (ctx) ctx.suspend(); }
+  else { if (ctx) ctx.resume(); if (!S.uv) { musica.volume = MUSICA_VOL; musica.play().catch(() => {}); } }
+});

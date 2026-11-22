@@ -54,6 +54,6 @@ function setUV(on){
 function updateHUD(){
   $("cPieces").textContent = `${S.visited.length}/${ROOMS.length}`;
   document.querySelector(".medal.ev").classList.toggle("locked", !S.lanternTaken);
-  $("cHidden").textContent = S.lanternTaken ? `${S.found.length}/10` : "—";
+  $("cHidden").textContent = S.lanternTaken ? `${S.found.length}/${HIDDEN_ROOMS.length}` : "—";
   $("cHiddenLbl").textContent = S.uv ? "evidencias" : "hallazgos";
 }
