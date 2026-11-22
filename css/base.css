@@ -1,7 +1,7 @@
 /* Variables de color y tipografía (museo y luz UV), fondo y estructura general de la página. */
 
 /* Dos mundos con la misma estructura (panel a la izquierda, plano a la derecha):
-   - Museo: sala antigua de madera de nogal y oro, tipografía serif.
+   - Museo: sala antigua de papel tapiz de nogal y oro, tipografía serif.
    - Luz UV: laboratorio de conservación, negro, sans y mono, hallazgos fluorescentes.
    El cambio se hace redefiniendo las variables en body.uv. */
 :root{
@@ -26,11 +26,11 @@ body.uv{
 }
 html,body{height:100%}
 body{margin:0;overflow:hidden;color:var(--text);font-family:var(--font-body);font-size:var(--fs);line-height:1.45;
-  background-color:var(--bg);
-  background-image:
-    repeating-linear-gradient(90deg, transparent 0 158px, rgba(0,0,0,.3) 158px 160px),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.16' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.10  0 0 0 0 0.05  0 0 0 0 0.02  1.6 0 0 0 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");}
-body.uv{background-image:none}
+  /* Papel tapiz de época: damasco discreto en oro sobre nogal (mosaico de 120×150 que empalma) y viñeta hacia los bordes. */
+  background-color:#2B190B;background-size:120px 150px, auto;background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='150' viewBox='0 0 120 150'%3E%3Cg fill='none' stroke='%23D9B866' stroke-opacity='.13' stroke-width='1.2'%3E%3Cpath d='M60 12 C74 30 82 48 60 75 C38 48 46 30 60 12Z'/%3E%3Cpath d='M60 75 C82 102 74 120 60 138 C46 120 38 102 60 75Z'/%3E%3Cpath d='M60 44 C76 50 88 62 92 75 C88 88 76 100 60 106 C44 100 32 88 28 75 C32 62 44 50 60 44Z'/%3E%3Ccircle cx='60' cy='75' r='4'/%3E%3Cpath d='M0 0 C12 14 12 22 0 37 M120 0 C108 14 108 22 120 37 M0 150 C12 136 12 128 0 113 M120 150 C108 136 108 128 120 113'/%3E%3C/g%3E%3Cg fill='%23D9B866' fill-opacity='.10'%3E%3Ccircle cx='0' cy='75' r='3'/%3E%3Ccircle cx='120' cy='75' r='3'/%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(ellipse 90% 80% at 50% 40%, transparent 50%, rgba(10,5,2,.55) 100%);}
+body.uv{background-color:var(--bg);background-image:none}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 button{font:inherit;color:inherit;cursor:pointer}

@@ -20,12 +20,12 @@ function drawPlan(){
 
   // Terreno: franja norte y jardín en terciopelo
   el("polygon", {points:"200,200 548,282 632,505 632,700 170,700 190,333", class:"estate"}, plan);
-  // Rosa de los vientos
-  const rose = el("g", {transform:"translate(590,228)"}, plan);
+  // Rosa de los vientos: dentro del recuadro visible (el viewBox empieza en y=192) y con «Norte» a su izquierda, como en el letrero del museo
+  const rose = el("g", {transform:"translate(604,236)", "aria-hidden":"true"}, plan);
   el("circle", {r:20, class:"deco"}, rose);
   el("path", {d:"M0 -27 L5 -5 L27 0 L5 5 L0 27 L-5 5 L-27 0 L-5 -5 Z", class:"deco-fill", opacity:".85"}, rose);
   el("path", {d:"M-14 -14 L0 -3 L14 -14 L3 0 L14 14 L0 3 L-14 14 L-3 0 Z", class:"deco-fill", opacity:".4"}, rose);
-  txt(rose, 0, -32, "N", "svg-label", {"text-anchor":"middle"});
+  txt(rose, -32, 3.5, "Norte", "svg-label", {"text-anchor":"end"});
 
   const roomsG = el("g", {}, plan);
   ROOMS.filter(r => r.garden).forEach(r => drawRoom(r, roomsG));
