@@ -356,6 +356,16 @@
     "h": 1600,
     "hash": "5071415d598243148a9f81a77d810943878e0c65"
   },
+  "contenido/general/sonido/Instrumental1.mp3": {
+    "src": "contenido/general/sonido/Instrumental1.mp3",
+    "hash": "36797b7c9da7f71338355d0e026c753695e1afa8",
+    "lufs": -15.7
+  },
+  "contenido/general/sonido/InstrumentalUV.mp3": {
+    "src": "optimizadas/general/sonido/InstrumentalUV.mp3",
+    "hash": "70387ad87f96e5b1e39b00fd753e80b70ded10bd",
+    "lufs": -13.6
+  },
   "contenido/uv/01-tributo/imagenes/01_LA_AMERICA_QUE_PAGABA_TRIBUTO.jpg": {
     "src": "optimizadas/uv/01-tributo/imagenes/01_LA_AMERICA_QUE_PAGABA_TRIBUTO.webp",
     "med": "optimizadas/uv/01-tributo/imagenes/01_LA_AMERICA_QUE_PAGABA_TRIBUTO-m.webp",

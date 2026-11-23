@@ -21,7 +21,9 @@
    imagen se copia a optimizadas/ en .webp, ya girada según su EXIF, en dos tamaños: una copia
    mediana (máximo 900 px, «-m.webp») que carga el carrusel y una grande (máximo 1600 px) que solo
    se pide al ampliar la foto. Solo se procesan las imágenes nuevas o cambiadas (optimizadas/manifiesto.json).
-   Sin sharp se reutilizan las copias que ya existan y, si no hay, se usa el original. */
+   Sin sharp se reutilizan las copias que ya existan y, si no hay, se usa el original.
+
+   Música: ver MUSICA más abajo (necesita ffmpeg; sin él se usan las copias que ya existan). */
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
@@ -72,7 +74,6 @@ async function optimizar(original){
   const mediana = destino.replace(/\.webp$/, "-m.webp");
   const previo = manifiesto[clave];
   usadas.add(clave);
-  const existe = f => f && fs.existsSync(path.join(RAIZ, f));
   if (previo && previo.hash === hash && existe(previo.src) && existe(previo.med)) return previo;
   if (!sharp) { sinOptimizar++; return previo && existe(previo.src) ? previo : {src:clave}; }
   fs.mkdirSync(path.dirname(destino), {recursive:true});
@@ -84,6 +85,47 @@ async function optimizar(original){
   procesadas++;
   return manifiesto[clave] = {src:rel(destino), med:rel(mediana), w:info.width, h:info.height, hash};
 }
+
+/* Música de fondo: un instrumental por modo, en contenido/general/sonido/. Con ffmpeg, el que pese
+   más de KBPS_MAX se recomprime a KBPS en optimizadas/ (sin carátula ni metadatos), y se mide su
+   sonoridad para que al cambiar de modo las dos pistas suenen igual de fuerte: la vista baja la
+   más fuerte con «gan» en vez de recomprimirla. Igual que las imágenes, solo se procesa lo que cambió. */
+const SONIDO = path.join(CONTENIDO, "general", "sonido");
+const MUSICA = {normal:"Instrumental1.mp3", uv:"InstrumentalUV.mp3"};
+const KBPS = 96, KBPS_MAX = 128, LUFS = -16;
+const {spawnSync} = require("child_process");
+const ff = args => spawnSync(process.env.FFMPEG || "ffmpeg", ["-hide_banner", "-nostdin", ...args], {encoding:"utf8", maxBuffer:64 << 20});
+let hayFfmpeg = null;
+const conFfmpeg = () => hayFfmpeg ??= !ff(["-version"]).error;
+let audioProcesado = 0, audioSinOptimizar = 0;
+const sha1 = p => crypto.createHash("sha1").update(fs.readFileSync(p)).digest("hex");
+const existe = f => f && fs.existsSync(path.join(RAIZ, f));
+const musicaAlDia = archivo => { const p = path.join(SONIDO, archivo), m = manifiesto[rel(p)];
+  return !fs.existsSync(p) || (m && m.hash === sha1(p) && existe(m.src)); };
+
+function musica(archivo){
+  const original = path.join(SONIDO, archivo), clave = rel(original);
+  if (!fs.existsSync(original)) { avisos.push(`Falta ${clave}: ese modo queda sin música de fondo.`); return null; }
+  usadas.add(clave);
+  const hash = sha1(original), previo = manifiesto[clave];
+  if (previo && previo.hash === hash && existe(previo.src)) return previo;
+  if (!conFfmpeg()) { audioSinOptimizar++; return {src:clave}; }
+  const kbps = Number((/bitrate: (\d+) kb\/s/.exec(ff(["-i", original]).stderr) || [])[1]) || Infinity;
+  let src = clave;
+  if (kbps > KBPS_MAX) {
+    const destino = path.join(OPTIMIZADAS, path.relative(CONTENIDO, original)).replace(/\.[^.]+$/, ".mp3");
+    fs.mkdirSync(path.dirname(destino), {recursive:true});
+    const r = ff(["-y", "-i", original, "-vn", "-map_metadata", "-1", "-ac", "2", "-ar", "44100", "-c:a", "libmp3lame", "-b:a", KBPS + "k", destino]);
+    if (r.status) { avisos.push(`No se pudo recomprimir ${clave}: ${r.stderr.trim().split("\n").pop()}`); return {src:clave}; }
+    src = rel(destino); audioProcesado++;
+  }
+  const medida = ff(["-i", path.join(RAIZ, src), "-af", "ebur128=framelog=quiet", "-f", "null", "-"]).stderr;
+  const lufs = Number((medida.match(/I:\s+(-?[\d.]+) LUFS/g) || []).pop()?.replace(/[^-\d.]/g, ""));
+  return manifiesto[clave] = Object.assign({src, hash}, Number.isFinite(lufs) ? {lufs} : {});
+}
+/* «--audio-al-dia»: sale con 0 si ninguna pista necesita ffmpeg (la acción de GitHub lo instala solo si hace falta). */
+if (process.argv.includes("--audio-al-dia")) process.exit(Object.values(MUSICA).every(musicaAlDia) ? 0 : 1);
+const pistaDe = m => m && Object.assign({src:m.src}, m.lufs ? {gan:Math.min(1, +Math.pow(10, (LUFS - m.lufs) / 20).toFixed(2))} : {});
 
 /* Lee contenido/pies-de-foto/<carpeta>.txt: líneas «ARCHIVO.jpg | pie». La clave es el nombre sin
    extensión y sin distinguir mayúsculas, para que cambiar .jpg por .jpeg no rompa el pie. */
@@ -149,24 +191,27 @@ async function recoger(dir, campos){
 const datos = {
   espacios: await recoger(CONTENIDO, ["titulo", "ficha", "descripcion"]),
   uv: await recoger(path.join(CONTENIDO, "uv"), ["titulo", "fecha", "cita", "descripcion", "fuente"]),
-  alrededores: await una(path.join(CONTENIDO, "alrededores"), ["titulo", "descripcion"])
+  alrededores: await una(path.join(CONTENIDO, "alrededores"), ["titulo", "descripcion"]),
+  musica: Object.fromEntries(Object.entries(MUSICA).map(([modo, f]) => [modo, pistaDe(musica(f))]).filter(([, p]) => p))
 };
 
-/* Borra las copias web de imágenes que ya no están en contenido/ y guarda el manifiesto. */
+/* Borra las copias web de imágenes y sonidos que ya no están en contenido/ y guarda el manifiesto.
+   Solo se borra dentro de optimizadas/: una pista que no hizo falta recomprimir apunta a su original. */
 for (const clave of Object.keys(manifiesto)) {
   if (usadas.has(clave)) continue;
-  for (const f of [manifiesto[clave].src, manifiesto[clave].med].filter(Boolean)) {
+  for (const f of [manifiesto[clave].src, manifiesto[clave].med].filter(f => f && f.startsWith("optimizadas/"))) {
     const copia = path.join(RAIZ, f);
     if (fs.existsSync(copia)) fs.unlinkSync(copia);
   }
   delete manifiesto[clave];
 }
-if (procesadas || Object.keys(manifiesto).length !== usadas.size || !fs.existsSync(MANIFIESTO)) {
+if (procesadas || audioProcesado || Object.keys(manifiesto).length !== usadas.size || !fs.existsSync(MANIFIESTO)) {
   fs.mkdirSync(OPTIMIZADAS, {recursive:true});
   const ordenado = Object.fromEntries(Object.keys(manifiesto).sort(orden).map(k => [k, manifiesto[k]]));
   fs.writeFileSync(MANIFIESTO, JSON.stringify(ordenado, null, 2) + "\n");
 }
 if (sinOptimizar) avisos.push(`${sinOptimizar} imágenes sin copia optimizada (falta sharp: corre «npm install»); se usan los originales, que pesan mucho más.`);
+if (audioSinOptimizar) avisos.push(`${audioSinOptimizar} pistas de música sin optimizar (falta ffmpeg); se usan los originales.`);
 
 /* Revisa contra js/datos.js que no falte ningún texto que la vista necesita. */
 try {
@@ -206,5 +251,6 @@ const total = grupo => Object.values(grupo).reduce((s, i) => s + i.imgs.length, 
 console.log(`${Object.keys(datos.espacios).length} espacios (${total(datos.espacios)} imágenes), ${Object.keys(datos.uv).length} evidencias UV (${total(datos.uv)} imágenes).`);
 console.log(cambio ? "js/contenido.js actualizado." : "js/contenido.js ya estaba al día.");
 if (procesadas) console.log(`${procesadas} imágenes optimizadas en optimizadas/.`);
+if (audioProcesado) console.log(`${audioProcesado} pistas de música recomprimidas en optimizadas/.`);
 if (avisos.length) console.log("\nAvisos:\n" + avisos.map(a => "  - " + a).join("\n"));
 })().catch(e => { console.error(e); process.exit(1); });

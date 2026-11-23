@@ -608,5 +608,15 @@ const CONTENIDO = {
         "pie": "Retrato del general José María Córdova."
       }
     ]
+  },
+  "musica": {
+    "normal": {
+      "src": "contenido/general/sonido/Instrumental1.mp3",
+      "gan": 0.97
+    },
+    "uv": {
+      "src": "optimizadas/general/sonido/InstrumentalUV.mp3",
+      "gan": 0.76
+    }
   }
 };

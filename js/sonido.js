@@ -1,15 +1,20 @@
 /* Sonido: de fondo suena un instrumental de contenido/general/sonido, uno para la versión
-   normal y otro para la luz UV. Los efectos se generan con WebAudio. */
+   normal y otro para la luz UV. scripts/sincronizar.js deja en CONTENIDO.musica la copia liviana
+   de cada uno y su ganancia («gan») para que las dos suenen igual de fuerte. Los efectos se
+   generan con WebAudio. Nada se descarga hasta que se activa el sonido, y la pista UV solo
+   cuando se enciende la luz UV. */
 
 /* ============ Música de fondo ============ */
 const MUSICA_VOL = .5;
-function pista(src){
-  const a = new Audio(src);
+const MUSICA = CONTENIDO.musica || {};
+function pista(p, respaldo){
+  const a = new Audio((p && p.src) || respaldo);
   a.loop = true; a.preload = "none"; a.volume = 0; a.fadeId = null;
+  a.vol = MUSICA_VOL * ((p && p.gan) || 1);
   return a;
 }
-const musicaNormal = pista("contenido/general/sonido/Instrumental1.mp3");
-const musicaUV = pista("contenido/general/sonido/InstrumentalUV.mp3");
+const musicaNormal = pista(MUSICA.normal, "contenido/general/sonido/Instrumental1.mp3");
+const musicaUV = pista(MUSICA.uv, "contenido/general/sonido/InstrumentalUV.mp3");
 function fade(a, to){
   clearInterval(a.fadeId);
   if (to > 0 && a.paused) a.play().catch(() => {});
@@ -22,8 +27,8 @@ function fade(a, to){
 }
 /* Suena la pista del modo actual; la otra se apaga. */
 function fadeMusica(){
-  fade(musicaNormal, soundOn && !S.uv ? MUSICA_VOL : 0);
-  fade(musicaUV, soundOn && S.uv ? MUSICA_VOL : 0);
+  fade(musicaNormal, soundOn && !S.uv ? musicaNormal.vol : 0);
+  fade(musicaUV, soundOn && S.uv ? musicaUV.vol : 0);
 }
 
 /* ============ Efectos (WebAudio, sin archivos) ============ */
@@ -62,6 +67,6 @@ document.addEventListener("visibilitychange", () => {
     if (ctx) ctx.suspend();
   } else {
     if (ctx) ctx.resume();
-    actual.volume = MUSICA_VOL; actual.play().catch(() => {});
+    actual.volume = actual.vol; actual.play().catch(() => {});
   }
 });

@@ -32,6 +32,8 @@ jobs:
           cache: npm
       - name: Instalar sharp (optimiza las imágenes)
         run: npm ci
+      - name: Instalar ffmpeg solo si cambió la música de fondo
+        run: node scripts/sincronizar.js --audio-al-dia || (sudo apt-get update -q && sudo apt-get install -y -q --no-install-recommends ffmpeg)
       - name: Generar js/contenido.js, optimizadas/ y versiones de index.html
         run: node scripts/sincronizar.js | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Subir el resultado si cambió

@@ -30,7 +30,7 @@ Abre `index.html` en el navegador. No necesita instalación ni servidor.
 - `assets/` — archivos que la vista ya usa (el plano oficial del museo).
 - `contenido/` — **la fuente de los textos e imágenes**: una carpeta por espacio y, en `contenido/uv/`, una por evidencia de la capa oculta; cada una con `imagenes/`, `sonido/` y `texto/`. Ver [contenido/README.md](contenido/README.md).
 - `scripts/sincronizar.js` — pasa lo que hay en `contenido/` a `js/contenido.js` y crea las copias web de las imágenes.
-- `optimizadas/` — copias `.webp` de las imágenes que carga la vista. Se generan solas; no se editan a mano.
+- `optimizadas/` — copias `.webp` de las imágenes y copias livianas de la música de fondo que carga la vista. Se generan solas; no se editan a mano.
 
 ## Cómo cambiar textos e imágenes
 
@@ -47,7 +47,7 @@ node scripts/sincronizar.js
 
 Todas las imágenes de una carpeta salen en su carrusel en orden alfabético; la que empieza por `01_` es la portada. Las fotos se suben tal como salen de la cámara: `scripts/sincronizar.js` crea en `optimizadas/` una copia `.webp` liviana (necesita `npm install` una vez; la acción de GitHub lo hace sola). Los pies de foto se editan en [contenido/pies-de-foto/](contenido/pies-de-foto/).
 
-La música de fondo es `contenido/general/sonido/Instrumental1.mp3` en la versión normal e `InstrumentalUV.mp3` con la luz UV; al cambiar de modo una pista se desvanece y entra la otra (el volumen está en `MUSICA_VOL` y las rutas al inicio de `js/sonido.js`). Los demás sonidos de `contenido/` todavía no se conectan a la vista.
+La música de fondo es `contenido/general/sonido/Instrumental1.mp3` en la versión normal e `InstrumentalUV.mp3` con la luz UV (los nombres están en `MUSICA`, en `scripts/sincronizar.js`); al cambiar de modo una pista se desvanece y entra la otra. Se suben tal cual: `scripts/sincronizar.js` recomprime a 96 kb/s en `optimizadas/` la que pese más de 128 kb/s y mide su sonoridad, para que la vista iguale el volumen de las dos (necesita [ffmpeg](https://ffmpeg.org/); la acción de GitHub lo instala sola cuando cambia una pista). Nada se descarga hasta que se activa el sonido, y la pista UV solo al encender la luz UV. El volumen general está en `MUSICA_VOL`, en `js/sonido.js`. Los demás sonidos de `contenido/` todavía no se conectan a la vista.
 
 ## Reglas del recorrido
 
