@@ -19,13 +19,14 @@
 <link rel="stylesheet" href="css/final.css?v=8a23d19d">
 <link rel="stylesheet" href="css/carrusel.css?v=e12f2788">
 <link rel="stylesheet" href="css/responsive.css?v=63f239da">
+<link rel="stylesheet" href="css/experiencia.css?v=f9337082">
 </head>
 <body>
 
 <div class="scene" id="scene">
   <header class="title">
     <div class="eyebrow" id="eyebrow">Casa Museo Quinta de Bolívar · Bogotá</div>
-    <h1>La Quinta<br> a la <em>luz</em></h1>
+    <h1>La Quinta<br> a la <em class="luz" id="luz" data-t="LUZ" tabindex="0" role="button" aria-label="LUZ: enciende la luz ultravioleta y descubre una pista">LUZ<span class="luz-tip" aria-hidden="true">tócame</span></em></h1>
     <p class="rule" id="rule">Explora la casa. Algunas cosas no están a la vista.</p>
   </header>
 
@@ -44,12 +45,13 @@
   <footer class="foot">
     <div class="counters">
       <div class="medal" title="Espacios visitados"><b id="cPieces">0/14</b><span>espacios</span></div>
+      <div class="medal imgs" id="mImgs" title="Fotos vistas: con 5 se abren los espacios 8 a 12"><b id="cImgs">0/5</b><span>fotos</span></div>
       <div class="medal ev locked" title="Evidencias de la capa oculta"><b id="cHidden">—</b><span id="cHiddenLbl">hallazgos</span></div>
     </div>
     <div class="controls">
       <button class="ctl uvctl" id="uvToggle" type="button" hidden aria-pressed="false" title="Encender o apagar la linterna UV">Luz UV</button>
       <button class="ctl help" id="helpBtn" type="button" title="Mostrar u ocultar la guía">Guía</button>
-      <button class="ctl" id="soundToggle" type="button" aria-pressed="false">Sonido: no</button>
+      <button class="ctl" id="soundToggle" type="button" aria-pressed="true">Sonido: sí</button>
       <details class="proto">
         <summary class="ctl" aria-label="Atajos del prototipo" title="Atajos del prototipo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></summary>
         <div class="proto-pop">
@@ -61,6 +63,23 @@
       </details>
     </div>
   </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="uvsweep" id="uvsweep" aria-hidden="true"><p class="uvsweep-msg" id="uvsweepMsg"></p></div>
+<div class="scare" id="scare" aria-hidden="true"><div class="scare-print" id="scarePrint"></div><p class="scare-msg" id="scareMsg"></p></div>
+
+<!-- Introducción: una linterna UV barre la pantalla y revela el título y las huellas. -->
+<div class="intro" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+  <div class="intro-prints" id="introPrints" aria-hidden="true"></div>
+  <div class="intro-beam" id="introBeam" aria-hidden="true"></div>
+  <div class="intro-inner">
+    <p class="intro-eye" id="introEye" aria-label="Casa Museo Quinta de Bolívar · Bogotá"></p>
+    <h2 class="intro-title" id="introTitle"><span class="t-base">La Quinta<br>a la <b>LUZ</b></span><span class="t-glow" id="introGlow" aria-hidden="true">La Quinta<br>a la <b>LUZ</b></span></h2>
+    <p class="intro-sub">Hay cosas que esta casa no muestra a simple vista.</p>
+    <button class="intro-go" id="introGo" type="button">Encender la luz</button>
+    <p class="intro-note">Recorrido con sonido · mueve la luz</p>
+  </div>
 </div>
 
 <section class="final" id="final" hidden aria-labelledby="finalTitle">
@@ -89,14 +108,15 @@
 
 <!-- El orden importa: datos y estado primero, app de último. -->
 <script src="js/contenido.js?v=f1c50fa0"></script>
-<script src="js/datos.js?v=a598fbd1"></script>
-<script src="js/estado.js?v=dbb67163"></script>
-<script src="js/plano.js?v=b3f3f2ad"></script>
-<script src="js/panel.js?v=4572f63d"></script>
-<script src="js/linterna.js?v=c1de6967"></script>
+<script src="js/datos.js?v=8b080336"></script>
+<script src="js/estado.js?v=a9640424"></script>
+<script src="js/plano.js?v=80ba6a1c"></script>
+<script src="js/panel.js?v=8fff698c"></script>
+<script src="js/linterna.js?v=af52749c"></script>
 <script src="js/final.js?v=db2d0ffe"></script>
-<script src="js/atajos.js?v=bc6cb65d"></script>
-<script src="js/sonido.js?v=3f8321e4"></script>
-<script src="js/app.js?v=5d42708d"></script>
+<script src="js/atajos.js?v=543558f2"></script>
+<script src="js/sonido.js?v=052a59fb"></script>
+<script src="js/experiencia.js?v=e9cfa26a"></script>
+<script src="js/app.js?v=e65e9026"></script>
 </body>
 </html>

@@ -21,11 +21,19 @@ function initGallery(root){
   root.querySelectorAll(".gal").forEach(g => {
     const track = g.querySelector(".track"), count = g.querySelector(".gcount"), n = track.children.length;
     const idx = () => Math.round(track.scrollLeft / track.clientWidth);
+    const imgs = track.querySelectorAll("img");
+    const mark = () => { const im = imgs[idx()]; if (im) seeImg(im.dataset.full); };
+    mark(); // la portada cuenta como vista al abrir el espacio
+    track.addEventListener("scrollend", mark);
     const go = d => track.scrollTo({left: Math.max(0, Math.min(n - 1, idx() + d)) * track.clientWidth, behavior:"smooth"});
     g.querySelector(".prev")?.addEventListener("click", () => go(-1));
     g.querySelector(".next")?.addEventListener("click", () => go(1));
     g.querySelector(".gzoom").addEventListener("click", () => openLightbox(track, idx()));
-    track.addEventListener("scroll", () => { if (count) count.textContent = `${idx() + 1} / ${n}`; }, {passive:true});
+    let still;
+    track.addEventListener("scroll", () => {
+      if (count) count.textContent = `${idx() + 1} / ${n}`;
+      clearTimeout(still); still = setTimeout(mark, 160); // respaldo para navegadores sin «scrollend»
+    }, {passive:true});
     track.addEventListener("keydown", e => {
       if (e.key === "ArrowRight"){ e.preventDefault(); go(1); }
       if (e.key === "ArrowLeft"){ e.preventDefault(); go(-1); }
@@ -54,6 +62,7 @@ let lbImgs = [], lbAt = 0, lbTrack = null;
 function showLightbox(i){
   lbAt = (i + lbImgs.length) % lbImgs.length;
   const src = lbImgs[lbAt], img = lightbox.querySelector("img");
+  seeImg(src.dataset.full);
   // Mientras llega la copia grande se ve la mediana (ya en caché), sin pantalla vacía.
   img.src = src.getAttribute("src"); img.alt = src.alt;
   const full = src.dataset.full;
@@ -81,28 +90,75 @@ lightbox.addEventListener("keydown", e => {
 lightbox.addEventListener("close", () => { if (lbTrack && lbTrack.isConnected) { lbTrack.scrollTo({left: lbAt * lbTrack.clientWidth}); lbTrack.focus({preventScroll:true}); } });
 
 function openCard(html, mode, pt){
+  $("scene").classList.add("reading");
   card.className = "card" + (mode ? " " + mode : "");
   card.innerHTML = `<button class="x" type="button" id="closeCard" aria-label="Cerrar">×</button>` + html;
-  card.hidden = false; card.scrollTop = 0; card.parentNode.scrollTop = 0; initGallery(card); anchor = pt;
+  card.hidden = false; card.scrollTop = 0; card.parentNode.scrollTop = 0; anchor = pt;
+  // Foto y texto en un mismo bloque (.cbody): uno encima del otro, o lado a lado si el panel es ancho.
+  const gal = card.querySelector(":scope > .gal, :scope > .foto");
+  const body = document.createElement("div"), text = document.createElement("div");
+  body.className = "cbody"; text.className = "ctext";
+  [...card.children].filter(c => !c.matches(".x,.head,.gal,.foto")).forEach(c => text.appendChild(c));
+  if (gal) body.appendChild(gal);
+  body.appendChild(text); card.appendChild(body);
+  fitCard(); initGallery(card);
   void card.offsetWidth; card.classList.add("pop");
   $("closeCard").onclick = closeCard;
-  placeCard();
 }
-function closeCard(){ if (lightbox.open) lightbox.close(); if (!card.hidden) closedAt = Date.now(); card.hidden = true; anchor = null; activeRoom = null; setActive(null); }
-function placeCard(){}
+function closeCard(){ if (lightbox.open) lightbox.close(); if (!card.hidden) closedAt = Date.now(); card.hidden = true; anchor = null; activeRoom = null; setActive(null); $("scene").classList.remove("reading"); }
+/* Descripción e imágenes en una sola vista, sin desplazar: la foto ocupa el espacio que deja el
+   texto (ver #card en experiencia.css) y, si aun así no cabe, la letra se reduce un poco. */
+function fitCard(){
+  if (card.hidden) return;
+  const box = card.parentNode;
+  let s = 1;
+  card.style.setProperty("--s", s);
+  while (box.scrollHeight > box.clientHeight + 2 && s > .72) { s -= .04; card.style.setProperty("--s", s.toFixed(2)); }
+  box.scrollTop = 0;
+}
+function placeCard(){ fitCard(); }
+document.fonts?.ready.then(fitCard);
 
-function openRoom(id){
+/* Fotos vistas: al llegar a IMGS_TO_UNLOCK se abren los espacios bloqueados. */
+function seeImg(key){
+  if (!key || S.imgs.includes(key)) return;
+  S.imgs.push(key);
+  updateHUD();
+  if (S.imgs.length === IMGS_TO_UNLOCK) {
+    syncRoomClasses(); unlockSound();
+    toast(`Se desbloquearon los espacios ${LOCKED_ROOMS.slice().sort((a,b) => a-b).join(", ")}`, "ok");
+    renderGuide();
+  } else if (S.imgs.length < IMGS_TO_UNLOCK) {
+    const m = $("mImgs"); m.classList.remove("bump"); void m.offsetWidth; m.classList.add("bump");
+  }
+}
+
+/* Espacio bloqueado: el candado tiembla y se explica qué falta. */
+function lockedNotice(id, why){
+  const r = ROOMS.find(x => x.id === id);
+  document.querySelectorAll(`.room[data-id="${id}"],.chip[data-id="${id}"]`).forEach(g => { g.classList.remove("shake"); void g.getBoundingClientRect(); g.classList.add("shake"); });
+  lockSound();
+  if (why === "start") toast(`El recorrido empieza en el Jardín (1). Ábrelo primero.`);
+  else toast(`${r.name} está cerrado: mira ${IMGS_TO_UNLOCK - S.imgs.length} foto${IMGS_TO_UNLOCK - S.imgs.length === 1 ? "" : "s"} más para abrirlo (${S.imgs.length}/${IMGS_TO_UNLOCK}).`);
+}
+
+function openRoom(id, fromHover){
+  const why = lockReason(id);
+  if (why) { if (!fromHover) lockedNotice(id, why); return; }
   const r = ROOMS.find(x => x.id === id);
   setActive(id);
   const before = S.visited.length;
   if (!S.visited.includes(id)) S.visited.push(id);
   let newPiece = false;
   if (r.piece && !S.seen.includes(id)) { S.seen.push(id); newPiece = true; chime(); }
-  if (S.visited.length !== before && S.visited.length >= UNLOCK_AT && !S.lanternRoom) { S.lanternRoom = id; drawLantern(id); lanternSound(); }
+  if (S.visited.length !== before && S.visited.length >= UNLOCK_AT && !S.lanternRoom) { S.lanternRoom = LANTERN_ROOM; drawLantern(LANTERN_ROOM); lanternSound(); }
+  // La linterna UV solo se ve y se toma en el Comedor (espacio 5); desde los demás se indica dónde está.
   let notice = "";
   if (S.lanternRoom && !S.lanternTaken) {
     const lr = ROOMS.find(x => x.id === S.lanternRoom);
-    notice = `<div class="notice"><p><b>Apareció una linterna UV</b> en ${esc(lr.name)}. Con ella verás lo que el museo no muestra.</p><button class="btn gold" type="button" id="takeBtn">Tomar la linterna</button></div>`;
+    notice = id === S.lanternRoom
+      ? `<div class="notice"><p><b>Aquí está la linterna UV.</b> Con ella verás lo que el museo no muestra.</p><button class="btn gold" type="button" id="takeBtn">Tomar la linterna</button></div>`
+      : `<div class="notice"><p><b>Algo brilla en ${esc(lr.name)} (${lr.id}).</b> Ve a buscarlo.</p><button class="btn" type="button" id="goLantern">Ir al ${esc(lr.name)} ›</button></div>`;
   }
   let html;
   if (r.piece) {
@@ -119,6 +175,7 @@ function openRoom(id){
   openCard(html, "", r.c);
   activeRoom = id;
   const tb = $("takeBtn"); if (tb) tb.onclick = takeLantern;
+  const gl = $("goLantern"); if (gl) gl.onclick = () => openRoom(S.lanternRoom);
   syncRoomClasses(); updateHUD();
   if (S.visited.length !== before) renderGuide();
 }
@@ -133,11 +190,12 @@ function renderGuide(){
       <h2>Bienvenido a la Quinta</h2>
       <p>La casa donde vivió Simón Bolívar en Bogotá. Cada número del plano es un espacio del museo; el punto rojo marca la entrada.</p>
       <ol class="steps">
-        <li>${touch ? "Toca un número en el plano o en la fila de números" : "Pasa el cursor sobre un número"} para ver lo que se exhibe allí. El jardín se abre con ${touch ? "un toque" : "clic"}.</li>
-        <li>Cuando hayas visitado más de la mitad de los espacios (${UNLOCK_AT} de ${ROOMS.length}) aparecerá una linterna UV.</li>
+        <li class="${S.visited.includes(START_ROOM) ? "done" : ""}">El recorrido empieza en el Jardín (1). ${touch ? "Toca" : "Haz clic en"} él primero.</li>
+        <li class="${S.imgs.length >= IMGS_TO_UNLOCK ? "done" : ""}">Mira las fotos de cada espacio: con ${IMGS_TO_UNLOCK} fotos vistas se abren los espacios ${LOCKED_ROOMS.slice().sort((a,b) => a-b).join(", ")} (${Math.min(S.imgs.length, IMGS_TO_UNLOCK)}/${IMGS_TO_UNLOCK}).</li>
+        <li class="${S.lanternRoom ? "done" : ""}">Visita ${UNLOCK_AT} de los ${ROOMS.length} espacios: algo se encenderá en el Comedor (5).</li>
         <li>Con la linterna, la sala se apaga y la casa se examina como una escena del crimen.</li>
       </ol>
-      ${S.lanternTaken ? `<p class="meta">Ya tienes la linterna: enciéndela con el botón violeta.</p>` : S.lanternRoom ? `<p class="meta">La linterna ya apareció en el plano. Tómala.</p>` : ""}
+      ${S.lanternTaken ? `<p class="meta">Ya tienes la linterna: enciéndela con el botón violeta.</p>` : S.lanternRoom ? `<p class="meta">La linterna te espera en el Comedor (5). Tómala.</p>` : ""}
       ${AROUND.imgs.length ? `<button class="btn" type="button" id="aroundBtn">Ver los alrededores de la Quinta ›</button>` : ""}`;
   } else {
     mode = "uvnote";

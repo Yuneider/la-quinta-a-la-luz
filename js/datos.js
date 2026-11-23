@@ -69,5 +69,9 @@ ROOMS.forEach(r => {
 const PIECE_ROOMS = ROOMS.filter(r => r.piece).map(r => r.id);
 const HIDDEN_ROOMS = ROOMS.filter(r => r.hidden);
 const UNLOCK_AT = Math.floor(ROOMS.length / 2) + 1; // la linterna aparece al visitar más de la mitad de los espacios
+const LANTERN_ROOM = 5;                 // la linterna UV solo aparece en el Comedor
+const START_ROOM = 1;                   // el recorrido siempre empieza en el Jardín
+const LOCKED_ROOMS = [8, 9, 10, 11, 12]; // bloqueados hasta ver IMGS_TO_UNLOCK fotos
+const IMGS_TO_UNLOCK = 5;
 const R_LIGHT = 34; // radio del haz UV: más pequeño = más difícil
 const ENTRY = [484, 677];

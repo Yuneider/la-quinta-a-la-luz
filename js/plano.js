@@ -90,6 +90,8 @@ function drawRoom(r, parent){
   r.badges.forEach(([x,y]) => {
     el("circle", {cx:x, cy:y, r: r.rects && r.rects[0][2] < 18 ? 6 : 7, class:"badge"}, g);
     txt(g, x, y + .5, r.id, "num");
+    // Candado: se ve en lugar del número mientras el espacio esté bloqueado.
+    el("path", {class:"lockico", d:`M${x-2} ${y-.6}v-1.4a2 2 0 0 1 4 0v1.4 M${x-3} ${y-.6}h6v4h-6z`}, g);
   });
   const t = el("title", {}, g); t.textContent = `${r.id}. ${r.name}`;
   let timer;
@@ -97,7 +99,7 @@ function drawRoom(r, parent){
   g.addEventListener("pointerenter", e => {
     if (e.pointerType !== "mouse" || S.uv || r.garden || activeRoom === r.id) return;
     clearTimeout(timer);
-    timer = setTimeout(() => { if (Date.now() - closedAt > 500) openRoom(r.id); }, 220);
+    timer = setTimeout(() => { if (Date.now() - closedAt > 500) openRoom(r.id, true); }, 220);
   });
   g.addEventListener("pointerleave", () => clearTimeout(timer));
   g.addEventListener("click", e => { e.stopPropagation(); if (!S.uv) openRoom(r.id); });
@@ -139,7 +141,12 @@ function drawMarks(){
 }
 
 function syncRoomClasses(){
-  document.querySelectorAll(".room,.chip").forEach(g => { const id = +g.dataset.id; g.classList.toggle("seen", S.seen.includes(id) || S.visited.includes(id)); });
+  document.querySelectorAll(".room,.chip").forEach(g => {
+    const id = +g.dataset.id;
+    g.classList.toggle("seen", S.seen.includes(id) || S.visited.includes(id));
+    g.classList.toggle("locked", !!lockReason(id));
+    g.classList.toggle("next", id === START_ROOM && !S.visited.includes(START_ROOM));
+  });
 }
 function syncMarks(){
   plan.querySelectorAll(".mark").forEach(g => { g.classList.toggle("found", S.found.includes(g.dataset.h)); g.setAttribute("tabindex", S.uv ? 0 : -1); });

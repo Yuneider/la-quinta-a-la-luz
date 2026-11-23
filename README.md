@@ -15,7 +15,8 @@ Abre `index.html` en el navegador. No necesita instalación ni servidor.
   - `panel.css` — cartela, guía, contadores y botones.
   - `final.css` — pantalla final.
   - `carrusel.css` — carrusel de imágenes y fila de números para celular.
-  - `responsive.css` — ajustes para celular (se carga de último).
+  - `responsive.css` — ajustes para celular.
+  - `experiencia.css` — introducción, destellos, candados y cartela en una sola vista (se carga de último).
 - `js/` — el comportamiento, un archivo por parte:
   - `contenido.js` — **los textos y las imágenes**, generado desde `contenido/` con `node scripts/sincronizar.js`. No se edita a mano.
   - `datos.js` — la estructura: geometría de los espacios sobre el plano, cuáles tienen pieza y cuál evidencia oculta guarda cada uno.
@@ -26,6 +27,7 @@ Abre `index.html` en el navegador. No necesita instalación ni servidor.
   - `final.js` — pantalla final y respuesta del visitante.
   - `atajos.js` — atajos del prototipo y reinicio.
   - `sonido.js` — música de fondo (normal y UV) y efectos.
+  - `experiencia.js` — introducción UV, «LUZ» interactivo del título, destellos y avisos.
   - `app.js` — arranque (se carga de último).
 - `assets/` — archivos que la vista ya usa (el plano oficial del museo).
 - `contenido/` — **la fuente de los textos e imágenes**: una carpeta por espacio y, en `contenido/uv/`, una por evidencia de la capa oculta; cada una con `imagenes/`, `sonido/` y `texto/`. Ver [contenido/README.md](contenido/README.md).
@@ -51,5 +53,11 @@ La música de fondo es `contenido/general/sonido/Instrumental1.mp3` en la versi�
 
 ## Reglas del recorrido
 
-- La linterna UV aparece al visitar más de la mitad de los espacios (8 de 14). Se cambia con `UNLOCK_AT` en `js/datos.js`.
+- Cada carga de la página empieza con una introducción (`js/experiencia.js`) y reinicia el recorrido: el progreso no se guarda.
+- El recorrido empieza siempre en el Jardín (1): los demás espacios están cerrados hasta abrirlo (`START_ROOM`).
+- Los espacios 8, 9, 10, 11 y 12 se abren al ver 5 fotos en los carruseles (`LOCKED_ROOMS` e `IMGS_TO_UNLOCK`).
+- La linterna UV aparece al visitar más de la mitad de los espacios (8 de 14), siempre en el Comedor (5). Se cambia con `UNLOCK_AT` y `LANTERN_ROOM` en `js/datos.js`.
+- El sonido viene activado; empieza a sonar con el botón de la introducción, porque los navegadores no dejan reproducir audio antes de un clic.
+- En la vista normal, cada 26 a 50 segundos un destello UV muestra una huella y una frase (`FRASES` en `js/experiencia.js`). Son dos destellos por evento, por debajo del umbral de 3 por segundo; con «reducir movimiento» se cambian por un aviso sin parpadeo.
+- Al tocar «LUZ» en el título, un haz UV recorre la página y muestra una pista según el avance.
 - El tamaño del haz UV es `R_LIGHT` en `js/datos.js`: más pequeño, más difícil encontrar las huellas.

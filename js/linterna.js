@@ -56,4 +56,8 @@ function updateHUD(){
   document.querySelector(".medal.ev").classList.toggle("locked", !S.lanternTaken);
   $("cHidden").textContent = S.lanternTaken ? `${S.found.length}/${HIDDEN_ROOMS.length}` : "—";
   $("cHiddenLbl").textContent = S.uv ? "evidencias" : "hallazgos";
+  const ok = S.imgs.length >= IMGS_TO_UNLOCK;
+  $("cImgs").textContent = ok ? "✓" : `${S.imgs.length}/${IMGS_TO_UNLOCK}`;
+  $("mImgs").classList.toggle("done", ok);
+  $("mImgs").title = ok ? "Espacios 8 a 12 abiertos" : `Fotos vistas: con ${IMGS_TO_UNLOCK} se abren los espacios 8 a 12`;
 }

@@ -1,0 +1,175 @@
+/* Introducción UV, «LUZ» interactivo, destellos, avisos, candados y la cartela en una sola vista.
+   Se carga después de responsive.css. */
+
+@property --mx{syntax:"<length-percentage>";inherits:true;initial-value:-60%}
+
+/* ---------- Cartela en una sola vista (sin desplazar) ---------- */
+/* La foto se estira para ocupar lo que deja el texto; fitCard() (panel.js) reduce la letra con --s
+   si el texto solo ya no cabe. */
+#card{display:flex;flex-direction:column;gap:calc(11px * var(--s,1));min-height:calc(100% - 10px);
+  font-size:calc(var(--fs) * var(--s,1));padding:calc(18px * var(--s,1)) 22px calc(20px * var(--s,1))}
+body.uv #card{min-height:100%;padding:calc(14px * var(--s,1)) 0 4px}
+#card .cbody{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:inherit}
+#card .ctext{display:flex;flex-direction:column;gap:inherit;min-width:0}
+#card .cbody > .gal{flex:1 1 0;min-height:110px;max-height:62vh;display:flex;flex-direction:column}
+#card .gal > .track{flex:1 1 auto;min-height:0}
+#card .slide{height:auto;min-height:0}
+#card .slide img{position:absolute;inset:0}
+#card .cbody > .foto{flex:0 0 auto}
+/* Panel ancho: foto a la izquierda (todo el alto) y texto a la derecha. */
+.panel{container-type:inline-size}
+@container (min-width:560px){
+  #card .cbody{flex-direction:row;align-items:stretch;column-gap:20px}
+  #card .cbody > .gal{flex:1.15 1 0;min-width:0;min-height:220px;max-height:none}
+  #card .ctext{flex:1 1 0}
+}
+@media (min-width:821px){
+  .scene{grid-template-columns:clamp(340px,48vw,820px) minmax(0,1fr)}
+  .counters{gap:16px}
+}
+@media (min-width:1280px){ h1 br{display:none} }
+#card .head{padding-bottom:calc(10px * var(--s,1))}
+#card h2{font-size:calc(1.55rem * var(--s,1))}
+body.uv #card h2{font-size:calc(1.75rem * var(--s,1))}
+#card .big{font-size:calc(clamp(3rem,5.4vw,4.6rem) * var(--s,1))}
+#card .room-name{font-size:calc(1.3rem * var(--s,1))}
+body.uv #card .room-name{font-size:calc(14px * var(--s,1))}
+#card .kicker{font-size:calc(13px * var(--s,1))}
+body.uv #card .kicker,body.uv #card .meta{font-size:calc(12.5px * var(--s,1))}
+#card .fuente{font-size:calc(12.5px * var(--s,1));padding:calc(8px * var(--s,1)) 12px}
+#card .notice{padding:calc(8px * var(--s,1)) 12px}
+
+@media (max-width:820px){
+  /* Con una cartela abierta el plano se encoge y el panel toma el resto de la pantalla. */
+  .scene.reading{grid-template-rows:auto minmax(0,24vh) auto minmax(0,1fr) auto}
+  .scene.reading .panel{max-height:none}
+  #card{padding:calc(14px * var(--s,1)) 16px calc(16px * var(--s,1))}
+  #card h2,body.uv #card h2{font-size:calc(1.35rem * var(--s,1))}
+  #card .big{font-size:calc(2.6rem * var(--s,1))}
+  #card .cbody > .gal{min-height:96px;max-height:none}
+}
+@media (max-height:520px){
+  #card .big{font-size:calc(2.4rem * var(--s,1))}
+  #card .cbody > .gal{min-height:80px}
+}
+
+/* ---------- «LUZ» del título: tubo UV que parpadea y se revela bajo el cursor ---------- */
+h1 em.luz,body.uv h1 em.luz{position:relative;display:inline-block;font-family:var(--font-lab);font-style:normal;font-weight:800;letter-spacing:.05em;
+  color:#B9A6FF;cursor:pointer;outline-offset:4px;
+  text-shadow:0 0 6px rgba(168,147,255,.8),0 0 18px rgba(122,79,224,.65),0 0 40px rgba(91,63,224,.5);
+  animation:luzFlicker 7s infinite}
+.luz::after{content:attr(data-t);position:absolute;left:0;top:0;pointer-events:none;color:#F2FFC4;
+  text-shadow:0 0 6px #D7FF5A,0 0 16px #D7FF5A,0 0 34px #A893FF;
+  -webkit-mask-image:radial-gradient(circle .8em at var(--mx) var(--my,50%),#000 30%,transparent 72%);
+          mask-image:radial-gradient(circle .8em at var(--mx) var(--my,50%),#000 30%,transparent 72%);
+  animation:luzScan 6s ease-in-out infinite}
+.luz.aim::after{animation:none}
+.luz:focus-visible::after{animation:none;--mx:50%}
+.luz-tip{position:absolute;left:calc(100% + .3em);top:.15em;font-family:var(--font-mono);font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:#D7FF5A;text-shadow:0 0 6px rgba(215,255,90,.8);white-space:nowrap;transform:rotate(-8deg);pointer-events:none;animation:tip 3.2s ease-in-out infinite}
+.luz.aim .luz-tip{opacity:0;animation:none}
+.luz.flash{animation:luzFlash 1.2s ease-out}
+@keyframes luzFlicker{0%,88%,100%{opacity:1}89%{opacity:.3}90%{opacity:1}92%{opacity:.45}93.5%{opacity:1}}
+@keyframes luzScan{0%,50%{--mx:-60%}78%,100%{--mx:160%}}
+@keyframes luzFlash{0%{text-shadow:0 0 6px #fff,0 0 30px #D7FF5A,0 0 80px #A893FF,0 0 140px #5B3FE0;color:#F2FFC4}100%{}}
+@keyframes tip{0%,100%{opacity:.25}50%{opacity:1}}
+@media (max-width:820px){ .luz-tip{display:none} }
+
+/* Haz ultravioleta al tocar «LUZ»: se abre desde el título y deja leer una pista. */
+.uvsweep{position:fixed;inset:0;z-index:70;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at var(--ox,50%) var(--oy,10%),rgba(201,174,255,.55) 0,rgba(91,63,224,.55) 18%,rgba(18,8,52,.9) 60%,rgba(5,3,14,.95) 100%)}
+.uvsweep.on{animation:sweep 2.6s ease forwards}
+.uvsweep-msg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(90vw,680px);margin:0;text-align:center;
+  font-family:var(--font-mono);font-weight:500;font-size:clamp(1.15rem,3vw,2rem);line-height:1.25;letter-spacing:.05em;text-transform:uppercase;
+  color:#F2FFC4;text-shadow:0 0 8px #D7FF5A,0 0 28px #7A4FE0;opacity:0}
+.uvsweep.on .uvsweep-msg{animation:msgIn 2.6s ease forwards}
+@keyframes sweep{0%{opacity:1;clip-path:circle(0 at var(--ox) var(--oy))}35%{opacity:1;clip-path:circle(160vmax at var(--ox) var(--oy))}82%{opacity:1;clip-path:circle(160vmax at var(--ox) var(--oy))}100%{opacity:0;clip-path:circle(160vmax at var(--ox) var(--oy))}}
+@keyframes msgIn{0%,22%{opacity:0;letter-spacing:.3em}36%,84%{opacity:1;letter-spacing:.05em}100%{opacity:0}}
+
+/* ---------- Destellos en la pantalla normal ---------- */
+.scare{position:fixed;inset:0;z-index:80;pointer-events:none;opacity:0;background:#000}
+.scare.dark{opacity:.95;background:#000}
+.scare.on{opacity:1;background:radial-gradient(circle at var(--px) var(--py),#4A26C9 0,#1A0B4E 32%,#060310 72%)}
+.scare.soft.on{opacity:.92}
+.scare-print,.scare-msg{display:none}
+.scare.on .scare-print,.scare.on .scare-msg{display:block}
+.scare-print{position:absolute;left:var(--px);top:var(--py);width:min(48vmin,380px);aspect-ratio:1;transform:translate(-50%,-50%)}
+.scare-print svg,.ip svg{display:block;width:100%;height:100%;fill:none;stroke:#D7FF5A;stroke-width:1.6;stroke-linecap:round;filter:drop-shadow(0 0 4px #D7FF5A) drop-shadow(0 0 16px #A893FF)}
+.scare-msg{position:absolute;left:50%;bottom:14%;transform:translateX(-50%);width:92vw;margin:0;text-align:center;
+  font-family:var(--font-lab);font-weight:800;font-size:clamp(1.6rem,5.4vw,3.8rem);line-height:1.05;letter-spacing:.02em;
+  color:#F2FFC4;text-shadow:0 0 10px #D7FF5A,0 0 34px #7A4FE0}
+.scene.jolt{animation:jolt .5s linear}
+@keyframes jolt{0%,100%{transform:none}15%{transform:translate(-6px,3px)}30%{transform:translate(5px,-4px)}45%{transform:translate(-4px,-2px)}60%{transform:translate(3px,4px)}80%{transform:translate(-2px,1px)}}
+/* Rastro que queda en el plano después del destello. */
+.rastro{pointer-events:none}
+.rastro ellipse{fill:none;stroke:#D7FF5A;stroke-width:1.6;stroke-linecap:round;filter:drop-shadow(0 0 3px #D7FF5A);animation:rastro 4.2s ease-out forwards}
+@keyframes rastro{0%{opacity:.95}100%{opacity:0}}
+
+/* ---------- Avisos breves ---------- */
+.toast{position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top,0px));z-index:75;transform:translate(-50%,-12px);opacity:0;pointer-events:none;
+  width:max-content;max-width:min(92vw,560px);padding:10px 16px;background:#0B0B0F;border:1px solid var(--uv);color:#F2F2F2;
+  font-family:var(--font-mono);font-size:13px;line-height:1.4;box-shadow:0 0 22px rgba(122,79,224,.45);transition:opacity .25s,transform .25s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.ok{border-color:var(--fluo);color:#F2FFC4;box-shadow:0 0 22px rgba(215,255,90,.35)}
+
+/* ---------- Espacios bloqueados y punto de partida ---------- */
+.room .lockico{display:none;fill:none;stroke:var(--accent-hi);stroke-width:.9;stroke-linejoin:round;pointer-events:none}
+.room.locked .lockico{display:block}
+.room.locked .num{display:none}
+.room.locked{cursor:not-allowed}
+.room.locked:not(.garden) .shape{opacity:.5}
+.room.locked .badge{stroke-dasharray:2 1.4}
+body.uv .room .lockico{display:none}
+body.uv .room.locked .num{display:block}
+body.uv .room.locked .shape{opacity:1}
+.room.next .badge{animation:nextPulse 1.3s ease-in-out infinite}
+@keyframes nextPulse{0%,100%{stroke-width:.8;filter:none}50%{stroke-width:2.6;filter:drop-shadow(0 0 4px #F1DB94)}}
+.room.shake,.chip.shake{animation:shake .4s ease}
+.room.shake{transform-box:fill-box;transform-origin:center}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-3px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
+.chip.locked{opacity:.5;border-style:dashed}
+.chip.next{animation:chipPulse 1.3s ease-in-out infinite}
+@keyframes chipPulse{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 3px rgba(241,219,148,.45)}}
+
+.medal.imgs.bump b{animation:bump .4s ease}
+.medal.imgs.done b{color:var(--accent)}
+@keyframes bump{50%{transform:scale(1.3)}}
+.steps li.done{opacity:.6;text-decoration:line-through;text-decoration-thickness:1px}
+
+/* ---------- Introducción ---------- */
+.intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow:hidden;background:#050508;color:#F2F2F2;font-family:var(--font-lab);touch-action:none;cursor:crosshair}
+.intro.lit{background:radial-gradient(ellipse at 50% 45%,#160b3a 0,#050508 72%);animation:tube 6s infinite}
+@keyframes tube{0%,93%,100%{background-color:#050508}94%{background-color:#0d0820}95%{background-color:#050508}}
+.intro::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(circle,#D9C8FF 0,#6B48F0 45%,rgba(20,8,60,0) 85%)}
+.intro.out{animation:introOut .9s ease forwards}
+.intro.out::after{animation:flashOut .9s ease forwards}
+@keyframes introOut{0%,30%{opacity:1}100%{opacity:0}}
+@keyframes flashOut{0%{opacity:0}22%{opacity:.9}100%{opacity:0}}
+.intro-beam{position:absolute;left:0;top:0;border-radius:50%;pointer-events:none;mix-blend-mode:screen;will-change:transform;
+  background:radial-gradient(circle,rgba(201,174,255,.5) 0,rgba(122,79,224,.3) 40%,rgba(58,30,144,0) 70%)}
+.intro-prints{position:absolute;inset:0;pointer-events:none}
+.ip{position:absolute;width:calc(74px * var(--k,1));aspect-ratio:1;transform:translate(-50%,-50%);opacity:0}
+.intro-inner{position:relative;display:grid;justify-items:center;gap:16px;padding:24px;text-align:center}
+.intro-eye{margin:0;min-height:1.4em;font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#A8A8B3}
+.intro-title{position:relative;display:grid;margin:0;font-family:var(--font-display);font-weight:800;font-size:clamp(3rem,10.5vw,7.4rem);line-height:.95;letter-spacing:-.01em}
+.intro-title > span{grid-area:1/1}
+.intro-title b{font-family:var(--font-lab);font-weight:800;letter-spacing:.05em}
+.t-base{color:#16141f}
+.t-glow{color:#ECE6FF;text-shadow:0 0 12px rgba(168,147,255,.85),0 0 42px rgba(122,79,224,.6)}
+.t-glow b{color:#F2FFC4;text-shadow:0 0 8px #D7FF5A,0 0 26px #D7FF5A,0 0 64px #A893FF}
+.intro.lit .t-glow b{display:inline-block;animation:luzFlicker 5s infinite}
+.intro-sub{margin:0;font-family:var(--font-body);font-style:italic;font-size:clamp(1.05rem,2.3vw,1.4rem);color:#C9BBFF}
+.intro-go{min-height:52px;padding:0 28px;border:1.5px solid #D7FF5A;background:rgba(215,255,90,.08);color:#F2FFC4;
+  font-family:var(--font-mono);font-weight:500;font-size:15px;letter-spacing:.16em;text-transform:uppercase;
+  box-shadow:0 0 18px rgba(215,255,90,.35),inset 0 0 12px rgba(215,255,90,.15)}
+.intro-go:hover,.intro-go:focus-visible{background:#D7FF5A;color:#0B0B0F}
+.intro-note{margin:0;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8C8C9A}
+.intro-sub,.intro-go,.intro-note{opacity:0;transform:translateY(8px);transition:opacity .8s,transform .8s;pointer-events:none}
+.intro.ready .intro-sub,.intro.lit .intro-sub,.intro.ready .intro-note,.intro.lit .intro-note{opacity:1;transform:none}
+.intro.ready .intro-go,.intro.lit .intro-go{opacity:1;transform:none;pointer-events:auto;animation:goPulse 1.8s ease-in-out infinite}
+@keyframes goPulse{0%,100%{box-shadow:0 0 14px rgba(215,255,90,.3),inset 0 0 10px rgba(215,255,90,.12)}50%{box-shadow:0 0 30px rgba(215,255,90,.6),inset 0 0 16px rgba(215,255,90,.25)}}
+
+/* Movimiento reducido: sin parpadeos ni barridos (responsive.css ya quita animaciones y transiciones). */
+@media (prefers-reduced-motion:reduce){
+  .intro-sub,.intro-go,.intro-note{opacity:1;transform:none;pointer-events:auto}
+}
