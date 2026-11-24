@@ -4,14 +4,11 @@
 const closeMenu = () => document.querySelector(".proto").removeAttribute("open");
 $("skipSix").onclick = () => {
   closeMenu(); if (S.lanternTaken) return;
-  while (S.imgs.length < IMGS_TO_UNLOCK) S.imgs.push("atajo-" + S.imgs.length);
-  const missing = ROOMS.map(r => r.id).filter(id => !S.visited.includes(id));
-  while (S.visited.length < UNLOCK_AT - 1 && missing.length) { const id = missing.shift(); S.visited.push(id); if (PIECE_ROOMS.includes(id) && !S.seen.includes(id)) S.seen.push(id); }
-  if (missing.length) openRoom(missing.shift());
+  if (!S.visited.includes(START_ROOM)) S.visited.push(START_ROOM);
+  openRoom(LANTERN_ROOM);
 };
 $("skipAll").onclick = () => {
   closeMenu();
-  while (S.imgs.length < IMGS_TO_UNLOCK) S.imgs.push("atajo-" + S.imgs.length);
   if (!S.lanternTaken) { PIECE_ROOMS.forEach(id => { if (!S.seen.includes(id)) S.seen.push(id); }); ROOMS.forEach(r => { if (!S.visited.includes(r.id)) S.visited.push(r.id); }); S.lanternRoom = LANTERN_ROOM; takeLantern(); }
   else if (!S.uv) setUV(true);
   S.found = HIDDEN_ROOMS.map(r => r.hidden);

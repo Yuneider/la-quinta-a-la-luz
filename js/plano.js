@@ -17,6 +17,9 @@ function drawPlan(){
   const gs = el("filter", {id:"glowS", x:"-50%", y:"-50%", width:"200%", height:"200%"}, defs);
   el("feGaussianBlur", {stdDeviation:"1.4", result:"b"}, gs);
   const fm = el("feMerge", {}, gs); el("feMergeNode", {in:"b"}, fm); el("feMergeNode", {in:"SourceGraphic"}, fm);
+  // Cinta de «zona restringida» (amarillo y negro) para los espacios en investigación.
+  const tp = el("pattern", {id:"tapeP", width:"6", height:"6", patternUnits:"userSpaceOnUse", patternTransform:"rotate(45)"}, defs);
+  el("rect", {width:6, height:6, fill:"#1A1208"}, tp); el("rect", {width:3, height:6, fill:"#E8C547"}, tp);
 
   // Terreno: franja norte y jardín en terciopelo
   el("polygon", {points:"200,200 548,282 632,505 632,700 170,700 190,333", class:"estate"}, plan);
@@ -54,6 +57,10 @@ function drawPlan(){
     b.rects.forEach(([x,y,w,h]) => el("rect", {x,y,width:w,height:h,class:"shape"}, g));
   });
   ROOMS.filter(r => !r.garden).forEach(r => drawRoom(r, plan));
+  // Cinta policial sobre los espacios 8 a 12 mientras dure la investigación.
+  const tape = el("g", {id:"restrictTape", "pointer-events":"none", "aria-hidden":"true", transform:"rotate(-5 489 375)"}, plan);
+  el("rect", {x:420, y:368.5, width:138, height:13, class:"tape-band"}, tape);
+  txt(tape, 489, 375.5, "⚠ INVESTIGACIÓN EN CURSO ⚠", "tape-txt");
 
   if (S.lanternRoom && !S.lanternTaken) drawLantern(S.lanternRoom);
 
@@ -94,14 +101,7 @@ function drawRoom(r, parent){
     el("path", {class:"lockico", d:`M${x-2} ${y-.6}v-1.4a2 2 0 0 1 4 0v1.4 M${x-3} ${y-.6}h6v4h-6z`}, g);
   });
   const t = el("title", {}, g); t.textContent = `${r.id}. ${r.name}`;
-  let timer;
-  // El jardín (espacio 1) rodea todo: solo se abre con clic, para que el hover no reabra ventanas al mover el cursor.
-  g.addEventListener("pointerenter", e => {
-    if (e.pointerType !== "mouse" || S.uv || r.garden || activeRoom === r.id) return;
-    clearTimeout(timer);
-    timer = setTimeout(() => { if (Date.now() - closedAt > 500) openRoom(r.id, true); }, 220);
-  });
-  g.addEventListener("pointerleave", () => clearTimeout(timer));
+  // Los espacios solo se abren con clic (o toque / teclado), nunca al pasar el cursor.
   g.addEventListener("click", e => { e.stopPropagation(); if (!S.uv) openRoom(r.id); });
   g.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && !S.uv){ e.preventDefault(); openRoom(r.id); }});
 }
@@ -141,10 +141,12 @@ function drawMarks(){
 }
 
 function syncRoomClasses(){
+  plan.classList.toggle("restricted", !investigacionCerrada());
   document.querySelectorAll(".room,.chip").forEach(g => {
     const id = +g.dataset.id;
     g.classList.toggle("seen", S.seen.includes(id) || S.visited.includes(id));
     g.classList.toggle("locked", !!lockReason(id));
+    g.classList.toggle("restricted", LOCKED_ROOMS.includes(id) && !investigacionCerrada());
     g.classList.toggle("next", id === START_ROOM && !S.visited.includes(START_ROOM));
   });
 }

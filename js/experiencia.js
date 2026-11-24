@@ -100,9 +100,7 @@ function pista(){
   if (S.uv) { const f = HIDDEN_ROOMS.length - S.found.length; return f ? `Faltan ${f} huellas. Mueve la luz despacio.` : "Ya lo viste todo. Cierra el expediente."; }
   if (S.lanternTaken) return "La linterna está en tus manos: enciéndela.";
   if (S.lanternRoom) return "La linterna te espera en el Comedor (5).";
-  if (S.imgs.length < IMGS_TO_UNLOCK) return `Mira ${IMGS_TO_UNLOCK - S.imgs.length} foto${IMGS_TO_UNLOCK - S.imgs.length === 1 ? "" : "s"} más: hay puertas cerradas.`;
-  const f = UNLOCK_AT - S.visited.length;
-  return `${f} espacio${f === 1 ? "" : "s"} más y algo se encenderá en el Comedor.`;
+  return "Algo se encenderá en el Comedor (5).";
 }
 let sweepId;
 function uvSweep(){

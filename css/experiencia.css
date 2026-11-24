@@ -173,3 +173,53 @@ body.uv .room.locked .shape{opacity:1}
 @media (prefers-reduced-motion:reduce){
   .intro-sub,.intro-go,.intro-note{opacity:1;transform:none;pointer-events:auto}
 }
+
+/* ---------- Luz UV en toda la pantalla ---------- */
+/* Fuera del plano, la oscuridad y el haz los pinta #uvveil (linterna.js le pasa --x, --y y --r
+   en píxeles). El plano, la cartela y los controles quedan por encima: el plano tiene su propia
+   oscuridad con el mismo haz, y la cartela y los botones se siguen leyendo. */
+.uvveil{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;visibility:hidden;transition:opacity 1s,visibility 0s 1s;
+  background:radial-gradient(circle var(--r,60px) at var(--x,50%) var(--y,50%),rgba(11,11,15,0) 60%,rgba(11,11,15,.97) 100%)}
+body.uv .uvveil{opacity:1;visibility:visible;transition:opacity 1s}
+.uvveil-tint,.uvveil-ring{position:absolute;left:var(--x,50%);top:var(--y,50%);width:calc(var(--r,60px) * 2);height:calc(var(--r,60px) * 2);
+  transform:translate(-50%,-50%);border-radius:50%;pointer-events:none}
+.uvveil-tint{mix-blend-mode:screen;background:radial-gradient(circle,rgba(201,174,255,.55) 0,rgba(122,79,224,.32) 55%,rgba(58,30,144,0) 100%)}
+.uvveil-ring{width:calc(var(--r,60px) * 1.96);height:calc(var(--r,60px) * 1.96);border:1px solid var(--uv);opacity:.6}
+body.uv .planwrap,body.uv .panel,body.uv .foot,body.uv .foot > *,body.uv .chips{position:relative;z-index:2}
+body.uv .scene{cursor:none}
+body.uv .panel,body.uv .foot,body.uv .foot > *{cursor:auto}
+body.uv h1 em.luz{cursor:none}
+
+/* ---------- Espacios acordonados por la investigación ---------- */
+.room.restricted:not(.garden) .shape{fill:url(#tapeP);opacity:.85;stroke:#E8C547;stroke-width:1.4}
+.room.restricted:not(.garden):hover .shape{opacity:1}
+.room.restricted .badge{fill:#8E1B12;stroke:#E8C547;stroke-dasharray:none;stroke-width:1}
+.room.restricted .lockico{display:block;stroke:#FFE9A8}
+.room.restricted .num{display:none}
+.room.restricted{cursor:not-allowed}
+#restrictTape{display:none}
+#plan.restricted #restrictTape{display:block}
+body.uv #plan #restrictTape,body.uv .room.restricted .lockico{display:none}
+body.uv .room.restricted .num{display:block}
+body.uv .room.restricted:not(.garden) .shape{fill:var(--room);stroke:var(--line);stroke-width:1.2;opacity:1}
+body.uv .room.restricted .badge{fill:#0B0B0F;stroke:var(--line)}
+.tape-band{fill:#E8C547;stroke:#1A1208;stroke-width:.8;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}
+.tape-txt{font-family:var(--font-mono);font-weight:500;font-size:7px;letter-spacing:.06em;fill:#1A1208;text-anchor:middle;dominant-baseline:central}
+#plan.restricted #restrictTape{animation:tapeBlink 2.4s ease-in-out infinite}
+@keyframes tapeBlink{0%,100%{opacity:1}50%{opacity:.72}}
+.chip.restricted{opacity:1;border:1.5px solid #E8C547;color:#FFF3C9;font-weight:800;text-shadow:0 0 3px #000,0 0 6px #000;
+  background:repeating-linear-gradient(45deg,#8a6d12 0 6px,#1A1208 6px 12px);cursor:not-allowed}
+
+/* Cartela de acceso restringido */
+#card.restricted{border-color:#E8C547;outline-color:#8E1B12}
+#card.restricted .big{color:#E8C547}
+.alert-tape{overflow:hidden;white-space:nowrap;background:#E8C547;color:#1A1208;border-block:3px solid #1A1208;
+  font-family:var(--font-mono);font-weight:500;font-size:12px;letter-spacing:.14em;padding:5px 0;transform:rotate(-1.2deg);margin:2px -6px}
+.alert-tape span{display:inline-block;animation:tapeRun 18s linear infinite}
+@keyframes tapeRun{to{transform:translateX(-50%)}}
+.restricted-box{display:grid;gap:8px;padding:14px 16px;border:2px dashed #E8C547;
+  background:repeating-linear-gradient(-45deg,rgba(232,197,71,.07) 0 14px,rgba(0,0,0,0) 14px 28px)}
+.restricted-box p{margin:0}
+.restricted-box .stamp{justify-self:start;padding:3px 10px;border:2px solid #C0392B;color:#FF8A7A;font-family:var(--font-mono);font-weight:500;
+  font-size:13px;letter-spacing:.16em;text-transform:uppercase;transform:rotate(-3deg)}
+.restricted-box h2{margin:0}

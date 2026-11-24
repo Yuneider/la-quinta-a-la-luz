@@ -119,39 +119,45 @@ function fitCard(){
 function placeCard(){ fitCard(); }
 document.fonts?.ready.then(fitCard);
 
-/* Fotos vistas: al llegar a IMGS_TO_UNLOCK se abren los espacios bloqueados. */
+/* Fotos vistas (solo se registran). */
 function seeImg(key){
-  if (!key || S.imgs.includes(key)) return;
-  S.imgs.push(key);
-  updateHUD();
-  if (S.imgs.length === IMGS_TO_UNLOCK) {
-    syncRoomClasses(); unlockSound();
-    toast(`Se desbloquearon los espacios ${LOCKED_ROOMS.slice().sort((a,b) => a-b).join(", ")}`, "ok");
-    renderGuide();
-  } else if (S.imgs.length < IMGS_TO_UNLOCK) {
-    const m = $("mImgs"); m.classList.remove("bump"); void m.offsetWidth; m.classList.add("bump");
-  }
+  if (key && !S.imgs.includes(key)) S.imgs.push(key);
 }
 
-/* Espacio bloqueado: el candado tiembla y se explica qué falta. */
+const LOCKED_LIST = LOCKED_ROOMS.slice().sort((a,b) => a-b).join(", ");
+/* Espacio bloqueado: el candado tiembla y se explica qué falta. Los espacios en investigación
+   muestran una alerta de acceso restringido en la cartela. */
 function lockedNotice(id, why){
   const r = ROOMS.find(x => x.id === id);
   document.querySelectorAll(`.room[data-id="${id}"],.chip[data-id="${id}"]`).forEach(g => { g.classList.remove("shake"); void g.getBoundingClientRect(); g.classList.add("shake"); });
   lockSound();
-  if (why === "start") toast(`El recorrido empieza en el Jardín (1). Ábrelo primero.`);
-  else toast(`${r.name} está cerrado: mira ${IMGS_TO_UNLOCK - S.imgs.length} foto${IMGS_TO_UNLOCK - S.imgs.length === 1 ? "" : "s"} más para abrirlo (${S.imgs.length}/${IMGS_TO_UNLOCK}).`);
+  if (why === "start") return toast(`El recorrido empieza en el Jardín (1). Ábrelo primero.`);
+  const left = HIDDEN_ROOMS.length - S.found.length;
+  const paso = S.lanternTaken
+    ? `Enciende la luz UV y encuentra las ${left} evidencias que faltan (${S.found.length}/${HIDDEN_ROOMS.length}).`
+    : `Abre el Comedor (5), toma la linterna UV y encuentra las ${HIDDEN_ROOMS.length} evidencias ocultas.`;
+  setActive(null);
+  openCard(`<div class="head"><span class="big">${pad(r.id)}</span><div class="head-txt"><span class="kicker">Espacio ${pad(r.id)} · Acceso restringido</span><span class="room-name">${esc(r.name)}</span></div></div>
+    <div class="alert-tape" aria-hidden="true"><span>INVESTIGACIÓN EN CURSO · NO PASAR · INVESTIGACIÓN EN CURSO · NO PASAR · INVESTIGACIÓN EN CURSO · NO PASAR</span></div>
+    <div class="restricted-box" role="alert">
+      <p class="stamp">⚠ Prohibido el acceso</p>
+      <h2>Se adelanta una investigación</h2>
+      <p>Este espacio está acordonado mientras se esclarece lo que el museo no cuenta. Los espacios ${LOCKED_LIST} permanecen cerrados hasta que la investigación termine.</p>
+      <p class="meta"><b>Para abrirlos:</b> ${paso}</p>
+    </div>`, "restricted", r.c);
 }
 
-function openRoom(id, fromHover){
+function openRoom(id){
   const why = lockReason(id);
-  if (why) { if (!fromHover) lockedNotice(id, why); return; }
+  if (why) { lockedNotice(id, why); return; }
   const r = ROOMS.find(x => x.id === id);
   setActive(id);
   const before = S.visited.length;
   if (!S.visited.includes(id)) S.visited.push(id);
   let newPiece = false;
   if (r.piece && !S.seen.includes(id)) { S.seen.push(id); newPiece = true; chime(); }
-  if (S.visited.length !== before && S.visited.length >= UNLOCK_AT && !S.lanternRoom) { S.lanternRoom = LANTERN_ROOM; drawLantern(LANTERN_ROOM); lanternSound(); }
+  // Abrir el Comedor (5) siempre enciende la linterna UV, sin importar cuántos espacios se hayan visto.
+  if (id === LANTERN_ROOM && !S.lanternRoom) { S.lanternRoom = LANTERN_ROOM; drawLantern(LANTERN_ROOM); lanternSound(); }
   // La linterna UV solo se ve y se toma en el Comedor (espacio 5); desde los demás se indica dónde está.
   let notice = "";
   if (S.lanternRoom && !S.lanternTaken) {
@@ -191,9 +197,9 @@ function renderGuide(){
       <p>La casa donde vivió Simón Bolívar en Bogotá. Cada número del plano es un espacio del museo; el punto rojo marca la entrada.</p>
       <ol class="steps">
         <li class="${S.visited.includes(START_ROOM) ? "done" : ""}">El recorrido empieza en el Jardín (1). ${touch ? "Toca" : "Haz clic en"} él primero.</li>
-        <li class="${S.imgs.length >= IMGS_TO_UNLOCK ? "done" : ""}">Mira las fotos de cada espacio: con ${IMGS_TO_UNLOCK} fotos vistas se abren los espacios ${LOCKED_ROOMS.slice().sort((a,b) => a-b).join(", ")} (${Math.min(S.imgs.length, IMGS_TO_UNLOCK)}/${IMGS_TO_UNLOCK}).</li>
-        <li class="${S.lanternRoom ? "done" : ""}">Visita ${UNLOCK_AT} de los ${ROOMS.length} espacios: algo se encenderá en el Comedor (5).</li>
-        <li>Con la linterna, la sala se apaga y la casa se examina como una escena del crimen.</li>
+        <li class="${S.lanternRoom ? "done" : ""}">Abre el Comedor (5): allí te espera la linterna UV.</li>
+        <li class="${S.found.length ? "done" : ""}">Con la linterna, la casa se apaga y se examina como una escena del crimen.</li>
+        <li class="${investigacionCerrada() ? "done" : ""}">Los espacios ${LOCKED_LIST} están acordonados por una investigación: se abren al encontrar las ${HIDDEN_ROOMS.length} evidencias UV (${S.found.length}/${HIDDEN_ROOMS.length}).</li>
       </ol>
       ${S.lanternTaken ? `<p class="meta">Ya tienes la linterna: enciéndela con el botón violeta.</p>` : S.lanternRoom ? `<p class="meta">La linterna te espera en el Comedor (5). Tómala.</p>` : ""}
       ${AROUND.imgs.length ? `<button class="btn" type="button" id="aroundBtn">Ver los alrededores de la Quinta ›</button>` : ""}`;
@@ -203,7 +209,7 @@ function renderGuide(){
     html = `<div class="kicker row"><span>Examen UV</span><span>${S.found.length}/${HIDDEN_ROOMS.length}</span></div>
       <h2>Lo que no se cuenta</h2>
       <p>La casa quedó a oscuras. ${touch ? "Arrastra el dedo: la luz va un poco por encima de él. Cuando una huella brille, levanta el dedo." : "Mueve la luz despacio: las huellas solo brillan cuando el centro del haz pasa justo encima."}</p>
-      <p>${left ? `Faltan ${left} evidencias.` : "Encontraste todas las evidencias."}</p>
+      <p>${left ? `Faltan ${left} evidencias. Al encontrarlas todas se abren los espacios ${LOCKED_LIST}.` : `Encontraste todas las evidencias: la investigación terminó y los espacios ${LOCKED_LIST} ya están abiertos.`}</p>
       ${left ? "" : `<button class="btn gold" type="button" id="toFinal">Cerrar el expediente</button>`}`;
   }
   guide.className = "card guide" + (mode ? " " + mode : "");
@@ -233,16 +239,18 @@ function openAround(){
 
 function openHidden(key){
   const h = HIDDEN[key]; const r = HIDDEN_ROOMS.find(x => x.hidden === key);
-  if (!S.found.includes(key)) { S.found.push(key); revealSound(); }
+  let acaba = false;
+  if (!S.found.includes(key)) { S.found.push(key); revealSound(); acaba = investigacionCerrada(); }
   syncMarks(); updateHUD(); renderGuide();
   const done = S.found.length === HIDDEN_ROOMS.length;
+  if (acaba) { syncRoomClasses(); unlockSound(); toast(`Investigación concluida: se abrieron los espacios ${LOCKED_LIST}`, "ok"); }
   openCard(`<div class="head"><span class="big">${pad(h.n)}</span><div class="head-txt"><span class="kicker">Hallazgo · Espacio ${pad(r.id)} · ${esc(r.name)}</span><span class="room-name">Fecha: ${esc(h.date)}</span></div></div>
     <h2>${esc(h.title)}</h2>
     ${h.quote ? `<p class="quote">«${esc(h.quote)}»</p>` : ""}
     <p>${esc(h.text)}</p>
     ${gallery(h.imgs, "Imagen de la capa oculta")}
     <div class="fuente"><b>FUENTE</b> — ${esc(h.src)}</div>
-    ${done ? `<button class="btn gold" type="button" id="toFinal">Cerrar el expediente</button>` : `<p class="meta">${S.found.length} de ${HIDDEN_ROOMS.length} evidencias.</p>`}`, "secret", r.c);
+    ${done ? `<p class="meta">Investigación concluida: apaga la luz UV para recorrer los espacios ${LOCKED_LIST}.</p><button class="btn gold" type="button" id="toFinal">Cerrar el expediente</button>` : `<p class="meta">${S.found.length} de ${HIDDEN_ROOMS.length} evidencias.</p>`}`, "secret", r.c);
   const tf = $("toFinal"); if (tf) tf.onclick = showFinal;
 }
 

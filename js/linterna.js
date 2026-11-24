@@ -4,9 +4,20 @@
 function toSvg(cx, cy){ const p = plan.createSVGPoint(); p.x = cx; p.y = cy; return p.matrixTransform(plan.getScreenCTM().inverse()); }
 let raf = 0;
 function requestFrame(){ if (!raf) raf = requestAnimationFrame(paint); }
+/* La oscuridad cubre toda la pantalla: sobre el plano la hace el SVG (#uvLayer) y en el resto
+   de la página la capa #uvveil, con el mismo haz en la misma posición y del mismo tamaño. */
+const veil = $("uvveil");
+function paintVeil(){
+  const m = plan.getScreenCTM(); if (!m) return;
+  const p = svgToScreen([light.x, light.y]);
+  veil.style.setProperty("--x", p.x.toFixed(1) + "px");
+  veil.style.setProperty("--y", p.y.toFixed(1) + "px");
+  veil.style.setProperty("--r", (R_LIGHT * m.a).toFixed(1) + "px");
+}
 function paint(){
   raf = 0;
   [lmc, tint, ring].forEach(c => { if (c) { c.setAttribute("cx", light.x); c.setAttribute("cy", light.y); } });
+  paintVeil();
   plan.querySelectorAll(".mark").forEach(g => {
     const r = HIDDEN_ROOMS.find(x => x.hidden === g.dataset.h);
     const d = Math.hypot(r.c[0] - light.x, r.c[1] - light.y);
@@ -25,8 +36,9 @@ plan.addEventListener("pointerup", e => {
   HIDDEN_ROOMS.forEach(r => { if (S.found.includes(r.hidden)) return; const d = Math.hypot(r.c[0] - light.x, r.c[1] - light.y); if (d < bd) { bd = d; best = r; } });
   if (best) openHidden(best.hidden);
 });
-plan.addEventListener("pointermove", follow);
-plan.addEventListener("pointerdown", follow);
+// La luz sigue al cursor por toda la pantalla, no solo sobre el plano.
+document.addEventListener("pointermove", follow);
+document.addEventListener("pointerdown", follow);
 plan.addEventListener("click", e => { if (!S.uv && !e.target.closest(".room,#lantern")) closeCard(); });
 // Con la vista ampliada abierta, Escape solo la cierra a ella (lo hace el <dialog>), no la cartela.
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !lightbox.open) closeCard(); });
@@ -45,7 +57,7 @@ function setUV(on){
   $("uvToggle").setAttribute("aria-pressed", on);
   $("eyebrow").textContent = on ? "Examen con luz ultravioleta — Quinta de Bolívar" : "Casa Museo Quinta de Bolívar · Bogotá";
   $("rule").textContent = on ? "ESCENA ABIERTA · sigue las pisadas bajo la luz" : "Explora la casa. Algunas cosas no están a la vista.";
-  $("hint").textContent = on ? "Mueve la luz ultravioleta sobre la casa" : "Pasa el cursor o toca un número";
+  $("hint").textContent = on ? "Mueve la luz ultravioleta sobre la casa" : "Haz clic o toca un número";
   closeCard(); syncMarks(); updateHUD(); audioMode();
   if (on) guideOpen = true;
   renderGuide();
@@ -56,8 +68,4 @@ function updateHUD(){
   document.querySelector(".medal.ev").classList.toggle("locked", !S.lanternTaken);
   $("cHidden").textContent = S.lanternTaken ? `${S.found.length}/${HIDDEN_ROOMS.length}` : "—";
   $("cHiddenLbl").textContent = S.uv ? "evidencias" : "hallazgos";
-  const ok = S.imgs.length >= IMGS_TO_UNLOCK;
-  $("cImgs").textContent = ok ? "✓" : `${S.imgs.length}/${IMGS_TO_UNLOCK}`;
-  $("mImgs").classList.toggle("done", ok);
-  $("mImgs").title = ok ? "Espacios 8 a 12 abiertos" : `Fotos vistas: con ${IMGS_TO_UNLOCK} se abren los espacios 8 a 12`;
 }

@@ -19,11 +19,13 @@
 <link rel="stylesheet" href="css/final.css?v=8a23d19d">
 <link rel="stylesheet" href="css/carrusel.css?v=e12f2788">
 <link rel="stylesheet" href="css/responsive.css?v=63f239da">
-<link rel="stylesheet" href="css/experiencia.css?v=f9337082">
+<link rel="stylesheet" href="css/experiencia.css?v=63b75ca4">
 </head>
 <body>
 
 <div class="scene" id="scene">
+  <!-- Oscuridad de la vista UV en toda la pantalla, con el haz que sigue al cursor. -->
+  <div class="uvveil" id="uvveil" aria-hidden="true"><span class="uvveil-tint"></span><span class="uvveil-ring"></span></div>
   <header class="title">
     <div class="eyebrow" id="eyebrow">Casa Museo Quinta de Bolívar · Bogotá</div>
     <h1>La Quinta<br> a la <em class="luz" id="luz" data-t="LUZ" tabindex="0" role="button" aria-label="LUZ: enciende la luz ultravioleta y descubre una pista">LUZ<span class="luz-tip" aria-hidden="true">tócame</span></em></h1>
@@ -32,7 +34,7 @@
 
   <div class="planwrap">
     <svg id="plan" viewBox="164 192 482 528" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Plano de la Casa Museo Quinta de Bolívar con 14 espacios numerados"></svg>
-    <div class="hint" id="hint">Pasa el cursor o toca un número</div>
+    <div class="hint" id="hint">Haz clic o toca un número</div>
   </div>
 
   <nav class="chips" id="chips" aria-label="Espacios del plano"></nav>
@@ -45,7 +47,6 @@
   <footer class="foot">
     <div class="counters">
       <div class="medal" title="Espacios visitados"><b id="cPieces">0/14</b><span>espacios</span></div>
-      <div class="medal imgs" id="mImgs" title="Fotos vistas: con 5 se abren los espacios 8 a 12"><b id="cImgs">0/5</b><span>fotos</span></div>
       <div class="medal ev locked" title="Evidencias de la capa oculta"><b id="cHidden">—</b><span id="cHiddenLbl">hallazgos</span></div>
     </div>
     <div class="controls">
@@ -56,7 +57,7 @@
         <summary class="ctl" aria-label="Atajos del prototipo" title="Atajos del prototipo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></summary>
         <div class="proto-pop">
           <p>Atajos para revisar el prototipo en clase.</p>
-          <button class="btn" type="button" id="skipSix">Visitar ocho espacios</button>
+          <button class="btn" type="button" id="skipSix">Ir a la linterna (Comedor)</button>
           <button class="btn" type="button" id="skipAll">Revelar todas las evidencias</button>
           <button class="btn" type="button" id="resetBtn">Reiniciar recorrido</button>
         </div>
@@ -108,15 +109,15 @@
 
 <!-- El orden importa: datos y estado primero, app de último. -->
 <script src="js/contenido.js?v=f1c50fa0"></script>
-<script src="js/datos.js?v=8b080336"></script>
-<script src="js/estado.js?v=a9640424"></script>
-<script src="js/plano.js?v=80ba6a1c"></script>
-<script src="js/panel.js?v=8fff698c"></script>
-<script src="js/linterna.js?v=af52749c"></script>
+<script src="js/datos.js?v=6c3a5a76"></script>
+<script src="js/estado.js?v=a850b22a"></script>
+<script src="js/plano.js?v=9f26467e"></script>
+<script src="js/panel.js?v=685832ea"></script>
+<script src="js/linterna.js?v=5b3d2f0b"></script>
 <script src="js/final.js?v=db2d0ffe"></script>
-<script src="js/atajos.js?v=543558f2"></script>
+<script src="js/atajos.js?v=9e732734"></script>
 <script src="js/sonido.js?v=052a59fb"></script>
-<script src="js/experiencia.js?v=e9cfa26a"></script>
+<script src="js/experiencia.js?v=e9982c13"></script>
 <script src="js/app.js?v=e65e9026"></script>
 </body>
 </html>

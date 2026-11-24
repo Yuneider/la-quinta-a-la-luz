@@ -55,8 +55,10 @@ La música de fondo es `contenido/general/sonido/Instrumental1.mp3` en la versi�
 
 - Cada carga de la página empieza con una introducción (`js/experiencia.js`) y reinicia el recorrido: el progreso no se guarda.
 - El recorrido empieza siempre en el Jardín (1): los demás espacios están cerrados hasta abrirlo (`START_ROOM`).
-- Los espacios 8, 9, 10, 11 y 12 se abren al ver 5 fotos en los carruseles (`LOCKED_ROOMS` e `IMGS_TO_UNLOCK`).
-- La linterna UV aparece al visitar más de la mitad de los espacios (8 de 14), siempre en el Comedor (5). Se cambia con `UNLOCK_AT` y `LANTERN_ROOM` en `js/datos.js`.
+- Los espacios se abren solo con clic, toque o teclado (no al pasar el cursor).
+- Los espacios 8, 9, 10, 11 y 12 están acordonados («investigación en curso») y se abren al encontrar todas las evidencias de la vista UV (`LOCKED_ROOMS` en `js/datos.js`).
+- La linterna UV aparece siempre que se abre el Comedor (5), sin importar cuántos espacios se hayan visto (`LANTERN_ROOM`).
+- Con la luz UV encendida toda la pantalla se oscurece y el haz sigue al cursor por toda ella; las huellas siguen estando en el plano.
 - El sonido viene activado; empieza a sonar con el botón de la introducción, porque los navegadores no dejan reproducir audio antes de un clic.
 - En la vista normal, cada 26 a 50 segundos un destello UV muestra una huella y una frase (`FRASES` en `js/experiencia.js`). Son dos destellos por evento, por debajo del umbral de 3 por segundo; con «reducir movimiento» se cambian por un aviso sin parpadeo.
 - Al tocar «LUZ» en el título, un haz UV recorre la página y muestra una pista según el avance.
